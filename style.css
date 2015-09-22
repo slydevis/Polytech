@@ -1,0 +1,51 @@
+html, body { 
+  height: 100%;
+  padding:0; 
+  margin:0;
+  text-shadow: 1px 1px 0 #fff;
+}
+
+.navbar-fixed-top {
+    min-width: 50%;
+    max-width: 500px;
+    margin: 0 auto 0 auto;
+    background: url("img/menu.png") repeat;
+    border-radius: 0 0 10px 10px;
+    border: 0px;
+}
+
+.navbar-header .navbar-brand{
+  color: #FFF;
+}
+
+.navbar-header .navbar-brand:hover{
+  color: #E86B22;
+}
+
+.navbar-collapse .nav .active a{
+  background: #E86B22;
+  color: #695341;
+}
+
+.navbar-collapse .nav .active a:hover{
+  background: #4D4D4F;
+  color: #FFF;
+}
+
+.navbar-collapse .nav li a{
+    color: #FFF;
+}
+
+.navbar-collapse .nav li a:hover{
+    color: #E86B22;
+}
+
+.centrer {
+    display: block;
+	text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#content { margin-top: 65px;}
+
