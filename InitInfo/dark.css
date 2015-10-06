@@ -1,0 +1,14 @@
+body { background: black; color:yellow;}
+.navbar { background: white; color: black; }
+#menu {
+    float: left;
+}
+.centrer {
+    display: block;
+	text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#content { margin-top: 65px;}
+a.col-lg-12.centrer { background: white; }
