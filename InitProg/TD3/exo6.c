@@ -13,28 +13,33 @@
 
 #define N 10
 
-int finDico(int tab[], int X) {
-    int beg = 0;
-    int end = N - 1;
-    int pos; 
+int finDico(int tab[], int val) {
+    int beg, end, middle, found;
+     
+    beg = 0;
+    end = N;
+    found = 0;
     
-    if(X > tab[end])
-        return end;
-    
-    while(beg != end) {
-        pos = (beg+end)/2;
-
-        if(X < tab[pos])
-            end = pos;
+    while(found == 0 && ((end - beg) > 1)) {
+        middle = (beg + end)/2;
+        
+        if(tab[middle] == val)
+            found = 1;
+        
+        if(tab[middle] > val)
+            end = middle;
         else
-            beg = pos+1;
+            beg = middle;  
     }
-    
-    return pos;
+  
+    if(tab[beg] == val)
+        return beg;
+    else
+        return -1;
 }
 
 int main() {
-    int tab[N] = {1, 2, 4, 5, 10, 11, 12, 13, 14, 15};
+    int tab[N] = {-3, -1, 4, 5, 10, 11, 12, 13, 14, 15};
     int X;
     int pos;
     
@@ -42,7 +47,11 @@ int main() {
     scanf("%d", &X);
 
     pos = finDico(tab, X);
-    printf("Position trouvé = %d\n", pos);
+    
+    if(pos >= 0)
+        printf("Position trouvé = %d\n", pos);
+    else
+        printf("Valeur non trouvé\n");
     return 0;
 }
  
