@@ -18,26 +18,22 @@ int factoriel(int n) {
     return 1;
 } 
 int combi(int p, int n) {
-    int res = 0;
-    int dem = factoriel(p);
-    dem = dem*factoriel(n-p);
-    res = factoriel(n)/dem;
-    return res;
+    int Cnp = 0;
+    int denominateur = factoriel(p);
+    denominateur = denominateur*factoriel(n-p);
+    Cnp = factoriel(n)/denominateur;
+    return Cnp;
 }
 
-int combi2(int n, int p) {
-// Problème de comprehension de la formule
-    int res = 1;
-    int pOrigin = p;
-    int tmp;
+int combi2(int p, int n) {
+    int i, k, Cnp;
+    k = n-p+1;
+    Cnp = 1;
+
+    for(i = 1; i <= p; ++i)
+        Cnp = (Cnp*(k++))/i;
     
-    while(p >= 1) {
-        tmp = (n - pOrigin + p)/p;
-        res = res*tmp;
-        p--;
-    }
-    
-    return res;
+    return Cnp;
 }
 
 int main() {
