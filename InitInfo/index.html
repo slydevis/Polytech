@@ -35,7 +35,7 @@ sur ce sujet. Le second explique les scripts utilisés dans vos pages. Ces docum
         <a onClick="infoBoxTest()" class="navbar-brand" href="#">Guillaume Michon</a>
         <ul>
             <li class="active"><a href="#">Accueil</a></li>
-            <li><a href="#about">CV</a></li>
+            <li><a href="cv.html">CV</a></li>
             <li><a href="#rapport">Rapport</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#lien">Lien</a></li>
@@ -64,10 +64,20 @@ sur ce sujet. Le second explique les scripts utilisés dans vos pages. Ces docum
     <div id="content">
         <div id="infoAlert" class="alert">Test d'info</div>
         <h1 class="red centrer">Surtout ne pas appuyer sur la touche T (si on n'aime pas l'humour) !!!</h1>
-        </div>
+         </div>
         <img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat"/>
         <img src="img/troll.png" id="trol" alt="trolol" />
-        <a onclick="return scrollToAnchor(this)" href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut"/></a>
+            Test Progress Bar :
+    <div class="progress">
+        <div id="bar" class="progress-bar blue" style="width:70%">
+            70%
+        </div>
+    </div>
+    Test du texte juste en dessous de la progress bar
+    <a onclick="progressBar()" href="#">Progress bar</a>
+
+    <div class="arrow"></div>
+    <a onclick="return scrollToAnchor(this)" href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut"/></a>
         <div id="music"></div>
         <span id="bas"></span>
     </div>

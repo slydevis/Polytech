@@ -2,6 +2,26 @@
 // TODO : Refaire une indentation propre
 
 // TODO : Enlever cette fonction trop complexe pour une personne qui a jamais de javascript normalement
+
+/*
+ // TODO : Check if this code is needed
+ var selector, elems, makeActive;
+
+ selector = '#nav li';
+
+ elems = document.querySelectorAll(selector);
+
+ makeActive = function () {
+ for (var i = 0; i < elems.length; i++)
+ elems[i].classList.remove('active');
+
+ this.classList.add('active');
+ };
+
+ for (var i = 0; i < elems.length; i++)
+ elems[i].addEventListener('mousedown', makeActive);
+
+ */
 function $(x) {return document.getElementById(x);}
 
 /*
@@ -126,24 +146,8 @@ window.onload = function ()
       localStorage.setItem("currentstyle", "style.css");
     else
       changeCSS(currentstyle);
-
-
-    // TODO : Check if this code is needed 
-    var selector, elems, makeActive;
-
-    selector = '#nav li';
-
-    elems = document.querySelectorAll(selector);
-
-    makeActive = function () {
-        for (var i = 0; i < elems.length; i++)
-            elems[i].classList.remove('active');
-
-        this.classList.add('active');
-    };
-
-    for (var i = 0; i < elems.length; i++)
-        elems[i].addEventListener('mousedown', makeActive);
+      
+     loadProgress();
 }
 
 function playSound() {
@@ -197,11 +201,11 @@ function freeNyanCatDiagonal(nyan) {
   nyan.style.top = up + 100 + "px";
   nyan.style.display = "inline";
   nyan.style.marginLeft = "auto";
-  nyan.style.webkitTransform = 'rotate('+320+'deg)'; 
-  nyan.style.mozTransform    = 'rotate('+320+'deg)'; 
-  nyan.style.msTransform     = 'rotate('+320+'deg)'; 
-  nyan.style.oTransform      = 'rotate('+320+'deg)'; 
-  nyan.style.transform       = 'rotate('+320+'deg)';  
+  nyan.style.webkitTransform = 'rotate('+320+'deg)';
+  nyan.style.mozTransform    = 'rotate('+320+'deg)';
+  nyan.style.msTransform     = 'rotate('+320+'deg)';
+  nyan.style.oTransform      = 'rotate('+320+'deg)';
+  nyan.style.transform       = 'rotate('+320+'deg)';
   
   var id = setInterval(frame, 1);
   var left = -200;
@@ -238,10 +242,10 @@ function freeNyanCatUp(nyan) {
   nyan.style.top = height + 1000 + "px";
 
   nyan.style.webkitTransform = 'rotate('+270+'deg)';
-  nyan.style.mozTransform    = 'rotate('+270+'deg)'; 
-  nyan.style.msTransform     = 'rotate('+270+'deg)'; 
-  nyan.style.oTransform      = 'rotate('+270+'deg)'; 
-  nyan.style.transform       = 'rotate('+270+'deg)';  
+  nyan.style.mozTransform    = 'rotate('+270+'deg)';
+  nyan.style.msTransform     = 'rotate('+270+'deg)';
+  nyan.style.oTransform      = 'rotate('+270+'deg)';
+  nyan.style.transform       = 'rotate('+270+'deg)';
   
   var id = setInterval(frame, 1);
   var top = height + 1000;
@@ -295,10 +299,10 @@ function freeTroll() {
   trol.style.display = "inline";
   
   var deg = 360;
-  trol.style.webkitTransform = 'rotate('+deg+'deg)'; 
-  trol.style.mozTransform    = 'rotate('+deg+'deg)'; 
-  trol.style.msTransform     = 'rotate('+deg+'deg)'; 
-  trol.style.oTransform      = 'rotate('+deg+'deg)'; 
+  trol.style.webkitTransform = 'rotate('+deg+'deg)';
+  trol.style.mozTransform    = 'rotate('+deg+'deg)';
+  trol.style.msTransform     = 'rotate('+deg+'deg)';
+  trol.style.oTransform      = 'rotate('+deg+'deg)';
   trol.style.transform       = 'rotate('+deg+'deg)';
   trol.style.left = 0 + "px";
 
@@ -379,6 +383,7 @@ function easterEgg(e) {
     }
   }
 }
+
 function getPosition(element) {
   var curleft = curtop = 0;
   var obj = element;
@@ -428,4 +433,31 @@ function scrollToAnchor(obj) {
   }
 
     return false;
+}
+
+function progressBar(bar, finalPurcent) {
+    bar.style.width = 0 + "%";
+    bar.innerHTML = "0%";
+    var purcent = 0;
+    var id = setInterval(frame, 10);
+
+    function frame() {
+        purcent+=0.5;
+        bar.style.width = purcent + "%";
+        bar.innerHTML = purcent.toFixed(0) + "%";
+        if(purcent >= finalPurcent)
+            clearInterval(id);
+    }
+}
+
+function loadProgress() {
+	var cpt = 0;
+	var barList = document.getElementsByClassName("progress-bar");
+	while(cpt < barList.length) {
+		var bar = barList[cpt];
+		var value = bar.getAttribute("value");
+		if(value)
+			progressBar(bar, value);	
+		cpt++;
+	}
 }
