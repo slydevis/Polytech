@@ -97,8 +97,4 @@
 
 .orange { background: #D48020; }
 
-li {
-    list-style-type: circle; /* on annule la puce par défaut */
-}
-
-/*li:before { content: "* "; }*/
+li { list-style-type: circle; }
