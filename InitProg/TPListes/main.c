@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-/* EXERCICE  1 : ADT - Abstract Data Type */
+/* EXERCICE 1 : ADT - Abstract Data Type */
 
 typedef struct maillon {
     int value;
