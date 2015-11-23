@@ -358,7 +358,18 @@ t_ptr_liste fusionListNoRepeat(t_ptr_liste liste, t_ptr_liste secondList) {
 /* Exercice 5 : La liste des sommes préfixe */
 
 t_ptr_liste sommeList(t_ptr_liste liste) {
-    return NULL;
+    t_ptr_liste tmp = liste;
+    t_ptr_liste prec = NULL;
+    
+    while(tmp != NULL) {
+        if(prec != NULL)
+            tmp->value = prec->value + tmp->value;
+        
+        prec = tmp;
+        tmp = tmp->next;
+    }
+    
+    return liste;
 } 
 
 /* Libération des ressources */
@@ -479,6 +490,7 @@ int main() {
     freeListe(fibList);
     freeListe(testFusion);
     freeListe(listeSomme);
+
     return 0;
 }
  
