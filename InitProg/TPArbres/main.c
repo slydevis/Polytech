@@ -84,13 +84,34 @@ void afficherArbre(t_ptr_arbre racine, int level) {
 	} 
 }
 
+void freeArbre(t_ptr_arbre tree) {
+    if(tree)
+        return;
+    freeArbre(tree->rightNode);
+    freeArbre(tree->leftNode);
+    free(tree);
+}
+
 /* Exercice 3 : Parcours en profondeur */
 
-void parcoursProfondeur();
+void parcoursProfondeur(t_ptr_arbre tree) {
+    if(tree == NULL)
+        return;
+        
+    if(est_feuille(tree))
+        printf(" %d ", tree->valFeuille);
+    else
+        printf(" %c ", tree->etiquette);
+   
+    parcoursProfondeur(tree->rightNode);      
+    parcoursProfondeur(tree->leftNode);
+}
 
 /* Exercice 4 : Parcours en largeur */
 
-void parcoursLargeur();
+void parcoursLargeur(t_ptr_arbre tree) {
+    
+}
 
 /* Exercice 5 : Quelques exercices vus en TD */
 
@@ -101,6 +122,7 @@ void parcoursLargeur();
 int main() {
 	/* Exercice 2 : Trois arbres */
 	// (((1 + 2)*3) + (4*(5*6)))
+	printf("# (((1 + 2)*3) + (4*(5*6))) = \n");
 	t_ptr_arbre un = cree_feuille(1);
 	t_ptr_arbre deux = cree_feuille(2);
 	t_ptr_arbre plus = cree_noeud('+', un, deux);
@@ -114,7 +136,62 @@ int main() {
 	t_ptr_arbre racine = cree_noeud('+', unPlusDeuxFoisTrois, quatreFoisCinqFoisSix);
 
 	afficherArbre(racine, 0);
+	
+	printf("Parcours en Profondeur : ");
+	parcoursProfondeur(racine);
+	printf("\nParcours en largeur : ");
+	parcoursLargeur(racine);
+    printf("\n");
+	freeArbre(racine);
 	// ((((1 + 2) + 3) + 4) + (((5*6) + 7)))
+	printf("# ((((1 + 2) + 3) + 4) + (((5*6) + 7))) = \n");
+    un = cree_feuille(1);
+    deux = cree_feuille(2);
+    plus = cree_noeud('+', un, deux);
+    trois = cree_feuille(3);
+    t_ptr_arbre unPlusDeuxPlusTrois = cree_noeud('+', plus, trois);    
+    quatre = cree_feuille(4);
+    t_ptr_arbre unPlusDeuxPlusTroisPlusQuatre = cree_noeud('+', unPlusDeuxPlusTrois, quatre);
+    cinq = cree_feuille(5);
+    six = cree_feuille(6);
+    cinqFoisSix = cree_noeud('*', cinq, six);
+    t_ptr_arbre sept = cree_feuille(7);
+    t_ptr_arbre cinqFoisSixPlusSept = cree_noeud('+', cinqFoisSix, sept);
+    racine = cree_noeud('+', unPlusDeuxPlusTroisPlusQuatre, cinqFoisSixPlusSept);
+    afficherArbre(racine, 0);
+	printf("Parcours en Profondeur : ");
+	parcoursProfondeur(racine);
+	printf("\nParcours en largeur : ");
+	parcoursLargeur(racine);
+    printf("\n");
+    freeArbre(racine);
+    
 	// ((1 + (2*(3 + 4))) * (5 + 6)*(7+(8*9))))
+	printf("# ((1 + (2*(3 + 4))) * (5 + 6)*(7+(8*9)))) = \n");
+    un = cree_feuille(1);
+    deux = cree_feuille(2);
+    trois = cree_feuille(3);
+    quatre = cree_feuille(4);
+    t_ptr_arbre troisPlusQuatre = cree_noeud('+', trois, quatre);
+    t_ptr_arbre deuxFoisTroisPlusQuatre = cree_noeud('*', deux, troisPlusQuatre);
+    t_ptr_arbre unPlusDeuxFoisTroisPlusQuatre = cree_noeud('+', un, deuxFoisTroisPlusQuatre);
+    cinq = cree_feuille(5);
+    six = cree_feuille(6);
+    t_ptr_arbre cinqPlusSix = cree_noeud('+', cinq, six);
+    sept = cree_feuille(7);
+    t_ptr_arbre huit = cree_feuille(8);
+    t_ptr_arbre neuf = cree_feuille(9);
+    t_ptr_arbre huitFoisNeuf = cree_noeud('*', huit, neuf);
+    t_ptr_arbre septPlusHuitFoisNeuf = cree_noeud('+', sept, huitFoisNeuf);
+    t_ptr_arbre cinqPlusSixFoisSeptPlusHuitFoisNeuf = cree_noeud('*', cinqPlusSix, septPlusHuitFoisNeuf); 
+    racine = cree_noeud('*', unPlusDeuxFoisTroisPlusQuatre, cinqPlusSixFoisSeptPlusHuitFoisNeuf);
+    afficherArbre(racine, 0);
+ 	printf("Parcours en Profondeur : ");
+	parcoursProfondeur(racine);
+	printf("\nParcours en largeur : ");
+	parcoursLargeur(racine);
+    printf("\n");
+    freeArbre(racine);
+    
 	return 0;
 }
