@@ -69,7 +69,7 @@ dowhile:
         addi $t2, $t1, 12 # &memoire[i+1]
         sw $t2, 4($t1)
 #       i=i+1;
-        addi $t0, t0, 1;
+        addi $t0, $t0, 1
 #   } while (i<MAX-1);
     li $t1, 199
     blt $t0, $t1, dowhile
@@ -80,8 +80,8 @@ dowhile:
     la $t1, memoire($t1) # &memoire[i] => $t1 
     sw $0, 4($t1)
 #   blocs_libres = memoire ;
-    la $t0, memoire(0) # memoire => $t0
-    sw $t0, blocs_libres(0) # blocs_libres = memoire
+    la $t0, memoire($0) # memoire => $t0
+    sw $t0, blocs_libres($0) # blocs_libres = memoire
 #
 #}
     jr $ra
@@ -97,7 +97,7 @@ my_malloc:
 #   Liste p; p dans $t0
 #
 #   p =  blocs_libres ;
-    la $t0, blocs_libres(0)
+    la $t0, blocs_libres($0)
 #   if (p!=NULL)
     beq $t0, $0, pEstNULL
 #   {

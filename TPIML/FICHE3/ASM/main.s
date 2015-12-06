@@ -240,7 +240,8 @@ saisieinserer: .asciiz  "nombre a inserer ? "
 saisierechercher: .asciiz "nombre a rechercher ? "
 present: .asciiz " present!\n"
 absent: .asciiz " absent!\n"
-
+listeVide : .asciiz "Liste vide"
+spaceCar : .asciiz " "
 # jump table
 	.align 2
 JT : 	.word 0 # mot perdu car choix=0 n'est pas une branche du switch	
