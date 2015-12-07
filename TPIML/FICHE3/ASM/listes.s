@@ -89,12 +89,11 @@ inserer_tete:
         la $a0, fullmemory
         jal afficher_chaine
         # Restauration de l
-        addi $sp, $sp, 4
-        lw $a0, 4($sp)
+        addi $sp, $sp, 8
+        lw $a0, -4($sp)
         move $v0, $a0
         # Restauration de l'adresse de retour
-        addiu $sp, $sp, 4
-        lw $ra, -4($sp)
+        lw $ra, -8($sp)
         # return(l);
         jr $ra
 #   }
@@ -121,14 +120,13 @@ lNotNull:
 #       l->pred->suiv = p ;
         lw $t1, 0($a0) # l->pred dans $t1 (inutile)
         sw $t0, 4($t1) # l->pred->suiv = p
-        move $a0, $t1
 #       l->pred = p ;
         sw $t0, 0($a0)
 #  }
 finIf:
     # Restauration de l'adresse de retour
-    addiu $sp, $sp, 4
-    lw $ra, -4($sp)
+    addiu $sp, $sp, 8
+    lw $ra, -8($sp)
     move $v0, $t0
 #  return(p) ;
 	jr $ra
@@ -188,9 +186,10 @@ pasTrouve:
 	.globl afficher_liste
 afficher_liste:
 #{
-#   Sauvegarde de l'ardresse de retour
-    sw $ra, -4($sp)
-    addi $sp, $sp, -4
+#   Sauvegarde de l'ardresse de retour et de l dans $sp
+    sw $a0, -4($sp)
+    sw $ra, -8($sp)
+    addi $sp, $sp, -8
 
 #     Noeud * p = l; # p dans $t0
     move $t0, $a0
@@ -208,9 +207,6 @@ lNotNull2:
 doWhile:
 #        do
 #        {
-#           Sauvegarde de $a0 (la variable l)
-            sw $a0, -4($sp)
-            addi $sp, $sp, -4
 #             afficher_chaine(" ");
             la $a0, spaceCar
             jal afficher_chaine
@@ -220,8 +216,7 @@ doWhile:
 #             p=p->suiv ;
             lw $t0, 4($t0)
             # Restauration de l
-            addiu $sp, $sp, 4
-            lw $a0, -4($sp)
+            lw $a0, 4($sp)
 #        } while ((p!=l));
         bne $t0, $a0, doWhile
 #    }
@@ -231,8 +226,8 @@ finIf2:
     jal afficher_chaine
     
     # Restauration de l'adresse de retour
-    addiu $sp, $sp, 4
-    lw $ra, -4($sp)
+    addiu $sp, $sp, 8
+    lw $ra, -8($sp)
 	jr $ra
 #}
 #
@@ -244,6 +239,10 @@ finIf2:
 	.globl afficher_liste_inverse
 afficher_liste_inverse:
 #{
+# sauvegarde de l'adresse de retour et du parametre
+    sw $a0, -4($sp)
+    sw $ra, -8($sp)
+    addi $sp, $sp, -8
 #     Noeud * p = l; p dans $t0
     move $t0, $a0
     bne $a0, $0, lNotNull3
@@ -252,13 +251,13 @@ afficher_liste_inverse:
         la $a0, listeVide
         jal afficher_chaine
 #        afficher_chaine("Liste vide");
-    beq $0, $0, finIf3
+        beq $0, $0, finIf3
 #     }
 lNotNull3:
 #     else
 #     {
 #        l = l-> pred ;
-        lw $a0, 4($a0)
+        lw $a0, 0($a0)
 #        p = l ;
         addi $t0, $a0, 0
 #        do
@@ -283,10 +282,12 @@ doWhile2:
 #    }
 finIf3:
 #    afficher_chaine("\n");
+    la $a0, alaligne
+    jal afficher_chaine
 #}
     # Restauration de l'adresse de retour
-    addiu $sp, $sp, 4
-    lw $ra, -4($sp)
+    addiu $sp, $sp, 8
+    lw $ra, -8($sp)
     jr $ra
 #
 #Liste supprimer_tete(Liste l)
@@ -298,8 +299,9 @@ finIf3:
 supprimer_tete:
 #{
 #   Sauvegarde de l'ardresse de retour
-    sw $ra, -4($sp)
-    addi $sp, $sp, -4
+    sw $a0, -4($sp)
+    sw $ra, -8($sp)
+    addi $sp, $sp, -8
 
 #   Noeud *p; p dans $t0
 #   
@@ -316,8 +318,8 @@ noRetourL:
 #        my_free(l);
     jal my_free
     # Restauration de l'adresse de retour
-    addiu $sp, $sp, 4
-    lw $ra, -4($sp)
+    addiu $sp, $sp, 8
+    lw $ra, -8($sp)
     move $v0, $0
 	jr $ra
 #        return(NULL) ;
@@ -335,8 +337,8 @@ lPredNotL:
     move $t0, $a0
     jal my_free
     # Restauration de l'adresse de retour
-    addiu $sp, $sp, 4
-    lw $ra, -4($sp)
+    addiu $sp, $sp, 8
+    lw $ra, -8($sp)
 #   return(p); 
     move $t0, $v0
     jr $ra

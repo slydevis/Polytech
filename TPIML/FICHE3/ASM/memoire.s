@@ -97,7 +97,7 @@ my_malloc:
 #   Liste p; p dans $t0
 #
 #   p =  blocs_libres ;
-    la $t0, blocs_libres($0)
+    lw $t0, blocs_libres($0)
 #   if (p!=NULL)
     beq $t0, $0, pEstNULL
 #   {
@@ -118,10 +118,13 @@ pEstNULL:
 #void my_free(void *bloc)
 	.globl	my_free
 my_free:
-	jr $ra # A REMPLACER PAR LA TRADUCTION DU CODE C CI-DESSOUS 
 #{
 #   ((Liste)bloc)->suiv = blocs_libres ;
+    lw $t0, blocs_libres($0) # blocs_libres dans $t0
+    sw $t0, 4($a0)
 #   blocs_libres = (Liste)bloc ;
+    sw $a0, blocs_libres($0)
+	jr $ra
 #}
 #/*----------------fin memoire.s--------------------------------------*/
 #
