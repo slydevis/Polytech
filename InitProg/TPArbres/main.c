@@ -4,7 +4,6 @@
  * @date 4/11/2015
  * @version 1
  * Polytech Marseille
- * TD sur les listes et files
  * Création et parcours d'arbres
  */
  
@@ -21,6 +20,42 @@ typedef struct t_noeud {
 } t_noeud;
 
 typedef t_noeud* t_ptr_arbre;
+
+// Liste pour le parcour en Largeur
+
+typedef struct t_liste {
+    t_ptr_arbre tree;
+    struct t_liste* next;
+} t_liste;
+
+typedef t_liste* t_ptr_liste;
+
+t_ptr_liste ajoutListe(t_ptr_liste l, t_ptr_arbre tree) {
+    t_liste* mail = (t_liste*) malloc(sizeof(t_liste));
+    t_ptr_liste tmp = l;
+    mail->tree = tree;
+    mail->next = NULL;
+    
+    if(l == NULL)
+        return mail;
+    
+    while(tmp->next != NULL)
+        tmp = tmp->next;
+        
+    tmp->next = mail;
+
+    return l;
+}
+
+t_ptr_liste supprimerListe(t_ptr_liste l) {
+    t_ptr_liste tmp = l;
+    free(l);
+    return tmp->next;
+}
+
+t_ptr_arbre getHead(t_ptr_liste l) {
+    return l->tree;
+}
 
 t_ptr_arbre cree_feuille(int value) {
 	t_ptr_arbre tmp = (t_noeud*) malloc(sizeof(t_noeud));
@@ -109,15 +144,77 @@ void parcoursProfondeur(t_ptr_arbre tree) {
 
 /* Exercice 4 : Parcours en largeur */
 
-void parcoursLargeur(t_ptr_arbre tree) {
+void parcoursLargeur(t_ptr_arbre tree) {   
+    t_ptr_liste l = NULL;
+    t_ptr_arbre tmp = NULL;
     
+    if(tree != NULL)
+         l = ajoutListe(l, tree);
+   
+    while(l != NULL) {
+        tmp = l->tree;
+        if(est_feuille(tmp))
+            printf(" %d ", tmp->valFeuille);
+        else
+            printf(" %c ", tmp->etiquette);
+        l = supprimerListe(l);
+
+        if(tmp->rightNode != NULL)
+            l = ajoutListe(l, tmp->rightNode);        
+        if(tmp->leftNode != NULL)
+            l = ajoutListe(l, tmp->leftNode);
+    }
 }
 
 /* Exercice 5 : Quelques exercices vus en TD */
 
+// 1. Calculer le nombre de nœuds internes de l’arbre.
+
+int nbInternNode(t_ptr_arbre tree) {
+    return 0;
+}
+
+// 2. Calculer le nombre de feuilles de l’arbre.
+
+int nbLeaf(t_ptr_arbre tree) {
+    if(est_feuille(tree))
+        return 1;
+    return nbLeaf(tree->rightNode) + nbLeaf(tree->leftNode);
+}
+
+// 3. Calculer la hauteur de l’arbre.
+
+int hauteur(t_ptr_arbre tree) {
+    int a = 0, b = 0;
+    
+    if(tree->rightNode != NULL)
+        a = hauteur(tree->rightNode) + 1;
+    if(tree->leftNode != NULL)
+        b = hauteur(tree->leftNode) + 1;
+        
+    if(a > b)
+        return a;
+    return b; 
+}
+
+// 4. En supposant que les feuilles comportent des valeurs num´eriques, calculer la somme des valeurs des feuilles de l’arbre. Le faire `a l’aide des deux sch´emas r´ecursifs.
+
+// 5. A partir d’un arbre fourni, construire un nouvel arbre dans lequel les feuilles apparaissent dans l’ordre inverse.
+
+// 6. Imprimer l’arbre sous forme inﬁxe, pr´eﬁxe et post-ﬁxe. Ecrire ces fonctions sans optimisation des ’espaces’ entre entiers ou des paires de parenth`eses, puis avec l’optimisation.
+
+// 7. Enum´erer et imprimer tous les sous-arbres.
 /* Exercice 6 : Fibonacci */
 
+void fibonacci(t_ptr_arbre tree) {
+
+}
+
 /* Exercice 7 : 8 dames */
+
+void huitDames(t_ptr_arbre tree) {
+
+}
 
 int main() {
 	/* Exercice 2 : Trois arbres */
@@ -139,8 +236,11 @@ int main() {
 	
 	printf("Parcours en Profondeur : ");
 	parcoursProfondeur(racine);
-	printf("\nParcours en largeur : ");
+	printf("\nParcours en Largeur : ");
 	parcoursLargeur(racine);
+    printf("\nNombre de noed internes de l'arbre : %d", nbInternNode(racine));
+    printf("\nNombre de feuille : %d", nbLeaf(racine));
+    printf("\nHauteur de l'arbre : %d", hauteur(racine));
     printf("\n");
 	freeArbre(racine);
 	// ((((1 + 2) + 3) + 4) + (((5*6) + 7)))
@@ -161,8 +261,11 @@ int main() {
     afficherArbre(racine, 0);
 	printf("Parcours en Profondeur : ");
 	parcoursProfondeur(racine);
-	printf("\nParcours en largeur : ");
+	printf("\nParcours en Largeur : ");
 	parcoursLargeur(racine);
+    printf("\nNombre de noed internes de l'arbre : %d", nbInternNode(racine));
+    printf("\nNombre de feuille : %d", nbLeaf(racine));
+    printf("\nHauteur de l'arbre : %d", hauteur(racine));
     printf("\n");
     freeArbre(racine);
     
@@ -188,8 +291,11 @@ int main() {
     afficherArbre(racine, 0);
  	printf("Parcours en Profondeur : ");
 	parcoursProfondeur(racine);
-	printf("\nParcours en largeur : ");
+	printf("\nParcours en Largeur : ");
 	parcoursLargeur(racine);
+    printf("\nNombre de noed internes de l'arbre : %d", nbInternNode(racine));    
+    printf("\nNombre de feuille : %d", nbLeaf(racine));
+    printf("\nHauteur de l'arbre : %d", hauteur(racine));
     printf("\n");
     freeArbre(racine);
     
