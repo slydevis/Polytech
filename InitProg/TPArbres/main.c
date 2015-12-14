@@ -171,7 +171,11 @@ void parcoursLargeur(t_ptr_arbre tree) {
 // 1. Calculer le nombre de nœuds internes de l’arbre.
 
 int nbInternNode(t_ptr_arbre tree) {
-    return 0;
+    if(!est_feuille(tree))
+        return 1 + nbInternNode(tree->rightNode) 
+                 + nbInternNode(tree->leftNode);
+    else
+        return 0;
 }
 
 // 2. Calculer le nombre de feuilles de l’arbre.
@@ -197,17 +201,88 @@ int hauteur(t_ptr_arbre tree) {
     return b; 
 }
 
-// 4. En supposant que les feuilles comportent des valeurs num´eriques, calculer la somme des valeurs des feuilles de l’arbre. Le faire `a l’aide des deux sch´emas r´ecursifs.
+// 4. En supposant que les feuilles comportent des valeurs numériques, 
+// calculer la somme des valeurs des feuilles de l’arbre. 
+// Le faire à l’aide des deux schémas récursifs.
 
-// 5. A partir d’un arbre fourni, construire un nouvel arbre dans lequel les feuilles apparaissent dans l’ordre inverse.
+int sommeFeuille(t_ptr_arbre tree) {
+    if(est_feuille(tree))
+        return tree->valFeuille;
+    return sommeFeuille(tree->rightNode) + sommeFeuille(tree->leftNode);
+}
 
-// 6. Imprimer l’arbre sous forme inﬁxe, pr´eﬁxe et post-ﬁxe. Ecrire ces fonctions sans optimisation des ’espaces’ entre entiers ou des paires de parenth`eses, puis avec l’optimisation.
+// 5. A partir d’un arbre fourni, construire un nouvel arbre dans lequel 
+// les feuilles apparaissent dans l’ordre inverse.
 
-// 7. Enum´erer et imprimer tous les sous-arbres.
+t_ptr_arbre inverseTree(t_ptr_arbre tree) {
+    t_ptr_arbre tmp = tree->leftNode;
+    tree->leftNode = tree->rightNode;
+    tree->rightNode = tmp;
+
+    if(tree->leftNode != NULL)
+        inverseTree(tree->leftNode);
+    if(tree->rightNode != NULL)
+        inverseTree(tree->rightNode);
+    return tree;
+}
+
+// 6. Imprimer l’arbre sous forme inﬁxe, préﬁxe et post-ﬁxe. Ecrire ces 
+// fonctions sans optimisation des ’espaces’ entre entiers ou des paires 
+// de parenthèses, puis avec l’optimisation.
+
+void printInfixe(t_ptr_arbre tree) {
+    if(est_feuille(tree)) {
+        printf("%d", tree->valFeuille);
+        return;    
+    }
+    
+    printf("(");
+    printInfixe(tree->rightNode);
+    printf("%c", tree->etiquette);
+    printInfixe(tree->leftNode);
+    printf(")");
+}
+
+void printPostFixe(t_ptr_arbre tree) {
+    if(est_feuille(tree)) {
+        printf("%d ", tree->valFeuille);
+        return;    
+    }
+
+    printPostFixe(tree->rightNode);
+    printPostFixe(tree->leftNode);
+    printf("%c", tree->etiquette);
+}
+
+void printPostFixeOpti(t_ptr_arbre tree) {
+    if(est_feuille(tree)) {
+        if(tree->valFeuille > 9)
+            printf("%d ", tree->valFeuille);
+        else
+            printf("%d", tree->valFeuille);
+        return;    
+    }
+
+    printPostFixeOpti(tree->rightNode);
+    printPostFixeOpti(tree->leftNode);
+    printf("%c", tree->etiquette);
+}
+
+// 7. Enumérer et imprimer tous les sous-arbres.
+
+void printSousArbre(t_ptr_arbre arbre) {
+
+}
+
 /* Exercice 6 : Fibonacci */
 
-void fibonacci(t_ptr_arbre tree) {
-
+t_ptr_arbre fibonacci(int n) {
+    if(n <= 0)
+        return cree_feuille(0);
+    if(n == 1)
+        return cree_feuille(1);
+         
+    return cree_noeud('+', fibonacci(n - 1), fibonacci(n - 2));
 }
 
 /* Exercice 7 : 8 dames */
@@ -231,7 +306,7 @@ int main() {
 	t_ptr_arbre cinqFoisSix = cree_noeud('*', cinq, six);
 	t_ptr_arbre quatreFoisCinqFoisSix = cree_noeud('*', quatre, cinqFoisSix);
 	t_ptr_arbre racine = cree_noeud('+', unPlusDeuxFoisTrois, quatreFoisCinqFoisSix);
-
+    t_ptr_arbre inverseRacine = NULL;
 	afficherArbre(racine, 0);
 	
 	printf("Parcours en Profondeur : ");
@@ -241,8 +316,19 @@ int main() {
     printf("\nNombre de noed internes de l'arbre : %d", nbInternNode(racine));
     printf("\nNombre de feuille : %d", nbLeaf(racine));
     printf("\nHauteur de l'arbre : %d", hauteur(racine));
+    printf("\nSomme des feuilles : %d", sommeFeuille(racine));
+    printf("\nAffichage Infixe : ");
+    printInfixe(racine);
+    printf("\nAffiche Post-fixe : ");
+    printPostFixe(racine);
+    printf("\nAffiche Post-fixe optimisé : ");
+    printPostFixeOpti(racine);
     printf("\n");
+    inverseRacine = inverseTree(racine);
+    printf("Inverse de (((1 + 2)*3) + (4*(5*6)) = \n");
+	afficherArbre(inverseRacine, 0);
 	freeArbre(racine);
+	
 	// ((((1 + 2) + 3) + 4) + (((5*6) + 7)))
 	printf("# ((((1 + 2) + 3) + 4) + (((5*6) + 7))) = \n");
     un = cree_feuille(1);
@@ -266,7 +352,17 @@ int main() {
     printf("\nNombre de noed internes de l'arbre : %d", nbInternNode(racine));
     printf("\nNombre de feuille : %d", nbLeaf(racine));
     printf("\nHauteur de l'arbre : %d", hauteur(racine));
+    printf("\nSomme des feuilles : %d", sommeFeuille(racine));
+    printf("\nAffichage Infixe : ");
+    printInfixe(racine);
+    printf("\nAffiche Post-fixe : ");
+    printPostFixe(racine);
+    printf("\nAffiche Post-fixe optimisé : ");
+    printPostFixeOpti(racine);
     printf("\n");
+    inverseRacine = inverseTree(racine);
+    printf("Inverse de (((1 + 2)*3) + (4*(5*6)) = \n");
+	afficherArbre(inverseRacine, 0);
     freeArbre(racine);
     
 	// ((1 + (2*(3 + 4))) * (5 + 6)*(7+(8*9))))
@@ -296,8 +392,21 @@ int main() {
     printf("\nNombre de noed internes de l'arbre : %d", nbInternNode(racine));    
     printf("\nNombre de feuille : %d", nbLeaf(racine));
     printf("\nHauteur de l'arbre : %d", hauteur(racine));
+    printf("\nSomme des feuilles : %d", sommeFeuille(racine));
+    printf("\nAffichage Infixe : ");
+    printInfixe(racine);
+    printf("\nAffiche Post-fixe : ");
+    printPostFixe(racine);
+    printf("\nAffiche Post-fixe optimisé : ");
+    printPostFixeOpti(racine);
     printf("\n");
+    inverseRacine = inverseTree(racine);
+    printf("Inverse de (((1 + 2)*3) + (4*(5*6)) = \n");
+	afficherArbre(inverseRacine, 0);
     freeArbre(racine);
     
+	printf("\nFibonacci de 3 : ");
+	printInfixe(fibonacci(3));
+	printf("\n");
 	return 0;
 }
