@@ -287,8 +287,73 @@ t_ptr_arbre fibonacci(int n) {
 
 /* Exercice 7 : 8 dames */
 
-void huitDames(t_ptr_arbre tree) {
+int* dame = NULL;
+int nbSolution = 0;
 
+/* Fonction d'évaluation du problème des 8 dames */
+int isFree(int ix, int iy)
+{
+    int i;
+    for (i = 0; i < iy; ++i) {
+        if (dame[i] == ix) // Colonne prise
+            return 0;
+        if(abs(dame[i]-ix) == abs(i-iy)) // Prise en diagonal   
+            return 0;
+    }   
+    
+    return 1;
+}
+
+void printSolution(int size) {
+    int i;
+    int j;
+    
+    for(i = 0; i < size; ++i) {
+        for(j = 0; j < size; ++j) {
+            printf("|");
+            if(j == dame[i]) {
+                printf("x");
+            }
+            else
+                printf(" ");
+            printf("|");
+        }
+        printf("\n");
+    }
+    
+    printf("\n\n");
+}
+
+/* tries to place queen n on row n */
+void backtrack(int start, int size)
+{
+    int i;
+    if (start == size) {
+        printSolution(size);
+        nbSolution++;
+    }
+
+    for (i = 0; i < size; ++i) {
+        if (isFree(i, start)) {
+            dame[start] = i;
+            backtrack (start+1, size);
+        }    
+    }
+}
+
+int huitDames(int n) {
+    int i = 0;
+    dame = malloc(sizeof(int)*n);
+    nbSolution = 0;
+    
+    // Initialisation du tableau
+    for(i = 0; i < n; ++i)
+        dame[i] = 0;
+    
+    // Lancement de l'algorithme de backtrack
+    backtrack(0, n);
+    
+    return nbSolution;
 }
 
 int main() {
@@ -407,6 +472,16 @@ int main() {
     
 	printf("\nFibonacci de 3 : ");
 	printInfixe(fibonacci(3));
+	
 	printf("\n");
+	
+	int nbSol = huitDames(4);
+    printf("\nDame(4) : Nombre de solution = %d\n", nbSol);
+	nbSol = huitDames(8);
+    printf("\nDame(8) : Nombre de solution = %d\n", nbSol);
+	nbSol = huitDames(10);
+    printf("\nDame(10) : Nombre de solution = %d\n", nbSol);
+	nbSol = huitDames(18);
+    printf("\nDame(18) : Nombre de solution = %d\n", nbSol);
 	return 0;
 }
