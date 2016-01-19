@@ -9,13 +9,13 @@
 #------------------------------------------------------------
 
 	.text # Le programme de test fonctionne en mode utilisateur
-	.globl main
-main:
-	
-        #$t0 contiendra le compteur
+	.globl main0
+main0:
+
+    #$t0 contiendra le compteur
 	move $t0, $0	
 	
-boucle_main:
+boucle_main0:
 	la $a0, message
 	li $v0, 4
 	syscall
@@ -27,7 +27,26 @@ boucle_main:
 	syscall
 	addi $t0,$t0, 1
 	jal tempo
-	j boucle_main # le programme boucle indéfinimemnt
+	j boucle_main0 # le programme boucle indéfinimemnt
+
+	.globl main1
+main1:
+    #$t0 contiendra le compteur
+	move $t0, $0	
+	
+boucle_main1:
+	la $a0, comprisMultiProg
+	li $v0, 4
+	syscall
+	move $a0,$t0 
+	li $v0, 1
+	syscall
+	la $a0, alaligne
+	li $v0, 4
+	syscall
+	addi $t0,$t0, 1
+	jal tempo
+	j boucle_main1 # le programme boucle indéfinimemnt
 
 # ------------------------------------------------------------------
 # Procedure tempo : temporisation de quelques secondes
@@ -42,9 +61,10 @@ fin_tempo:
 	jr $ra
 
 #-----------------------------------------------------------------
-	.data  # Section des données utilisateur
-message: .asciiz "Ca marche! "
-alaligne: .asciiz "\n"
+.data  # Section des données utilisateur
+	message: .asciiz "Ca marche! "
+	alaligne: .asciiz "\n"
+	comprisMultiProg: .asciiz "J'ai meme compris la multiprogrammation :"
 
 #-------------------------------------------------------------
 
