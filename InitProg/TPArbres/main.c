@@ -481,7 +481,7 @@ int main() {
     printf("\nDame(8) : Nombre de solution = %d\n", nbSol);
 	nbSol = huitDames(10);
     printf("\nDame(10) : Nombre de solution = %d\n", nbSol);
-	nbSol = huitDames(15);
-    printf("\nDame(15) : Nombre de solution = %d\n", nbSol);
+	nbSol = huitDames(18);
+    printf("\nDame(18) : Nombre de solution = %d\n", nbSol);
 	return 0;
 }

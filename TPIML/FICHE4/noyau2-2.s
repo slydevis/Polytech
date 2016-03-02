@@ -142,9 +142,14 @@ TPC_ra:.word 0
 TPC_HI:.word 0
 TPC_LO:.word 0
 TPC_fp:.word 0
+TPC_Status: .word 1 # 0 = Inactif/Terminer; 1 = actif ; 2 = Bloque
 TPC:.word main0
+TPC_Entree: .word main0
 # Entrée 1
-    .space 128
+    .space 136
+
+# save minimal : $t1, $t0, $a0, $ra, $at, PC
+
 # This is the exception handler code that the processor runs when
 # an exception occurs. It only prints some information about the
 # exception, but scan server as a model of how to write a handler.
@@ -240,10 +245,10 @@ interruption: # Forcément IT clavier
 	beq $t0, 81, changeProcess # touche Q
 
 # 0, 1, 2, 3 : on crée (s’il n’existe pas déjà) ou on réveille (s’il existe et est bloqué) respectivement le processus 0, 1, 2, 3
-#    beq $t0, 48, # touche 0
-#    beq $t0, 49, # touche 1
-#    beq $t0, 50, # touche 2
-#    beq $t0, 51, # touche 3
+    beq $t0, 48, createProcess # touche 0
+    beq $t0, 49, createProcess # touche 1
+    beq $t0, 50, createProcess # touche 2
+    beq $t0, 51, createProcess # touche 3
 
 # a, b, c, d : on bloque respectivement le processus 0, 1, 2, 3 (ne fait rien si le processus est déjà terminé ou est bloqué)
 #    beq $t0, 97, # touche a
@@ -252,10 +257,10 @@ interruption: # Forcément IT clavier
 #    beq $t0, 100, # touche d
     
 # A, B, C, D : on termine respectivement le processus 0, 1, 2, 3 (ne fait rien si le processus est déjà terminé).
-    beq $t0, 65, endProcess # touche A
-    beq $t0, 66, endProcess # touche B
-    beq $t0, 67, endProcess # touche C
-    beq $t0, 68, endProcess # touche D
+#    beq $t0, 65, endProcess # touche A
+#    beq $t0, 66, endProcess # touche B
+#    beq $t0, 67, endProcess # touche C
+#    beq $t0, 68, endProcess # touche D
     
 	move $a0, $t0
 	li $v0, 1
@@ -265,10 +270,31 @@ interruption: # Forcément IT clavier
 	li $v0, 4
 	syscall
 	j int_ret
+	
+createProcess:
+    addi $t0, $t0, -48 # On récupère le numéro de processus
+    
+    # On change l'elu
+	li $t1, 5
+	rem $t0, $t0, $t1
+	sw $t0, elu
+	
+    li $t1, 136
+    mul $t0, $t0, $t1 # on récupère la table des processus correspondant
+	lw $t1, TPC_Status($t0)
+    li $t2, 1
+    sw $t0
+    bne $t1, $0, wakeProcess
+    # On initialise les registre de ce nouveau processus
+    sw $0, TPC($t0)
+wakeProcess:
+    li $t1, 1
+    sw $t1, TPC_Status($t0)
+    la $k0, TPC_Entree($t0)
 changeProcess:
     # on change elu
     lw $t0, elu
-    li $t1, 128
+    li $t1, 136
     mul $t0, $t0, $t1
 
     mfc0 $k0, $14
@@ -348,7 +374,7 @@ changeProcess:
 	rem $t0, $t0, $t1
 	sw $t0, elu
 
-	li $t1, 128
+	li $t1, 136
 	mul $t0, $t0, $t1
 	lw $a0, TPC_a0($t0)
 	lw $v0, TPC_v0($t0)
@@ -469,11 +495,31 @@ __start:
 
 	# On met dans $k0 l'adresse du début du programme
 	la $k0, main0
+	sw $k0, TPC_Entree($0)
+	sw $k0, TPC($0)
+	
 	# on met le numéro du programme qui commence dans la variable elu
 	sw $0, elu
-	# On initialise l'adresse du deuxième programme dans le registre $k1
+	# On initialise l'adresse des différents programme dans le registre $k1
 	la $k1, main1
-	sw $k1, TPC+128($0) # k0 -> première entrée de TPC
+	sw $k1, TPC+136($0) # k0 -> première entrée de TPC
+	sw $0, TPC_Status+136($0)
+	sw $k1, TPC_Entree+136($0)
+	
+	la $k1, main2
+	sw $k1, TPC+272($0)
+	sw $k1, TPC_Entree+272($0)
+	sw $0, TPC_Status+272($0)
+	
+	la $k1, main3
+	sw $k1, TPC+408($0)
+	sw $k1, TPC_Entree+408($0)
+	sw $0, TPC_Status($0)
+	
+	la $k1, main4
+	sw $k1, TPC+544($0)
+	sw $k1, TPC_Entree+544($0)
+	
 	# Commutation de contextes (changer status et PC de façon atomique
         # avec les 2 instructions suivantes)
 	rfe # Au prochain jr, status aura la valeur 0x103, et on sera donc

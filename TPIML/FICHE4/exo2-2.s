@@ -16,7 +16,7 @@ main0:
 	move $t0, $0	
 	
 boucle_main0:
-	la $a0, message
+	la $a0, process0
 	li $v0, 4
 	syscall
 	move $a0,$t0 
@@ -35,7 +35,7 @@ main1:
 	move $t0, $0	
 	
 boucle_main1:
-	la $a0, comprisMultiProg
+	la $a0, process1
 	li $v0, 4
 	syscall
 	move $a0,$t0 
@@ -50,10 +50,57 @@ boucle_main1:
     
     .globl main2
 main2:
+    #$t0 contiendra le compteur
+	move $t0, $0	
+	
+boucle_main2:
+	la $a0, process2
+	li $v0, 4
+	syscall
+	move $a0,$t0 
+	li $v0, 1
+	syscall
+	la $a0, alaligne
+	li $v0, 4
+	syscall
+	addi $t0,$t0, 1
+	jal tempo
+	j boucle_main2 # le programme boucle indéfinimemnt
+
     .globl main3
 main3:
+	move $t0, $0	
+boucle_main3:
+	la $a0, process3
+	li $v0, 4
+	syscall
+	move $a0,$t0 
+	li $v0, 1
+	syscall
+	la $a0, alaligne
+	li $v0, 4
+	syscall
+	addi $t0,$t0, 1
+	jal tempo
+	j boucle_main3 # le programme boucle indéfinimemnt
+
     .globl main4
 main4:
+	move $t0, $0	
+boucle_main4:
+	la $a0, process4
+	li $v0, 4
+	syscall
+	move $a0,$t0 
+	li $v0, 1
+	syscall
+	la $a0, alaligne
+	li $v0, 4
+	syscall
+	addi $t0,$t0, 1
+	jal tempo
+	j boucle_main4 # le programme boucle indéfinimemnt
+
 # ------------------------------------------------------------------
 # Procedure tempo : temporisation de quelques secondes
 #-------------------------------------------------------------------	
@@ -68,9 +115,11 @@ fin_tempo:
 
 #-----------------------------------------------------------------
 .data  # Section des données utilisateur
-	message: .asciiz "Ca marche! "
 	alaligne: .asciiz "\n"
-	comprisMultiProg: .asciiz "J'ai meme compris la multiprogrammation :"
-
+	process0: .asciiz "Processus 0 :"
+    process1: .asciiz "Processus 1 :"
+    process2: .asciiz "Processus 2 :"
+    process3: .asciiz "Processus 3 :"
+    process4: .asciiz "Processus 4 : Tache de fond : "
 #-------------------------------------------------------------
 
