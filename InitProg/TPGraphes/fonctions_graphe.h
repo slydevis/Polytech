@@ -231,11 +231,10 @@ void imprime_graphe_etapes ( t_gra graphe , int info_couleur , int gauche_droite
 
 /* Une gestion classique des files et leur type de données. */
 
-typedef struct mm_file
-        {int sommet ;
-         struct mm_file * suiv ;
-        }
-struct_file , * t_file ;
+typedef struct mm_file {
+   int sommet ;
+   struct mm_file * suiv ;
+} struct_file , * t_file ;
 
 t_file cree_file_vide ( void ) ;
 

@@ -86,7 +86,7 @@ Graphe G_5_nonpond_S non orienté : 1
 
 Le graphe G_5_nonpond_S :
 
-graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], a -- b[color=red,label="**0 / 0**"], b -- c[color=red,label="**0 / 0**"], b -- d[color=red,label="**0 / 0**"], c -- d[color=red,label="**0 / 0**"], d -- e[color=red,label="**0 / 0**"], rankdir=LR }
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], a -- b, b -- c, b -- d, c -- d, d -- e, rankdir=LR }
 
 Graphe G_6_nonpond_DAG non orienté : 0
 
@@ -94,38 +94,54 @@ Le graphe G_6_nonpond_DAG :
 
 digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> d, a -> e, b -> a, b -> d, c -> b, e -> d, f -> c, rankdir=LR }
 
-Graphe G_5_nonpond_S anti-réflexif : 0
+Graphe G_5_nonpond_S anti-réflexif : 1
 
 Le graphe G_5_nonpond_S fermé réflexivement :
 
-graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], a -- b[label="**0 / 0**"], b -- c[label="**0 / 0**"], b -- d[label="**0 / 0**"], c -- d[label="**0 / 0**"], d -- e[label="**0 / 0**"], rankdir=LR }
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], a -- a[color=red], a -- b, b -- b[color=red], b -- c, b -- d, c -- c[color=red], c -- d, d -- d[color=red], d -- e, e -- e[color=red], rankdir=LR }
 
 G_5_nonpond_S n'est plus anti-réflexif : 0
 
-Le graphe G_6_nonpond_DAG est anti-réflexif : 0
+Le graphe G_6_nonpond_DAG est anti-réflexif : 1
 
-Graphe G_6_nonpond_DAG anti-réflexif et anti-symétrique : 0
+Graphe G_6_nonpond_DAG anti-réflexif et anti-symétrique : 1
 
-Le degré du graphe symétrique G_5_nonpond_S fermé réflexivement : 0
+Le degré du graphe symétrique G_5_nonpond_S fermé réflexivement : 5
 
 Le graphe G_9_nonpond_S :
 
 graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -- b, a -- c, b -- d, c -- e, d -- d, d -- e, e -- f, g -- h, h -- h, h -- i, rankdir=LR }
 
 Les étapes de propagation des vagues dans G_9_nonpond_S :
-Il y a 0 composantes connexes.
 
-Le graphe G_9_arbre est un arbre : 0
+graph{ a[label="a* / 0"], b[label="b* / 1"], c[label="c* / 1"], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -- b[color=red], a -- c[color=red], b -- d, c -- e, d -- d, d -- e, e -- f, g -- h, h -- h, h -- i, rankdir=LR }
 
-graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -- b, a -- e, b -- c, b -- d, e -- f, f -- g, f -- h, f -- i }
+
+graph{ a[label="a* / 0"], b[label="b* / 1"], c[label="c* / 1"], d[label="d* / 2"], e[label="e* / 2"], f[label=f], g[label=g], h[label=h], i[label=i], a -- b[color=red], a -- c[color=red], b -- d[color=green3], c -- e[color=green3], d -- d, d -- e, e -- f, g -- h, h -- h, h -- i, rankdir=LR }
+
+
+graph{ a[label="a* / 0"], b[label="b* / 1"], c[label="c* / 1"], d[label="d* / 2"], e[label="e* / 2"], f[label="f* / 3"], g[label=g], h[label=h], i[label=i], a -- b[color=red], a -- c[color=red], b -- d[color=green3], c -- e[color=green3], d -- d[color=blue], d -- e[color=blue], e -- f[color=blue], g -- h, h -- h, h -- i, rankdir=LR }
+
+
+graph{ a[label="a* / 0"], b[label="b* / 1"], c[label="c* / 1"], d[label="d* / 2"], e[label="e* / 2"], f[label="f* / 3"], g[label="g* / 0"], h[label="h* / 1"], i[label=i], a -- b[color=red], a -- c[color=red], b -- d[color=green3], c -- e[color=green3], d -- d[color=blue], d -- e[color=blue], e -- f[color=blue], g -- h[color=red], h -- h, h -- i, rankdir=LR }
+
+
+graph{ a[label="a* / 0"], b[label="b* / 1"], c[label="c* / 1"], d[label="d* / 2"], e[label="e* / 2"], f[label="f* / 3"], g[label="g* / 0"], h[label="h* / 1"], i[label="i* / 2"], a -- b[color=red], a -- c[color=red], b -- d[color=green3], c -- e[color=green3], d -- d[color=blue], d -- e[color=blue], e -- f[color=blue], g -- h[color=red], h -- h[color=green3], h -- i[color=green3], rankdir=LR }
+
+Il y a 2 composantes connexes.
+
+Le graphe G_9_arbre est un arbre : 1
+
+graph{ a[label="a / 0"], b[label="b / 1"], c[label="c / 2"], d[label="d / 2"], e[label="e / 1"], f[label="f / 2"], g[label="g / 3"], h[label="h / 3"], i[label="i / 3"], a -- b, a -- e, b -- c, b -- d, e -- f, f -- g, f -- h, f -- i }
 
 Ce graphe est un arbre : 0
 
-graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -- b, a -- e, b -- c, b -- g, e -- f, f -- g, f -- h, f -- i }
+graph{ a[label="a / 0"], b[label="b / 1"], c[label="c / 2"], d[label="d / 0"], e[label="e / 1"], f[label="f / 2"], g[label="g / 2"], h[label="h / 3"], i[label="i / 3"], a -- b, a -- e, b -- c, b -- g, e -- f, f -- g, f -- h, f -- i }
 
 Le graphe G_9_nonpond_NS avec les distances depuis 0 :
+Je boucle
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b, a -> e, b -> c, b -> e, b -> f, c -> b, c -> d, c -> e, c -> f, c -> h, d -> c, d -> f, d -> g, d -> i, e -> b, e -> c, e -> f, e -> h, f -> c, f -> d, f -> e, f -> g, f -> h, g -> d, g -> f, g -> h, g -> i, h -> e, h -> g, h -> i }
+digraph{ a[label="a / 0"], b[label="b / +inf"], c[label="c / +inf"], d[label="d / +inf"], e[label="e / +inf"], f[label="f / +inf"], g[label="g / +inf"], h[label="h / +inf"], i[label="i / +inf"], a -> b, a -> e, b -> c, b -> e, b -> f, c -> b, c -> d, c -> e, c -> f, c -> h, d -> c, d -> f, d -> g, d -> i, e -> b, e -> c, e -> f, e -> h, f -> c, f -> d, f -> e, f -> g, f -> h, g -> d, g -> f, g -> h, g -> i, h -> e, h -> g, h -> i }
 
 Le tri topologique de G_6_nonpond_DAG donne :
 
@@ -137,7 +153,7 @@ digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f],
 
 La multiplication matricielle donne ces étapes pour G_8_nonpond_S :
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -> b, b -> a, b -> c, b -> d, c -> b, c -> d, d -> b, d -> c, d -> e, d -> f, e -> d, f -> c, f -> d, f -> g, g -> f, g -> h, h -> g, rankdir=LR }
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- a[color=red], a -- b[color=red], a -- c[color=red], a -- d[color=red], a -- e[color=red], a -- f[color=red], a -- g[color=red], a -- h[color=red], b -- b[color=red], b -- c[color=red], b -- d[color=red], b -- e[color=red], b -- f[color=red], b -- g[color=red], b -- h[color=red], c -- c[color=red], c -- d[color=red], c -- e[color=red], c -- f[color=red], c -- g[color=red], c -- h[color=red], d -- d[color=red], d -- e[color=red], d -- f[color=red], d -- g[color=red], d -- h[color=red], e -- e[color=red], e -- f[color=red], e -- g[color=red], e -- h[color=red], f -- f[color=red], f -- g[color=red], f -- h[color=red], g -- g[color=red], g -- h[color=red], h -- h[color=red], rankdir=LR }
 
 Floyd-Warshall donne ces étapes pour G_8_nonpond_S_bis :
 

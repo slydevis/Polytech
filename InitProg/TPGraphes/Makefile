@@ -2,6 +2,7 @@ heads = constantes_type_graphe.h fonctions_graphe.h
 
 run :
 	$(MAKE) all
+#	./monprog
 	./monprog > ma_reponse
 	diff ma_reponse la_reponse_de_reference | more
 

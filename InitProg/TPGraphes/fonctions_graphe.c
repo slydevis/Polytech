@@ -522,6 +522,13 @@ t_gra nouveau_graphe ( int n )
        nouveau = (t_gra)malloc( sizeof( t_gra_struct ) ) ;
        nouveau->taille = n ;
        nouveau->pondere = NON ;
+
+       /* ------------------------------------------------------ */
+
+       nouveau->flot = NON; // TODO : C'est moi qui l'es ajouté
+       
+       /* ------------------------------------------------------ */
+       
        for ( i = 0 ; i < n ; i++ )
 	   {for ( j = 0 ; j < n ; j++ )
 		set_case_detail( nouveau , i , j , NON , Couleur ) ;

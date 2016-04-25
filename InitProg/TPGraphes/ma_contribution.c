@@ -88,10 +88,16 @@ int graphe_non_oriente ( t_gra graphe ) {
    vers lui-même. Les nouvelles arêtes seront de la couleur donnée
    par la_couleur( ). Le graphe ne doit pas être pondéré. */  
 
-void fermeture_reflexive ( t_gra graphe )
-     {
+void fermeture_reflexive ( t_gra graphe ) {
 	/* +/- 5 lignes */
-     }
+    assert(!graphe_pondere(graphe));
+  
+    int i, taille = taille_graphe(graphe);
+    for(i = 0; i < taille; ++i) {
+    if(!get_arc(graphe, i, i))
+      set_arc(graphe, i, i, la_couleur());
+    }
+}
 
 /* ------------------------------------------------------------ */
 
@@ -101,10 +107,14 @@ void fermeture_reflexive ( t_gra graphe )
    On vérifiera que le graphe est bien pondéré et que le poids donné
    est accepté par le graphe. */
 
-void fermeture_reflexive_pondere ( t_gra graphe , int poids )
-     {
+void fermeture_reflexive_pondere ( t_gra graphe , int poids ) {
 	/* +/- 5 lignes */
-     }
+    int i, taille = taille_graphe(graphe);
+    for(i = 0; i < taille; ++i) {
+    if(!get_arc(graphe, i, i))
+      set_arc_pondere(graphe, i, i, poids, la_couleur());
+    }
+}
 
 /* ------------------------------------------------------------ */
 
@@ -113,10 +123,15 @@ void fermeture_reflexive_pondere ( t_gra graphe , int poids )
    ( s , s ) ? Elle s'applique aussi bien aux graphes pondérés que
    non pondérés, orientés ou non. */
 
-int graphe_AR ( t_gra graphe )
-    {/* +/- 5 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int graphe_AR ( t_gra graphe ) {
+   /* +/- 5 lignes. Il faudra retourner une valeur convenable. */
+    int i, taille = taille_graphe(graphe);
+    for(i = 0; i < taille; ++i) {
+        if(get_arc(graphe, i, i))
+            return NON;
     }
+    return( OUI ) ; 
+}
 
 /* ------------------------------------------------------------ */
 
@@ -124,10 +139,21 @@ int graphe_AR ( t_gra graphe )
    est à la fois anti-réflexif et anti-symétrique ? Le graphe
    peut être pondéré ou non. */
 
-int graphe_ARAS ( t_gra graphe )
-    {/* +/- 10 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int graphe_ARAS ( t_gra graphe ) {
+    /* +/- 10 lignes. Il faudra retourner une valeur convenable. */
+    int i, j, taille = taille_graphe(graphe);
+    
+    if(!graphe_AR(graphe))
+        return NON;
+
+    for(i = 0; i < taille; ++i) {
+        for(j = 0; j < taille; ++j) {
+            if(get_arete(graphe, i, j))
+                return NON;
+        }
     }
+    return( OUI ) ; 
+}
 
 /* ------------------------------------------------------------ */
 
@@ -137,10 +163,28 @@ int graphe_ARAS ( t_gra graphe )
    consiste à dire qu'une arête réflexive de la forme ( a , a )
    compte pour 2 dans le degré du sommet a . */
 
-int degre_graphe ( t_gra graphe )
-    {/* +/- 15 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int degre_graphe ( t_gra graphe ) {
+    /* +/- 15 lignes. Il faudra retourner une valeur convenable. */
+    assert(graphe_non_oriente(graphe));
+
+    int i, j, degre = 0, degreMax = 0, taille = taille_graphe(graphe);
+    for(i = 0; i < taille; ++i) {
+        for(j = 0; j < taille; ++j) {
+            if(get_arete(graphe, i, j)) {
+              degre = degre + 1;
+              if(i == j)
+                degre = degre + 1;
+            }
+        }
+
+        if(degre > degreMax)
+          degreMax = degre;
+
+        degre = 0;
     }
+
+    return( degreMax ) ; 
+}
 
 /* ------------------------------------------------------------ */
 
@@ -175,15 +219,70 @@ int degre_graphe ( t_gra graphe )
    connexe_vague est un peu plus difficile à implanter que d'autres et on
    peut préférer résoudre d'abord certaines des questions qui suivent. */ 
 
-int cherche_sommet_sec ( t_gra graphe )
-    {/* +/- 5 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int cherche_sommet_sec ( t_gra graphe ) {
+    /* +/- 5 lignes. Il faudra retourner une valeur convenable. */
+    int i, taille = taille_graphe(graphe);
+    for(i = 0; i < taille; ++i) {
+        if(!mouille(graphe , i))
+            return i ;
+    }
+    return -1; 
+}
+
+int connexe_vague ( t_gra graphe , int view ) {
+    /* +/- 40 lignes. Il faudra retourner une valeur convenable. */
+    assert(graphe_non_oriente(graphe));
+
+    int i, taille, connexite, couleur, sommet_sec, etape = 0;
+    t_file file = cree_file_vide();
+    taille = taille_graphe(graphe);
+    connexite = 0;
+    couleur = la_couleur();
+    sommet_sec = cherche_sommet_sec(graphe);
+
+    while(sommet_sec != -1) {
+        connexite = connexite + 1;
+        etape = 0;
+        sommet_set_poids(graphe, sommet_sec, etape);
+        tremper(graphe, sommet_sec);
+        etape++;
+        file = insere_file(sommet_sec, file);
+        while(!est_file_vide(file)) {
+            sommet_sec = tete_file(file);
+            file = supprime_tete_file(file);
+            
+            for(i = 0; i < taille; ++i) {
+                if(get_arete(graphe, sommet_sec, i)) {
+                    set_couleur_arc(graphe, sommet_sec, i, couleur);
+                    if(!mouille(graphe, i)) {
+                        sommet_set_poids(graphe, i, etape);
+                        tremper(graphe, i);
+                        file = insere_file(i, file);
+                    }
+                }
+            }
+
+            if(!est_file_vide(file) && sommet_get_poids(graphe, sommet_sec) != sommet_get_poids(graphe, tete_file(file))) {
+                couleur_suivante();
+                couleur = la_couleur();
+                etape++;
+
+                if(view == OUI)
+                  imprime_graphe(graphe, TOUTES_COULEURS, OUI);
+            }
+            
+        }
+        sommet_sec = cherche_sommet_sec(graphe);
+        definir_couleur(ROUGE);
+        couleur = la_couleur();
     }
 
-int connexe_vague ( t_gra graphe , int view )
-    {/* +/- 40 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
-    }
+    // On seche tous les sommets
+    for(i = 0; i < taille; ++i)
+        secher(graphe, i);
+
+    return connexite; 
+}
 
 /* ------------------------------------------------------------ */
 
@@ -192,15 +291,31 @@ int connexe_vague ( t_gra graphe , int view )
    est un arbre. Il suffira de compter le nombre d'arêtes et de vérifier
    que le graphe possède exactement une seule composante connexe. */
 
-int nombre_aretes ( t_gra graphe )
-    {/* +/- 10 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int nombre_aretes ( t_gra graphe ) {
+    /* +/- 10 lignes. Il faudra retourner une valeur convenable. */
+    int nbArrete = 0, i, taille, j;
+    taille = taille_graphe(graphe);
+    for(i = 0; i < taille; ++i) {
+        for(j = 0; j < i; ++j) {
+            if(get_arete(graphe, i, j))
+                nbArrete++;
+        }
     }
+    
+    return nbArrete; 
+}
 
-int est_un_arbre ( t_gra graphe )
-    {/* +/- 5 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
-    }
+int est_un_arbre ( t_gra graphe ) {
+    /* +/- 5 lignes. Il faudra retourner une valeur convenable. */
+    assert(graphe_AR(graphe));
+    assert(graphe_non_oriente(graphe));
+
+    if(nombre_aretes(graphe) == taille_graphe(graphe) - 1)
+        if(connexe_vague(graphe, NON) == 1)
+            return OUI;
+
+    return NON; 
+}
 
 /* ------------------------------------------------------------ */
 
@@ -216,15 +331,42 @@ int est_un_arbre ( t_gra graphe )
    parcours_profondeur_niveaux initialise les poids des sommets et
    parcours_profondeur_niveaux_rec effectue le parcours. */
 
-void parcours_profondeur_niveaux_rec ( t_gra graphe , int sommet , int niveau )
-     {
+void parcours_profondeur_niveaux_rec ( t_gra graphe , int sommet , int niveau ) {
 	/* +/- 10 lignes */
-     }
+    int i, taille;
+    taille = taille_graphe(graphe);
+    printf("Je boucle\n");
+    
+    if(!mouille(graphe, sommet)) {
+        if(sommet_get_poids(graphe, sommet) > niveau) {
+            sommet_set_poids(graphe, sommet, niveau);
+        }
+        tremper(graphe, sommet);
+    }
 
-void parcours_profondeur_niveaux ( t_gra graphe , int depart )
-     {
+    for(i = sommet; i < taille; ++i) {
+        if(get_arete(graphe, sommet, i))
+            parcours_profondeur_niveaux_rec(graphe, i, niveau+1);      
+    } 
+}
+
+void parcours_profondeur_niveaux ( t_gra graphe , int depart ) {
 	/* +/- 10 lignes */
-     }
+    int i, taille, niveau = 0;
+    taille = taille_graphe(graphe);
+
+    for(i = depart; i < taille; ++i)
+        sommet_set_poids(graphe, i, PLUS_INF);
+    
+    sommet_set_poids(graphe, depart, niveau);
+    tremper(graphe, depart);
+
+    parcours_profondeur_niveaux_rec(graphe, depart, niveau);
+    
+    // On seche tous les sommets
+    for(i = 0; i < taille; ++i)
+        secher(graphe, i);
+}
 
 /* ------------------------------------------------------------ */
 
@@ -297,10 +439,28 @@ void tri_topologique ( t_gra graphe )
    l'appel "copie_graphe( graphe , nouveau ) ;" a pour effet de
    recopier "graphe" en "nouveau". */
 
-void multiplie ( t_gra graphe )
-     {
+void multiplie ( t_gra graphe ) {
 	/* +/- 20 lignes */
-     }
+    assert(!graphe_pondere(graphe));
+
+    int longeur, n, i, j, k, l, couleur;
+    n = taille_graphe(graphe);
+    couleur = la_couleur();
+    fermeture_reflexive(graphe);
+    for(k = 1; k < n-1; k = 2*k) {
+        for(l = 0; l < n; l++) {
+            for(i = 0; i < n; ++i) {
+                for(j = 0; j < n; ++j) {
+                    if(i != j) {
+                        longeur = get_arc(graphe, i, l) * get_arc(graphe, l, j);
+                        if(longeur == 1) 
+                            set_arc(graphe, i, j, couleur);
+                    }
+                } 
+            }
+        }
+    }
+}
 
 /* ------------------------------------------------------------ */
 
