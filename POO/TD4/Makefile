@@ -3,8 +3,8 @@ CC     = g++
 CFLAGS = -Wall -W -pedantic -g
 LIBS   =
 
-OFILES =  td4.o Displayable.o complexe.o MesExceptions.o VectorException.o vector.o
-displayable.out: td4.o Displayable.o complexe.o MesExceptions.o VectorException.o vector.o
+OFILES =  td4.o Displayable.o complexe.o MesExceptions.o VectorException.o vector.o  PileExceptions.o
+displayable.out: td4.o Displayable.o complexe.o MesExceptions.o VectorException.o vector.o PileExceptions.o
 	$(CC) -o  displayable.out $(OFILES) $(CFLAGS)
 td4.o: td4.cpp
 	$(CC) -c td4.cpp $(CFLAGS)

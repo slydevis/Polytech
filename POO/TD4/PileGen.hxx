@@ -17,8 +17,8 @@ PileGen<T>::~PileGen() {
 
 template <typename T>
 void PileGen<T>::display(ostream& os) {
-	if(isempty())
-		return;
+	if(isempty()) 
+		throw PileExceptions("La pile est vide");
 
 	CNode<T>* headTmp = m_head;
 	while(headTmp->getNext() != NULL) {
@@ -65,11 +65,10 @@ bool PileGen<T>::isempty() const {
 
 template <typename T>
 T PileGen<T>::getFirstElement() const {
-	if(!isempty())
-		return m_head->getData();
-
-	cout << "La pile est vide" << endl;
-	return T();
+	if(isempty())
+		throw PileExceptions("La pile est vide");
+	
+	return m_head->getData();
 }
 
 template <typename T>
