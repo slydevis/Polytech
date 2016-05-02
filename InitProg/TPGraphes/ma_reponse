@@ -139,21 +139,33 @@ Ce graphe est un arbre : 0
 graph{ a[label="a / 0"], b[label="b / 1"], c[label="c / 2"], d[label="d / 0"], e[label="e / 1"], f[label="f / 2"], g[label="g / 2"], h[label="h / 3"], i[label="i / 3"], a -- b, a -- e, b -- c, b -- g, e -- f, f -- g, f -- h, f -- i }
 
 Le graphe G_9_nonpond_NS avec les distances depuis 0 :
-Je boucle
 
-digraph{ a[label="a / 0"], b[label="b / +inf"], c[label="c / +inf"], d[label="d / +inf"], e[label="e / +inf"], f[label="f / +inf"], g[label="g / +inf"], h[label="h / +inf"], i[label="i / +inf"], a -> b, a -> e, b -> c, b -> e, b -> f, c -> b, c -> d, c -> e, c -> f, c -> h, d -> c, d -> f, d -> g, d -> i, e -> b, e -> c, e -> f, e -> h, f -> c, f -> d, f -> e, f -> g, f -> h, g -> d, g -> f, g -> h, g -> i, h -> e, h -> g, h -> i }
+digraph{ a[label="a / 0"], b[label="b / 1"], c[label="c / 2"], d[label="d / 3"], e[label="e / 1"], f[label="f / 2"], g[label="g / 3"], h[label="h / 2"], i[label="i / 3"], a -> b, a -> e, b -> c, b -> e, b -> f, c -> b, c -> d, c -> e, c -> f, c -> h, d -> c, d -> f, d -> g, d -> i, e -> b, e -> c, e -> f, e -> h, f -> c, f -> d, f -> e, f -> g, f -> h, g -> d, g -> f, g -> h, g -> i, h -> e, h -> g, h -> i }
 
 Le tri topologique de G_6_nonpond_DAG donne :
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> d, a -> e, b -> a, b -> d, c -> b, e -> d, f -> c, rankdir=LR }
+digraph{ a[label="a* / 3"], b[label="b* / 2"], c[label="c* / 1"], d[label="d* / 5"], e[label="e* / 4"], f[label="f* / 0"], a -> d[color=yellow], a -> e[color=yellow], b -> a[color=blue], b -> d[color=blue], c -> b[color=green3], e -> d[color=orange], f -> c[color=red], rankdir=LR }
 
 Le tri topologique de G_8_ARAS_non_DAG donne :
+LE GRAPHE COMPORTE DES CIRCUITS !
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -> b, b -> c, c -> e, d -> e, e -> f, f -> g, g -> c, g -> h, rankdir=LR }
+digraph{ a[label="a* / 0"], b[label="b* / 1"], c[label=c], d[label="d* / 2"], e[label=e], f[label=f], g[label=g], h[label=h], a -> b[color=gold], b -> c[color=magenta], c -> e, d -> e[color=grey], e -> f, f -> g, g -> c, g -> h, rankdir=LR }
 
 La multiplication matricielle donne ces étapes pour G_8_nonpond_S :
 
-graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- a[color=red], a -- b[color=red], a -- c[color=red], a -- d[color=red], a -- e[color=red], a -- f[color=red], a -- g[color=red], a -- h[color=red], b -- b[color=red], b -- c[color=red], b -- d[color=red], b -- e[color=red], b -- f[color=red], b -- g[color=red], b -- h[color=red], c -- c[color=red], c -- d[color=red], c -- e[color=red], c -- f[color=red], c -- g[color=red], c -- h[color=red], d -- d[color=red], d -- e[color=red], d -- f[color=red], d -- g[color=red], d -- h[color=red], e -- e[color=red], e -- f[color=red], e -- g[color=red], e -- h[color=red], f -- f[color=red], f -- g[color=red], f -- h[color=red], g -- g[color=red], g -- h[color=red], h -- h[color=red], rankdir=LR }
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- b, b -- c, b -- d, c -- d, d -- e, d -- f, f -- g, g -- h, rankdir=LR }
+
+
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- b, b -- c, b -- d, c -- d, d -- e, d -- f, f -- g, g -- h, rankdir=LR }
+
+
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- a[color=green3], a -- b, a -- c[color=green3], a -- d[color=green3], b -- b[color=green3], b -- c, b -- d, b -- e[color=green3], b -- f[color=green3], c -- c[color=green3], c -- d, c -- e[color=green3], c -- f[color=green3], d -- d[color=green3], d -- e, d -- f, d -- g[color=green3], e -- e[color=green3], e -- f[color=green3], f -- f[color=green3], f -- g, f -- h[color=green3], g -- g[color=green3], g -- h, h -- h[color=green3], rankdir=LR }
+
+
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- a, a -- b, a -- c, a -- d, a -- e[color=blue], a -- f[color=blue], a -- g[color=blue], b -- b, b -- c, b -- d, b -- e, b -- f, b -- g[color=blue], b -- h[color=blue], c -- c, c -- d, c -- e, c -- f, c -- g[color=blue], c -- h[color=blue], d -- d, d -- e, d -- f, d -- g, d -- h[color=blue], e -- e, e -- f, e -- g[color=blue], e -- h[color=blue], f -- f, f -- g, f -- h, g -- g, g -- h, h -- h, rankdir=LR }
+
+
+graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -- a, a -- b, a -- c, a -- d, a -- e, a -- f, a -- g, a -- h[color=yellow], b -- b, b -- c, b -- d, b -- e, b -- f, b -- g, b -- h, c -- c, c -- d, c -- e, c -- f, c -- g, c -- h, d -- d, d -- e, d -- f, d -- g, d -- h, e -- e, e -- f, e -- g, e -- h, f -- f, f -- g, f -- h, g -- g, g -- h, h -- h, rankdir=LR }
 
 Floyd-Warshall donne ces étapes pour G_8_nonpond_S_bis :
 
@@ -163,21 +175,30 @@ La multiplication donne ces étapes pour G_6_pond_NS pondéré :
 
 digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> b[label=4], b -> a[label=3], b -> c[label=7], b -> d[label=2], c -> b[label=7], c -> d[label=5], c -> f[label=4], d -> c[label=5], d -> e[label=8], d -> f[label=6], e -> d[label=8], f -> c[label=8], f -> d[label=6], rankdir=LR }
 
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> b[label=4], b -> a[label=3], b -> c[label=7], b -> d[label=2], c -> b[label=7], c -> d[label=5], c -> f[label=4], d -> c[label=5], d -> e[label=8], d -> f[label=6], e -> d[label=8], f -> c[label=8], f -> d[label=6], rankdir=LR }
+
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> a[color=green3,label=0], a -> b[label=4], a -> c[color=green3,label=11], a -> d[color=green3,label=6], b -> a[label=3], b -> b[color=green3,label=0], b -> c[label=7], b -> d[label=2], b -> e[color=green3,label=10], b -> f[color=green3,label=8], c -> a[color=green3,label=10], c -> b[label=7], c -> c[color=green3,label=0], c -> d[label=5], c -> e[color=green3,label=13], c -> f[label=4], d -> b[color=green3,label=12], d -> c[label=5], d -> d[color=green3,label=0], d -> e[label=8], d -> f[label=6], e -> c[color=green3,label=13], e -> d[label=8], e -> e[color=green3,label=0], e -> f[color=green3,label=14], f -> b[color=green3,label=15], f -> c[label=8], f -> d[label=6], f -> e[color=green3,label=14], f -> f[color=green3,label=0], rankdir=LR }
+
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> a[label=0], a -> b[label=4], a -> c[label=11], a -> d[label=6], a -> e[color=blue,label=14], a -> f[color=blue,label=12], b -> a[label=3], b -> b[label=0], b -> c[label=7], b -> d[label=2], b -> e[label=10], b -> f[label=8], c -> a[label=10], c -> b[label=7], c -> c[label=0], c -> d[label=5], c -> e[label=13], c -> f[label=4], d -> a[color=blue,label=15], d -> b[label=12], d -> c[label=5], d -> d[label=0], d -> e[label=8], d -> f[label=6], e -> a[color=blue,label=23], e -> b[color=blue,label=29], e -> c[label=13], e -> d[label=8], e -> e[label=0], e -> f[label=14], f -> a[color=blue,label=18], f -> b[label=15], f -> c[label=8], f -> d[label=6], f -> e[label=14], f -> f[label=0], rankdir=LR }
+
 Floyd-Warshall donne ces étapes pour G_6_pond_NS_bis pondéré :
 
 digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], a -> b[label=4], b -> a[label=3], b -> c[label=7], b -> d[label=2], c -> b[label=7], c -> d[label=5], c -> f[label=4], d -> c[label=5], d -> e[label=8], d -> f[label=6], e -> d[label=8], f -> c[label=8], f -> d[label=6], rankdir=LR }
 
 L'algorithme de Dijkstra donne ce graphe pour le départ 0 :
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -> c[label=11], a -> d[label=7], a -> g[label=6], b -> e[label=20], b -> f[label=9], c -> a[label=11], c -> b[label=20], d -> e[label=8], e -> b[label=10], f -> h[label=5], g -> a[label=6], g -> h[label=9], h -> f[label=5], rankdir=LR }
+digraph{ a[label="a* / 0"], b[label="b* / 25"], c[label="c* / 11"], d[label="d* / 7"], e[label="e* / 15"], f[label="f* / 20"], g[label="g* / 6"], h[label="h* / 15"], a -> c[color=red,label=11], a -> d[color=red,label=7], a -> g[color=red,label=6], b -> e[label=20], b -> f[label=9], c -> a[label=11], c -> b[label=20], d -> e[color=red,label=8], e -> b[color=red,label=10], f -> h[label=5], g -> a[label=6], g -> h[color=red,label=9], h -> f[color=red,label=5], rankdir=LR }
 
 L'algorithme de Dijkstra donne ce graphe pour le départ 0 :
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -> c[label=11], a -> g[label=6], b -> e[label=20], b -> f[label=9], c -> a[label=11], c -> b[label=20], d -> e[label=8], e -> b[label=10], f -> e[label=5], g -> a[label=6], g -> g[label=9], h -> d[label=12], rankdir=LR }
+digraph{ a[label="a* / 0"], b[label="b* / 31"], c[label="c* / 11"], d[label="d / +inf"], e[label="e* / 45"], f[label="f* / 40"], g[label="g* / 6"], h[label="h / +inf"], a -> c[color=red,label=11], a -> g[color=red,label=6], b -> e[label=20], b -> f[color=red,label=9], c -> a[label=11], c -> b[color=red,label=20], d -> e[label=8], e -> b[label=10], f -> e[color=red,label=5], g -> a[label=6], g -> g[label=9], h -> d[label=12], rankdir=LR }
 
 Dijkstra qui maximise le minimum pour le départ 0 :
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], a -> c[label=11], a -> d[label=7], a -> g[label=6], b -> e[label=20], b -> f[label=9], c -> a[label=11], c -> b[label=20], d -> e[label=8], e -> b[label=10], f -> h[label=5], g -> a[label=6], g -> h[label=9], h -> f[label=5], rankdir=LR }
+digraph{ a[label="a* / 0"], b[label="b* / 11"], c[label="c* / 11"], d[label="d* / 7"], e[label="e* / 11"], f[label="f* / 9"], g[label="g* / 6"], h[label="h* / 6"], a -> c[color=red,label=11], a -> d[color=red,label=7], a -> g[color=red,label=6], b -> e[color=red,label=20], b -> f[color=red,label=9], c -> a[label=11], c -> b[color=red,label=20], d -> e[label=8], e -> b[label=10], f -> h[label=5], g -> a[label=6], g -> h[color=red,label=9], h -> f[label=5], rankdir=LR }
 
 Le graphe de flot donné :
 
@@ -185,11 +206,59 @@ digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f],
 
 Le graphe résiduel et son meilleur chemin augmentant :
 
-graph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+digraph{ a[label="a* / 0"], b[label="b* / 21"], c[label="c* / 18"], d[label="d* / 7"], e[label="e* / 9"], f[label="f* / 9"], g[label="g* / 5"], h[label="h* / 4"], i[label="i* / 7"], a -> b[color=blue,label=21], a -> e[label=9], b -> c[color=blue,label=18], b -> e[label=3], b -> f[label=1], c -> b[label=12], c -> d[color=blue,label=7], c -> e[label=5], c -> f[label=6], c -> h[label=1], d -> c[label=5], d -> f[label=4], d -> g[label=2], d -> i[color=blue,label=16], e -> b[label=2], e -> c[label=3], e -> f[label=12], e -> h[label=3], f -> c[label=5], f -> d[label=6], f -> e[label=12], f -> g[label=5], f -> h[label=4], g -> d[label=2], g -> f[label=5], g -> h[label=2], g -> i[label=9], h -> e[label=2], h -> g[label=3], h -> i[label=6], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe de flot donné :
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[color=red,label="7 / 21"], a -> e[label="0 / 9"], b -> c[color=red,label="7 / 18"], b -> e[label="0 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[color=red,label="**7 / 7**"], c -> e[label="0 / 5"], c -> f[label="0 / 6"], c -> h[label="0 / 1"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[color=red,label="7 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[label="0 / 12"], e -> h[label="0 / 3"], f -> c[label="0 / 5"], f -> d[label="0 / 6"], f -> e[label="0 / 12"], f -> g[label="0 / 5"], f -> h[label="0 / 4"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[label="0 / 9"], h -> e[label="0 / 2"], h -> g[label="0 / 3"], h -> i[label="0 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe résiduel et son meilleur chemin augmentant :
+
+digraph{ a[label="a* / 0"], b[label="b* / 14"], c[label="c* / 11"], d[label="d* / 6"], e[label="e* / 9"], f[label="f* / 9"], g[label="g* / 5"], h[label="h* / 4"], i[label="i* / 6"], a -> b[label=14], a -> e[color=blue,label=9], b -> a[label=7], b -> c[label=11], b -> e[label=3], b -> f[label=1], c -> b[label=19], c -> e[label=5], c -> f[label=6], c -> h[label=1], d -> c[label=12], d -> f[label=4], d -> g[label=2], d -> i[color=blue,label=9], e -> b[label=2], e -> c[label=3], e -> f[color=blue,label=12], e -> h[label=3], f -> c[label=5], f -> d[color=blue,label=6], f -> e[label=12], f -> g[label=5], f -> h[label=4], g -> d[label=2], g -> f[label=5], g -> h[label=2], g -> i[label=9], h -> e[label=2], h -> g[label=3], h -> i[label=6], i -> d[label=7], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe de flot donné :
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[label="7 / 21"], a -> e[color=green3,label="6 / 9"], b -> c[label="7 / 18"], b -> e[label="0 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[label="**7 / 7**"], c -> e[label="0 / 5"], c -> f[label="0 / 6"], c -> h[label="0 / 1"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[color=green3,label="13 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[color=green3,label="6 / 12"], e -> h[label="0 / 3"], f -> c[label="0 / 5"], f -> d[color=green3,label="**6 / 6**"], f -> e[label="0 / 12"], f -> g[label="0 / 5"], f -> h[label="0 / 4"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[label="0 / 9"], h -> e[label="0 / 2"], h -> g[label="0 / 3"], h -> i[label="0 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe résiduel et son meilleur chemin augmentant :
+
+digraph{ a[label="a* / 0"], b[label="b* / 14"], c[label="c* / 11"], d[label="d* / 5"], e[label="e* / 6"], f[label="f* / 6"], g[label="g* / 5"], h[label="h* / 4"], i[label="i* / 5"], a -> b[color=blue,label=14], a -> e[label=3], b -> a[color=blue,label=7], b -> c[color=blue,label=11], b -> e[label=3], b -> f[label=1], c -> b[label=19], c -> e[label=5], c -> f[color=blue,label=6], c -> h[label=1], d -> c[label=12], d -> f[label=10], d -> g[label=2], d -> i[label=3], e -> a[color=blue,label=6], e -> b[label=2], e -> c[label=3], e -> f[label=6], e -> h[label=3], f -> c[label=5], f -> e[label=18], f -> g[color=blue,label=5], f -> h[label=4], g -> d[label=2], g -> f[label=5], g -> h[label=2], g -> i[color=blue,label=9], h -> e[label=2], h -> g[label=3], h -> i[label=6], i -> d[label=13], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe de flot donné :
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[color=blue,label="12 / 21"], a -> e[label="6 / 9"], b -> c[color=blue,label="12 / 18"], b -> e[label="0 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[label="**7 / 7**"], c -> e[label="0 / 5"], c -> f[color=blue,label="5 / 6"], c -> h[label="0 / 1"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[label="13 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[label="6 / 12"], e -> h[label="0 / 3"], f -> c[label="0 / 5"], f -> d[label="**6 / 6**"], f -> e[label="0 / 12"], f -> g[color=blue,label="**5 / 5**"], f -> h[label="0 / 4"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[color=blue,label="5 / 9"], h -> e[label="0 / 2"], h -> g[label="0 / 3"], h -> i[label="0 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe résiduel et son meilleur chemin augmentant :
+
+digraph{ a[label="a* / 0"], b[label="b* / 9"], c[label="c* / 6"], d[label="d* / 4"], e[label="e* / 5"], f[label="f* / 5"], g[label="g* / 4"], h[label="h* / 4"], i[label="i* / 4"], a -> b[label=9], a -> e[label=3], b -> a[color=yellow,label=12], b -> c[label=6], b -> e[label=3], b -> f[label=1], c -> b[label=24], c -> e[label=5], c -> f[label=1], c -> h[label=1], d -> c[label=12], d -> f[label=10], d -> g[label=2], d -> i[label=3], e -> a[color=yellow,label=6], e -> b[label=2], e -> c[label=3], e -> f[label=6], e -> h[label=3], f -> c[label=10], f -> e[label=18], f -> h[label=4], g -> d[label=2], g -> f[label=10], g -> h[label=2], g -> i[label=4], h -> e[label=2], h -> g[label=3], h -> i[label=6], i -> d[label=13], i -> g[label=5], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe de flot donné :
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[color=yellow,label="16 / 21"], a -> e[label="6 / 9"], b -> c[color=yellow,label="16 / 18"], b -> e[label="0 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[label="**7 / 7**"], c -> e[color=yellow,label="4 / 5"], c -> f[label="5 / 6"], c -> h[label="0 / 1"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[label="13 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[color=yellow,label="10 / 12"], e -> h[label="0 / 3"], f -> c[label="0 / 5"], f -> d[label="**6 / 6**"], f -> e[label="0 / 12"], f -> g[label="**5 / 5**"], f -> h[color=yellow,label="**4 / 4**"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[label="5 / 9"], h -> e[label="0 / 2"], h -> g[label="0 / 3"], h -> i[color=yellow,label="4 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe résiduel et son meilleur chemin augmentant :
+
+digraph{ a[label="a* / 0"], b[label="b* / 5"], c[label="c* / 3"], d[label="d* / 3"], e[label="e* / 3"], f[label="f* / 3"], g[label="g* / 3"], h[label="h* / 3"], i[label="i* / 3"], a -> b[label=5], a -> e[label=3], b -> a[color=orange,label=16], b -> c[label=2], b -> e[label=3], b -> f[label=1], c -> b[label=28], c -> e[label=1], c -> f[label=1], c -> h[label=1], d -> c[label=12], d -> f[label=10], d -> g[label=2], d -> i[label=3], e -> a[color=orange,label=6], e -> b[label=2], e -> c[label=7], e -> f[label=2], e -> h[label=3], f -> c[label=10], f -> e[label=22], g -> d[label=2], g -> f[label=10], g -> h[label=2], g -> i[label=4], h -> e[label=2], h -> f[label=4], h -> g[label=3], h -> i[label=2], i -> d[label=13], i -> g[label=5], i -> h[label=4], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe de flot donné :
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[label="16 / 21"], a -> e[color=orange,label="**9 / 9**"], b -> c[label="16 / 18"], b -> e[label="0 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[label="**7 / 7**"], c -> e[label="4 / 5"], c -> f[label="5 / 6"], c -> h[label="0 / 1"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[label="13 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[label="10 / 12"], e -> h[color=orange,label="**3 / 3**"], f -> c[label="0 / 5"], f -> d[label="**6 / 6**"], f -> e[label="0 / 12"], f -> g[label="**5 / 5**"], f -> h[label="**4 / 4**"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[color=orange,label="8 / 9"], h -> e[label="0 / 2"], h -> g[color=orange,label="**3 / 3**"], h -> i[label="4 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe résiduel et son meilleur chemin augmentant :
+
+digraph{ a[label="a* / 0"], b[label="b* / 5"], c[label="c* / 3"], d[label="d* / 1"], e[label="e* / 3"], f[label="f* / 2"], g[label="g* / 1"], h[label="h* / 1"], i[label="i* / 1"], a -> b[label=5], b -> a[color=darkviolet,label=16], b -> c[label=2], b -> e[label=3], b -> f[label=1], c -> b[label=28], c -> e[label=1], c -> f[label=1], c -> h[label=1], d -> c[label=12], d -> f[label=10], d -> g[label=2], d -> i[label=3], e -> a[color=darkviolet,label=9], e -> b[label=2], e -> c[label=7], e -> f[label=2], f -> c[label=10], f -> e[label=22], g -> d[label=2], g -> f[label=10], g -> h[label=5], g -> i[label=1], h -> e[label=5], h -> f[label=4], h -> i[label=2], i -> d[label=13], i -> g[label=8], i -> h[label=4], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe de flot donné :
+
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[color=darkviolet,label="17 / 21"], a -> e[label="**9 / 9**"], b -> c[label="16 / 18"], b -> e[color=darkviolet,label="1 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[label="**7 / 7**"], c -> e[color=darkviolet,label="3 / 5"], c -> f[label="5 / 6"], c -> h[color=darkviolet,label="**1 / 1**"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[label="13 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[label="10 / 12"], e -> h[label="**3 / 3**"], f -> c[label="0 / 5"], f -> d[label="**6 / 6**"], f -> e[label="0 / 12"], f -> g[label="**5 / 5**"], f -> h[label="**4 / 4**"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[label="8 / 9"], h -> e[label="0 / 2"], h -> g[label="**3 / 3**"], h -> i[color=darkviolet,label="5 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+
+Le graphe résiduel et son meilleur chemin augmentant :
+
+digraph{ a[label="a* / 0"], b[label="b* / 4"], c[label="c* / 2"], d[label="d / -inf"], e[label="e* / 2"], f[label="f* / 2"], g[label="g / -inf"], h[label="h / -inf"], i[label="i / -inf"], a -> b[label=4], b -> a[color=gold,label=17], b -> c[label=2], b -> e[label=2], b -> f[label=1], c -> b[label=28], c -> e[label=2], c -> f[label=1], d -> c[label=12], d -> f[label=10], d -> g[color=gold,label=2], d -> i[color=gold,label=3], e -> a[color=gold,label=9], e -> b[label=3], e -> c[label=6], e -> f[label=2], f -> c[label=10], f -> e[label=22], g -> d[color=gold,label=2], g -> f[label=10], g -> h[color=gold,label=5], g -> i[color=gold,label=1], h -> c[label=1], h -> e[label=5], h -> f[label=4], h -> i[color=gold,label=1], i -> d[color=gold,label=13], i -> g[color=gold,label=8], i -> h[color=gold,label=5], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
 
 Le graphe de flot final où les arcs saturés sont en rouge :
 
-digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[label="0 / 21"], a -> e[label="0 / 9"], b -> c[label="0 / 18"], b -> e[label="0 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[label="0 / 7"], c -> e[label="0 / 5"], c -> f[label="0 / 6"], c -> h[label="0 / 1"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[label="0 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[label="0 / 12"], e -> h[label="0 / 3"], f -> c[label="0 / 5"], f -> d[label="0 / 6"], f -> e[label="0 / 12"], f -> g[label="0 / 5"], f -> h[label="0 / 4"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[label="0 / 9"], h -> e[label="0 / 2"], h -> g[label="0 / 3"], h -> i[label="0 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
+digraph{ a[label=a], b[label=b], c[label=c], d[label=d], e[label=e], f[label=f], g[label=g], h[label=h], i[label=i], a -> b[label="17 / 21"], a -> e[color=red,label="**9 / 9**"], b -> c[label="16 / 18"], b -> e[label="1 / 3"], b -> f[label="0 / 1"], c -> b[label="0 / 12"], c -> d[color=red,label="**7 / 7**"], c -> e[label="3 / 5"], c -> f[label="5 / 6"], c -> h[color=red,label="**1 / 1**"], d -> c[label="0 / 5"], d -> f[label="0 / 4"], d -> g[label="0 / 2"], d -> i[label="13 / 16"], e -> b[label="0 / 2"], e -> c[label="0 / 3"], e -> f[label="10 / 12"], e -> h[color=red,label="**3 / 3**"], f -> c[label="0 / 5"], f -> d[color=red,label="**6 / 6**"], f -> e[label="0 / 12"], f -> g[color=red,label="**5 / 5**"], f -> h[color=red,label="**4 / 4**"], g -> d[label="0 / 2"], g -> f[label="0 / 5"], g -> h[label="0 / 2"], g -> i[label="8 / 9"], h -> e[label="0 / 2"], h -> g[color=red,label="**3 / 3**"], h -> i[label="5 / 6"], {rank=same;a}, {rank=same;b,e}, {rank=same;c,f,h}, {rank=same;d,g}, {rank=same;i} }
 
 
 Bye !

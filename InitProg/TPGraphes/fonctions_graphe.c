@@ -525,7 +525,7 @@ t_gra nouveau_graphe ( int n )
 
        /* ------------------------------------------------------ */
 
-       nouveau->flot = NON; // TODO : C'est moi qui l'es ajouté
+       nouveau->flot = NON; // Modification personel pour resoudre une difference entre la reference et les resultas
        
        /* ------------------------------------------------------ */
        

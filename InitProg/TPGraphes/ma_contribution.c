@@ -94,8 +94,8 @@ void fermeture_reflexive ( t_gra graphe ) {
   
     int i, taille = taille_graphe(graphe);
     for(i = 0; i < taille; ++i) {
-    if(!get_arc(graphe, i, i))
-      set_arc(graphe, i, i, la_couleur());
+        if(!get_arc(graphe, i, i))
+            set_arc(graphe, i, i, la_couleur());
     }
 }
 
@@ -111,8 +111,8 @@ void fermeture_reflexive_pondere ( t_gra graphe , int poids ) {
 	/* +/- 5 lignes */
     int i, taille = taille_graphe(graphe);
     for(i = 0; i < taille; ++i) {
-    if(!get_arc(graphe, i, i))
-      set_arc_pondere(graphe, i, i, poids, la_couleur());
+        if(!get_arc(graphe, i, i))
+            set_arc_pondere(graphe, i, i, poids, la_couleur());
     }
 }
 
@@ -130,7 +130,7 @@ int graphe_AR ( t_gra graphe ) {
         if(get_arc(graphe, i, i))
             return NON;
     }
-    return( OUI ) ; 
+    return OUI; 
 }
 
 /* ------------------------------------------------------------ */
@@ -152,7 +152,7 @@ int graphe_ARAS ( t_gra graphe ) {
                 return NON;
         }
     }
-    return( OUI ) ; 
+    return OUI; 
 }
 
 /* ------------------------------------------------------------ */
@@ -183,7 +183,7 @@ int degre_graphe ( t_gra graphe ) {
         degre = 0;
     }
 
-    return( degreMax ) ; 
+    return degreMax; 
 }
 
 /* ------------------------------------------------------------ */
@@ -335,19 +335,21 @@ void parcours_profondeur_niveaux_rec ( t_gra graphe , int sommet , int niveau ) 
 	/* +/- 10 lignes */
     int i, taille;
     taille = taille_graphe(graphe);
-    printf("Je boucle\n");
     
     if(!mouille(graphe, sommet)) {
-        if(sommet_get_poids(graphe, sommet) > niveau) {
+        if(sommet_get_poids(graphe, sommet) > niveau)
             sommet_set_poids(graphe, sommet, niveau);
-        }
+
         tremper(graphe, sommet);
     }
 
     for(i = sommet; i < taille; ++i) {
-        if(get_arete(graphe, sommet, i))
-            parcours_profondeur_niveaux_rec(graphe, i, niveau+1);      
-    } 
+        if(get_arc(graphe, sommet, i))
+          if(!mouille(graphe, i)){
+            parcours_profondeur_niveaux_rec(graphe, i, niveau+1);
+        }
+    }
+    secher(graphe, sommet);
 }
 
 void parcours_profondeur_niveaux ( t_gra graphe , int depart ) {
@@ -362,10 +364,6 @@ void parcours_profondeur_niveaux ( t_gra graphe , int depart ) {
     tremper(graphe, depart);
 
     parcours_profondeur_niveaux_rec(graphe, depart, niveau);
-    
-    // On seche tous les sommets
-    for(i = 0; i < taille; ++i)
-        secher(graphe, i);
 }
 
 /* ------------------------------------------------------------ */
@@ -398,16 +396,58 @@ void parcours_profondeur_niveaux ( t_gra graphe , int depart ) {
    suite du calcul est abandonnée. Le graphe rendu ne sera donc
    que partiellement valué. */
 
-int cherche_sommet_sec_et_predecesseurs_mouilles ( t_gra graphe )
-    {/* +/- 15 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int cherche_sommet_sec_et_predecesseurs_mouilles ( t_gra graphe ) {
+    /* +/- 15 lignes. Il faudra retourner une valeur convenable. */
+    int cpt = 0, i, tousTrempe;
+    int taille = taille_graphe(graphe);
+    int sommet = -1;
+
+    while(sommet == -1 && cpt < taille){
+        tousTrempe = 1;
+
+        for(i = 0; i < taille; ++i){
+            if(get_arc(graphe, i, cpt) && !mouille(graphe, i))
+                tousTrempe = 0;
+        }
+
+        if(tousTrempe && !mouille(graphe, cpt))
+            sommet = cpt;
+        cpt++;
     }
 
-void tri_topologique ( t_gra graphe )
-     {
-	/* +/- 20 lignes */
-     }
+    if(sommet != -1)
+        tremper(graphe, sommet);
 
+    return sommet; 
+}
+
+void tri_topologique ( t_gra graphe ) {
+    /* +/- 20 lignes */
+    assert(graphe_ARAS(graphe));
+     
+    int i, sommet, poids = 0;
+    int taille = taille_graphe(graphe);
+   
+    while((sommet = cherche_sommet_sec_et_predecesseurs_mouilles(graphe)) != -1){
+        for(i = 0; i < taille; i++){
+            if(get_arc(graphe, sommet, i))
+                set_couleur_arc(graphe, sommet, i, la_couleur());
+        }
+
+        sommet_set_poids(graphe, sommet, poids);
+
+        if(la_couleur() >= NOMBRE_COULEURS - 1)
+            definir_couleur(ROUGE);
+        else
+            couleur_suivante();
+        
+        poids++;
+    }
+
+    if(poids < taille)
+        printf("LE GRAPHE COMPORTE DES CIRCUITS !\n");
+}
+  
 /* ------------------------------------------------------------ */
 
 /* On considère un graphe non pondéré et on souhaite calculer les plus
@@ -440,25 +480,38 @@ void tri_topologique ( t_gra graphe )
    recopier "graphe" en "nouveau". */
 
 void multiplie ( t_gra graphe ) {
-	/* +/- 20 lignes */
+    /* +/- 20 lignes */
     assert(!graphe_pondere(graphe));
 
-    int longeur, n, i, j, k, l, couleur;
-    n = taille_graphe(graphe);
-    couleur = la_couleur();
+    int p, i, j, k;
+    int n = taille_graphe(graphe);
+    
+    definir_couleur(2); // Pour avoir pareil que la réponse de référence
     fermeture_reflexive(graphe);
-    for(k = 1; k < n-1; k = 2*k) {
-        for(l = 0; l < n; l++) {
-            for(i = 0; i < n; ++i) {
-                for(j = 0; j < n; ++j) {
-                    if(i != j) {
-                        longeur = get_arc(graphe, i, l) * get_arc(graphe, l, j);
-                        if(longeur == 1) 
-                            set_arc(graphe, i, j, couleur);
+
+    int max;
+
+    t_gra graphe2 = nouveau_graphe(n);
+    copie_graphe(graphe, graphe2);
+    
+    for(p = 1; p < n - 1 ; p = p*2) {
+        for(i = 0; i < n; ++i){
+            for(j = 0; j < n; ++j){
+                if(!get_arc(graphe, i, j)) {
+                    max = 0;
+                    for(k = 0;  k < n;  k++) {
+                        if(get_arc(graphe, i, k) && get_arc(graphe, k, j) ) 
+                            max = 1;
                     }
-                } 
+
+                    if(max == 1)
+                        set_arc(graphe2,  i,  j, la_couleur());
+                }
             }
         }
+
+        couleur_suivante();
+        copie_graphe(graphe2, graphe);
     }
 }
 
@@ -468,10 +521,11 @@ void multiplie ( t_gra graphe ) {
    un graphe non pondéré. Chaque "barbecue" utilisera une autre
    couleur d'arc pour marquer les nouvelles connaissances. */
 
-void floyd_warshall ( t_gra graphe )
-     {
-	/* +/- 15 lignes */
-     }
+void floyd_warshall ( t_gra graphe ) {
+    /* +/- 15 lignes */
+    
+    assert(!graphe_pondere(graphe));
+}
 
 /* ------------------------------------------------------------ */
 
@@ -486,10 +540,44 @@ void floyd_warshall ( t_gra graphe )
    On est garanti du fait que la constante PLUS_INF est neutre pour la
    minimisation et la constante MOINS_INF neutre pour la maximisation. */
 
-void multiplie_pondere ( t_gra graphe )
-     {
-	/* +/- 25 lignes */
-     }
+void multiplie_pondere ( t_gra graphe ) {
+    /* +/- 25 lignes */
+   assert(graphe_pondere(graphe));
+
+    int p, i, j, k;
+    int n = taille_graphe(graphe);
+    
+    definir_couleur(2); // Pour avoir pareil que la réponse de référence
+    fermeture_reflexive_pondere(graphe, 0);
+
+    int max, poids;
+
+    t_gra graphe2 = nouveau_graphe(n);
+    copie_graphe(graphe, graphe2);
+    
+    for(p = 1; p < n - 1 ; p = p*2) {
+        for(i = 0; i < n; ++i){
+            for(j = 0; j < n; ++j){
+                if(!get_arc(graphe, i, j)) {
+                    max = 0;
+                    for(k = 0;  k < n;  k++) {
+                        if(get_arc(graphe, i, k) && get_arc(graphe, k, j) )  {
+                            poids = poids_arc(graphe, i, k) + poids_arc(graphe, k, j);
+                            max = 1;
+                        }
+                    }
+
+                    if(max == 1) {
+                        set_arc_pondere(graphe2,  i,  j,  poids, la_couleur());
+                    }
+                }
+            }
+        }
+
+        couleur_suivante();
+        copie_graphe(graphe2, graphe);
+    }
+ }
 
 /* ------------------------------------------------------------ */
 
@@ -498,6 +586,7 @@ void multiplie_pondere ( t_gra graphe )
 void floyd_warshall_pondere ( t_gra graphe )
      {
 	/* +/- 20 lignes */
+    assert(graphe_pondere(graphe));
      }
 
 /* ------------------------------------------------------------ */
@@ -531,25 +620,77 @@ void floyd_warshall_pondere ( t_gra graphe )
    initialisée et doit donc être initialisée. De même, on ne suppose rien
    sur les poids de sommets. */
 
-int verifie_ponderation ( t_gra graphe )
-    {/* +/- 10 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int verifie_ponderation ( t_gra graphe ) {
+    /* +/- 10 lignes. Il faudra retourner une valeur convenable. */
+    int i, j, n;
+    n = taille_graphe(graphe);
+
+    for (i = 0; i < n; ++i) {
+        for (j = 0; j < n; ++j) {
+            if (get_arc(graphe, i, j) && poids_arc(graphe, i, j) < 0)
+                return 0;
+        }
     }
 
-int cherche_sec_sommet_min ( t_gra graphe )
-    {/* +/- 10 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+    return 1; 
+}
+
+int cherche_sec_sommet_min ( t_gra graphe ) {
+    /* +/- 10 lignes. Il faudra retourner une valeur convenable. */
+    
+    int i, s = -1;
+    int poids = PLUS_INF;
+
+    for (i = 0; i < taille_graphe(graphe); i++) {
+         if (!mouille(graphe, i) && sommet_get_poids(graphe, i) < poids) {
+            s = i;
+            poids = sommet_get_poids(graphe, i);
+         }
     }
 
-void relax ( t_gra graphe , int table_predecesseurs[ ] , int pred , int sommet )
-     {
-	/* +/- 10 lignes */
-     }
+    return s; 
+}
 
-void dijkstra ( int depart , t_gra graphe , int table_predecesseurs[ ] )
-     {
-	/* +/- 20 lignes */
-     }
+void relax ( t_gra graphe , int table_predecesseurs[ ] , int pred , int sommet ) {
+    /* +/- 10 lignes */
+    int i, poids;
+    poids = sommet_get_poids(graphe, pred) + poids_arc(graphe, pred, sommet);
+
+    if (poids < sommet_get_poids(graphe, sommet)) {
+        table_predecesseurs[sommet] = pred;
+        sommet_set_poids(graphe, sommet, poids);
+
+        for (i = 0; i < taille_graphe(graphe); i++) {
+            if (get_arc(graphe, i, sommet)) {
+                set_couleur_arc(graphe, i, sommet, NOIR);
+            }
+        }
+
+        set_couleur_arc(graphe, pred, sommet, ROUGE);
+    }
+ }
+
+void dijkstra ( int depart , t_gra graphe , int table_predecesseurs[ ] ) {
+    /* +/- 20 lignes */
+    int i, s, n = taille_graphe(graphe);
+
+    for (i = 0; i < n;  ++i) {
+        sommet_set_poids(graphe, i, PLUS_INF);
+        table_predecesseurs[i] = -1;
+    }
+
+    sommet_set_poids(graphe, depart, 0);
+
+    s = cherche_sec_sommet_min(graphe);
+    do {
+        tremper(graphe, s);
+        for (i = 0; i < n; ++i) {
+            if (get_arc(graphe, s, i) && !mouille(graphe, i))
+                relax(graphe, table_predecesseurs, s, i);
+        }
+        s = cherche_sec_sommet_min(graphe);
+    } while (s != -1);
+}
 
 /* ------------------------------------------------------------ */
 
@@ -565,21 +706,68 @@ void dijkstra ( int depart , t_gra graphe , int table_predecesseurs[ ] )
    que certains sommets ne sont peut-être pas atteignables depuis le
    sommet de départ. */
 
-int cherche_sec_sommet_max ( t_gra graphe )
-    {/* +/- 10 lignes. Il faudra retourner une valeur convenable. */
-     return( 0 ) ; 
+int cherche_sec_sommet_max ( t_gra graphe ) {
+    /* +/- 10 lignes. Il faudra retourner une valeur convenable. */
+    int i, poids, n = taille_graphe(graphe);
+    int s = -1;
+    poids = MOINS_INF;
+
+    for (i = 0; i < n; ++i) {
+        if (!mouille(graphe, i) && sommet_get_poids(graphe, i) > poids) {
+            s = i;
+            poids = sommet_get_poids(graphe, i);
+        }
     }
 
-void relax_maximise_le_min ( t_gra graphe , int table_predecesseurs[ ] ,
-			     int pred , int sommet , int depart )
-     {
-	/* +/- 10 lignes */
-     }
+    return s; 
+}
 
-void dijkstra_maximise_le_min ( int depart , t_gra graphe , int table_predecesseurs[ ] )
-     {
-	/* +/- 20 lignes */
-     }
+void relax_maximise_le_min ( t_gra graphe , int table_predecesseurs[ ] ,
+			     int pred , int sommet , int depart ) {
+    /* +/- 10 lignes */
+    int i, poids, n = taille_graphe(graphe);
+
+    if (depart != pred)
+        poids = min(sommet_get_poids(graphe, pred), poids_arc(graphe, pred, sommet));
+    else
+        poids = poids_arc(graphe, pred, sommet);
+
+    if (poids > sommet_get_poids(graphe, sommet)) {
+        table_predecesseurs[sommet] = pred;
+        sommet_set_poids(graphe, sommet, poids);
+
+        for (i = 0; i < n; ++i) {
+            if (get_arc(graphe, i, sommet))
+                set_couleur_arc(graphe, i, sommet, NOIR);
+        }
+
+        set_couleur_arc(graphe, pred, sommet, ROUGE);
+    }
+}
+
+void dijkstra_maximise_le_min ( int depart , t_gra graphe , int table_predecesseurs[ ] ) {
+    /* +/- 20 lignes */
+    assert(verifie_ponderation(graphe));
+
+    int i, s, n = taille_graphe(graphe);
+
+    for (i = 0; i < n; ++i) {
+        sommet_set_poids(graphe, i, MOINS_INF);
+        table_predecesseurs[i] = -1;
+    }
+
+    sommet_set_poids(graphe, depart, 0);
+    s = cherche_sec_sommet_max(graphe);
+
+    do {
+        tremper(graphe, s);    
+        for (i = 0; i < n; ++i) {
+            if (get_arc(graphe, s, i) && !mouille(graphe, i))
+                relax_maximise_le_min(graphe, table_predecesseurs, s, i, depart);
+        }
+        s = cherche_sec_sommet_max(graphe);
+    } while (s != -1);
+}
 
 /* ------------------------------------------------------------ */
 
@@ -605,15 +793,54 @@ void dijkstra_maximise_le_min ( int depart , t_gra graphe , int table_predecesse
    ( depuis , vers ) et ( vers , depuis ) dans le graphe de flot.
    Chaque arc modifié reçoit la couleur courante. */
 
-void calcule_residuel ( t_gra graphe_flot , t_gra graphe_residuel , int i , int j )
-     {
-	/* +/- 10 lignes */
-     }
+void calcule_residuel ( t_gra graphe_flot , t_gra graphe_residuel , int i , int j ) {
+    /* +/- 10 lignes */
 
-void adapte_flot ( t_gra graphe_flot , int depuis , int vers , int valeur )
-     {
-	/* +/- 20 lignes */
-     }
+    int pij, pji, capij;
+
+    if (get_arc(graphe_flot, i, j)) {
+        pij = poids_arc(graphe_flot, i, j);
+        capij = capacite_arc(graphe_flot, i, j);
+    }
+    else {
+        pij = 0;
+        capij = 0;
+    }
+
+    if (get_arc(graphe_flot, j, i))
+        pji = poids_arc(graphe_flot, j, i);
+    else
+        pji = 0;
+
+    if (capij - pij + pji) {
+        set_arc_pondere(graphe_residuel, i, j,
+            capij - pij + pji, la_couleur());
+    }
+}
+
+void adapte_flot ( t_gra graphe_flot , int depuis , int vers , int valeur ) {
+    /* +/- 20 lignes */
+
+    if (valeur) {
+        int poids, mini, i = depuis, j = vers;
+
+        if (get_arc(graphe_flot, j, i)) {
+            poids = poids_arc(graphe_flot, j, i);
+
+            if (poids) {
+                mini = min(valeur, poids);
+                valeur = valeur - mini;
+                ajoute_poids_arc(graphe_flot, j, i, -mini);
+                set_couleur_arc(graphe_flot, j, i, la_couleur());
+            }
+        }
+
+        if (valeur) {
+            ajoute_poids_arc(graphe_flot, i, j, valeur);
+            set_couleur_arc(graphe_flot, i, j, la_couleur());
+        }
+    }
+}
 
 void ford_et_fulkerson ( void ) 
      {int i , j , sommet , taille , continuer , table_predecesseurs[ N ] ;
