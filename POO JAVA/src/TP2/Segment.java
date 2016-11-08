@@ -1,11 +1,15 @@
 package TP2;
 
-public class Segment extends Forme {
+public class Segment extends Forme implements Cloneable {
     private Point pFinal;
 
     public Segment(Point pOrigin, Point pFinal) {
         super(pOrigin);
         this.pFinal = pFinal;
+    }
+
+    public Segment clone() throws CloneNotSupportedException {
+        return (Segment) super.clone();
     }
 
     public void dessiner(Piletransformations pt) {
@@ -18,5 +22,12 @@ public class Segment extends Forme {
 
     public void deplacer(Point p) {
         pFinal = pFinal.additionner(p);
+    }
+
+    @Override
+    public void afficher() {
+        System.out.println("Segment ========================");
+        System.out.println("Point origin = " + getOrigin());
+        System.out.println("Point final = " + pFinal);
     }
 }

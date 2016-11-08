@@ -3,67 +3,76 @@ package TP1;
 import java.util.Arrays;
 
 import TP2.Structure;
+import TP3.NotElementEntiers;
 
 public class Entier extends Structure {
-	private int[] elements;
-	private int taille;
-	private int nbElements = 0;
+    private int[] data;
+    private int maxElements;
+    private int nbElements = 0;
 
+    /**
+     * @param taille nombre d'entier maximum stocké
+     */
     public Entier(int taille) {
-        this.taille = taille;
-        elements = new int[taille];
+        maxElements = taille;
+        data = new int[maxElements];
     }
 
+    /**
+     * @param entier à insérer dans l'ensemble d'entier
+     */
     public void inserer(int entier) {
-        int i;
-        for(i = 0; i < nbElements; ++i) {
-            if(entier < elements[i])
-                break;
-        }
+        assert nbElements < maxElements;
 
-        if (entier != elements[i]) {
-            assert nbElements < taille;
-
-            for(int j = nbElements; j>i; --j)
-            elements[j] = elements[j-1];
-
-            elements[i] = entier;
-            ++nbElements;
+        if(Arrays.binarySearch(data, entier) < 0) {
+            data[nbElements] = entier;
+            nbElements++;
+            Arrays.sort(data, 0, nbElements);
         }
     }
 
+    /**
+     * @param entier à supprimer si il existe
+     */
     public void supprimer(int entier) {
-    	assert nbElements > 0 ;
+        try {
+            int index = Arrays.binarySearch(data, entier);
+            if(index < 0)
+                throw new NotElementEntiers(entier);
 
-        int i = 0;
-        for(; i < nbElements; ++i)  {
-            if(elements[i] == entier)
-                break;
-        }
-        
-        if (i < nbElements) {
-        	for (int j = i; j < nbElements; ++j)
-        		elements[j] = elements[j+1];
-        	--nbElements;
+            for(int i = index; i < maxElements - 1; ++i)
+                data[i] = data[i + 1];
+            nbElements--;
+        } catch (NotElementEntiers notElementEntiers) {
+            notElementEntiers.printStackTrace();
         }
     }
-    
-    public void print() {
-        System.out.println(Arrays.toString(elements));
+
+    @Override
+    public void afficher() {
+        System.out.println(Arrays.toString(data));
     }
-    
+
+    @Override
+    public void compacter(int nb) {
+        for(int i = 0; i < nb; ++i)
+            supprimer(i);
+    }
+
     public static void main(String[] args) {
-        Entier tableau1 = new Entier(10);
+        Entier entier = new Entier(6);
+        entier.inserer(1);
+        entier.afficher();
 
-        tableau1.inserer(10);
-        tableau1.print();
-        tableau1.inserer(7);
-        tableau1.inserer(0);
-        tableau1.inserer(3);
-        tableau1.print();
-        tableau1.supprimer(7);
-        tableau1.print();
-        tableau1.supprimer(5);
-        tableau1.print();
+        entier.inserer(6);
+        entier.inserer(3);
+        entier.inserer(3);
+        entier.inserer(2);
+        entier.afficher();
+
+        entier.supprimer(2);
+        entier.afficher();
+        entier.supprimer(3);
+        entier.afficher();
     }
 }

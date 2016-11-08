@@ -1,71 +1,85 @@
 package TP1;
 
-public class Piles {
-	private int[] elements; // Le tableau qui contient les nombres entiers
-	private int taille; // Indique le nombre max d'éléments que l'on peut stocker dans la pile
-	private int nbElements; // Indique combien d'éléments contient la pile
+import TP3.PileVide;
 
-	/**
-     * Construit la pile avec la taille passée en paramètre
+import java.lang.reflect.Array;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Objects;
+
+public class Piles<E> {
+    private E[] data;
+    private int maxElement;
+    private int nbElement = 0;
+
+    public Piles(int taille, Class<E> c) {
+        maxElement = taille;
+        data = (E[]) Array.newInstance(c, maxElement);
+    }
+    /**
+     * Constructeur de la classe Piles
      * @param taille
      */
     public Piles(int taille) {
-        this.taille = taille; // Défini la taille de la nouvelle pile
-        elements = new int[taille]; // Créer le tableau qui stockera les valeurs de la table
-        nbElements = 0; // Cette pile est vide
+        maxElement = taille;
+        data = (E[]) new Object[maxElement];
     }
 
     /**
-     * Dit si la pile est pleine
-     * @return true si elle est pleine
+     * Empile un élément sur la pile
+     * @param element
      */
-    public boolean pleine() {
-    	return taille==nbElements;
+    public void empiler(E element) {
+        assert !pleine();
+        data[nbElement] = element;
+        nbElement++;
     }
 
     /**
-     * Dit si la pile est vide
-     * @return true si elle est vide
+     * Dépile l'entier du sommet de la pile
+     * @return le sommet
+     * @throws PileVide
      */
-    public boolean vide() {
-    	return nbElements==0 ;
+    public E depiler() throws PileVide {
+        if (vide())
+            throw new PileVide();
+        nbElement--;
+        return data[nbElement];
     }
 
     /**
-     * Empile l'entier passé en paramètre
-     * @param entier
+     * @return true si la pile est pleine
      */
-    public void empiler(int entier) {
-    	assert !pleine(); // Renvoie une erreur si la pile est pleine
-    	
-    	elements[nbElements] = entier; // Rajoute l'entier dans le dernier emplacement libre de la pile
-    	++nbElements; // Met à jour le nombre d'éléments de la pile
-    }
-    
-    /**
-     * Dépile l'entier en haut de la pile
-     * @return sommet
-     */
-    public int depiler() {
-    	assert !vide(); // Renvoie une erreur si la pile est vide
-    	
-    	--nbElements; // Décrémente le nombre d'éléments, permettant d'écrire à l'emplacement du sommet
-    	return elements[nbElements]; // Renvoie le sommet
+    private boolean pleine() {
+        return nbElement == maxElement;
     }
 
     /**
-     * Fonction de test
+     * @return true si la pile est vide
      */
+    private boolean vide() {
+        return nbElement == 0;
+    }
+
     public static void main(String[] args) {
-    	int sommet;
-        // Déclaration d'une nouvelle pile
-        Piles pileA = new Piles(4);
+        try {
+            Piles<Integer> piles = new Piles<>(4);
+            piles.empiler(5);
+            System.out.println("Sommet = " + piles.depiler());
 
-        pileA.empiler(4);
-        sommet = pileA.depiler();
-        
-        System.out.println(sommet);
+            /* Test de la mécanisme de réflexion */
+            Piles<String> stringPiles = new Piles(4, String.class);
+            stringPiles.empiler("C'est du JAVA");
+            System.out.println("Sommet = " + stringPiles.depiler());
+        } catch (PileVide pileVide) {
+            pileVide.printStackTrace();
+        }
+
+        /* ArrayDeque */
+        System.out.println("Même pile de String avec ArrayDeque");
+        ArrayDeque<String> arrayDeque = new ArrayDeque<>();
+        arrayDeque.push("J'aime les licornes");
+        System.out.println("Sommet = "  + arrayDeque.pop());
 
     }
-
 }

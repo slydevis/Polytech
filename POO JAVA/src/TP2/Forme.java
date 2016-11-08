@@ -1,6 +1,6 @@
 package TP2;
 
-public abstract class Forme {
+public abstract class Forme implements Affichable {
 	private Point pOrigin;
 	
 	public Forme() {

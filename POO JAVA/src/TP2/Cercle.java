@@ -10,10 +10,15 @@ public class Cercle extends Forme {
 
     public void dessiner(Piletransformations pt) {
         System.out.println("Cercle :");
-        Point pTmp = super.getOrigin().additionner(pt.getCourant());
+        Point pTmp = getOrigin().additionner(pt.getCourant());
         System.out.println("d'origine : " + pTmp);
         System.out.println("de rayon : " + rayon);
     }
 
-    public Point getOrigin() { return super.getOrigin(); } // For JUnit testing
+    @Override
+    public void afficher() {
+        System.out.println("Cercle ===========================");
+        System.out.println("Rayon = " + rayon);
+        System.out.println(getOrigin());
+    }
 }

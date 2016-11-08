@@ -3,6 +3,11 @@ package TP2;
 import TP1.Entier;
 import TP1.Liste;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Main {
     public static void main(String[] argv) {
     	System.out.println("Création d'un segment");
@@ -80,6 +85,36 @@ public class Main {
     	s[1] = (Structure) new Entier(7);
     	s[1].inserer(8);
     	s[1].supprimer(7);
+
+		Affichable a[]= new Affichable[99];
+		a[0] = new Cercle(new Point(0,0), 5);
+		a[1] = s[1]; // a[1] = Entier
+
+		a[0].afficher();
+		a[1].afficher();
+
+        Compactable c[] = new Compactable[2];
+        c[0] = image4;
+        c[1] = s[1]; // a[1] = Entier
+
+        c[0].compacter(1);
+        c[1].compacter(2);
+
+        System.out.println("Tableau d'image");
+        ArrayList<Image> iL = new ArrayList<>();
+        image2.ajouter(cercle3);
+        iL.add(image2);
+        iL.add(image3);
+        iL.sort(Image::compareTo);
+
+        for(int i = 0; i < iL.size(); ++i)
+            iL.get(i).afficher();
+
+        System.out.println("Image max de la première collection");
+        Image imageMax = Collections.max(iL, new Image());
+        imageMax.afficher();
+
+        Image imageClone = image4;
     }
 }
 

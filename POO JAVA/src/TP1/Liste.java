@@ -2,89 +2,125 @@ package TP1;
 
 import TP2.Structure;
 
-public class Liste extends Structure {
-    private Maillons premier;
+public class Liste extends Structure implements Cloneable {
+    private Maillon list;
 
-    public Liste() {
-        premier = null;
-    }
+    private class Maillon {
+        private int value;
+        private Maillon next;
 
-    class Maillons {
-        public int valeur;
-        public Maillons next;
-
-        public Maillons(int valeur, Maillons next) {
-            this.valeur = valeur;
+        private Maillon(int value, Maillon next) {
+            this.value = value;
             this.next = next;
         }
 
-        public void print() {
-            System.out.println(valeur + " -> ");
-            if(next != null)
-                next.print();
-        }
-    }
-
-    public void inserer(int entier) {
-        boolean estPresent = false;
-        Maillons maillons = premier;
-
-        while(maillons != null) {
-            if(maillons.valeur == entier)
-                estPresent = true;
-            maillons = maillons.next;
-        }
-
-        if(!estPresent) {
-            Maillons newMaillons = new Maillons(entier, premier);
-            premier = newMaillons;
-        }
-    }
-
-    public void supprimer(int entier) {
-        Maillons maillons = premier;
-
-        if(maillons != null && maillons.next != null && maillons.valeur == entier) {
-            premier = maillons.next;
-            return;
-        }
-
-        if(maillons != null && maillons.next == null && maillons.valeur == entier) {
-            premier = null;
-            return;
-        }
-
-        while (maillons != null) {
-            if(maillons.next != null && maillons.next.valeur == entier) {
-                maillons.next = maillons.next.next;
-                return;
+        private void afficher() {
+            if(next != null) {
+                System.out.print(value + " -> ");
+                next.afficher();
             }
-            maillons = maillons.next;
+            else {
+                System.out.println(value);
+            }
         }
     }
 
-    public void print() {
-        premier.print();
-        System.out.println();
+    public Liste() {
+        this.list = null;
+    }
+
+    /**
+     * @param first premier élément de la liste
+     */
+    public Liste(Maillon first) {
+        this.list = first;
+    }
+
+    /**
+     * @param e entier à chercher dans la liste
+     * @return vrai si l'entier est présent dans la liste
+     */
+    private boolean estPresent(int e) {
+        Maillon cur = list;
+
+        while(cur != null) {
+            if(cur.value == e)
+                return true;
+            cur = cur.next;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param e nouvelle élément à inserer dans la liste
+     */
+    @Override
+    public void inserer(int e) {
+        if(!estPresent(e)) {
+            Maillon newMaillon = new Maillon(e, list);
+            list = newMaillon;
+        }
+    }
+
+    /**
+     * @param e élément à supprimer de la liste
+     */
+    @Override
+    public void supprimer(int e) {
+        if(estPresent(e)) {
+            Maillon mail = list;
+
+            // Si la liste contiens qu'un élément
+            if (mail != null && mail.next == null) {
+                if(mail.value == e) {
+                    list = null;
+                    return;
+                }
+            }
+
+            // Si l'élément est le premier élément de la liste
+            if (mail != null && mail.next != null) {
+                if (mail.value == e) {
+                    list = mail.next;
+                    return;
+                }
+            }
+
+            while (mail != null) {
+                if(mail.next != null && mail.next.value == e) {
+                    mail.next = mail.next.next;
+                    return;
+                }
+                mail = mail.next;
+            }
+        }
+    }
+
+    @Override
+    public void afficher() {
+        list.afficher();
+    }
+
+    @Override
+    public void compacter(int nb) {
+        for(int i = 0; i < nb; ++i)
+            supprimer(i);
+    }
+
+    public Liste clone() throws CloneNotSupportedException {
+        return (Liste) super.clone();
     }
 
     public static void main(String[] args) {
-
-        Liste liste1 = new Liste();
-
-        liste1.inserer(2);
-        liste1.print();
-        liste1.inserer(3);
-        liste1.inserer(5);
-        liste1.inserer(7);
-        liste1.inserer(11);
-        liste1.print();
-        liste1.supprimer(7);
-        liste1.print();
-        liste1.supprimer(2);
-        liste1.print();
-        liste1.supprimer(11);
-        liste1.print();
-
+        Liste liste = new Liste();
+        liste.inserer(3);
+        liste.inserer(6);
+        liste.inserer(4);
+        liste.inserer(3);
+        liste.inserer(1);
+        liste.afficher();
+        liste.supprimer(4);
+        liste.afficher();
     }
 }
