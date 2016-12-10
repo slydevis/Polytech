@@ -352,7 +352,7 @@ supprimer_min:
   jal afficher_chaine
 #          return(NULL);
   li $v0, 0
-  j fin_supprimer_min
+  j fin_restauration_supprimer_min
 #      }
 a_not_null_supprimer_min:
 while_supprimer_min:
@@ -397,7 +397,7 @@ p_fils_droit_null_supprimer_min:
 #             if (p == a) a=NULL ;
   bne $s0, $a0, p_pas_egal_a_supprimer_min
   move $a0, $0
-#  j fin_supprimer_min
+  j fin_supprimer_min
 p_pas_egal_a_supprimer_min:
 #             else p->pere->fils_gauche=NULL ;
   lw $t0, 12($s0) # p->pere
@@ -415,6 +415,8 @@ fin_supprimer_min:
   lw $a0, -4($sp)
 #      return(a);
   move $v0, $a0
+
+fin_restauration_supprimer_min:
 # restauration de $ra et $s0
   addiu $sp, $sp, 8
   lw $ra, -4($sp)
