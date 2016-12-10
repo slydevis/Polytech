@@ -60,19 +60,18 @@ init_mem:
 # 	i dans $t0
 #   i=0 ;
 	li $t0, 0
-
 #   do
 do_while_init_mem:
 #   {
 #       memoire[i].pere = (Noeud *)(&memoire[i+1]);
 # calcul de &memoire[i+1] dans $t1
 	li $t1, 16
-	addi $t2, $t0, 1 # i+1 dans $t2
-	mulo $t1, $t1, $t2
-	la $t1, memoire($t2)
-# calcul de memoire[i].pere
-	# adresse de memoire[i].pere = @memoire[i+1-4]
-	sw $t1, -4($t1) # memoire[i].pere
+	mulo $t1, $t0, $t1
+	la $t1, memoire($t1) # @memoire[i]
+	addi $t2, $t1, 16 # @memoire[i+1]
+# adresse de memoire[i].pere = @memoire[i+1-4]
+#	sw $t1, -4($t1) # memoire[i].pere
+	sw $t2, 12($t1)
 #       i=i+1;
 	addi $t0, $t0, 1
 #   } while (i<MAX-1);
@@ -80,10 +79,9 @@ do_while_init_mem:
 	blt $t0, $t1, do_while_init_mem
 #   memoire[MAX-1].pere = NULL ;
 	li $t1, 16
-	li $t2, 399 # MAX-1
-	mulo $t1, $t1, $t2
-	la $t2, memoire($0)
-	addu $t1, $t2, $t1
+	li $t0, 399 # MAX-1
+	mulo $t1, $t0, $t1
+	la $t1, memoire($t1) # @memoire[i]
 	sw $0, 12($t1)
 #   blocs_libres = memoire ;
 	la $t0, memoire($0)
@@ -103,13 +101,13 @@ my_malloc:
 #		p dans $t0
 #
 #   p =  blocs_libres ;
-	la $t0, blocs_libres
+	lw $t0, blocs_libres
 #   if (p!=NULL)
 	beqz $t0, fin_my_malloc
 #   {
 #       blocs_libres = blocs_libres->pere ;
-	lw $t0, blocs_libres+12($0)
-	sw $t0, blocs_libres($0)
+	lw $t1, 12($t0)
+	sw $t1, blocs_libres($0)
 #   }
 fin_my_malloc:
 #   return((void *)p);
@@ -125,10 +123,13 @@ fin_my_malloc:
 # Parametre bloc dans $a0
 	.globl	my_free
 my_free:
-	jr $ra # A REMPLACER PAR LA TRADUCTION DU CODE C CI-DESSOUS
 #{
 #   ((Arbre)bloc)->pere = blocs_libres ;
+	lw $t0, blocs_libres
+	sw $t0, 12($a0)
 #   blocs_libres = (Arbre)bloc ;
+	sw $a0, blocs_libres($0)
+	jr $ra
 #}
 #/*----------------fin memoire.s--------------------------------------*/
 #
