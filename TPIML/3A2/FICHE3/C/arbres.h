@@ -2,17 +2,17 @@
 -------------------------------------------------------------------
 Nom du fichier : arbres.h
 Auteur :
-Objet : entete du module implantant les arbres binaires de recherche 
+Objet : entete du module implantant les arbres binaires de recherche
         contenant des entiers. Les noeuds sont doublement chainees.
 --------------------------------------------------------------------
 */
 
-#ifndef _ARBRES_H_ 
+#ifndef _ARBRES_H_
 #define _ARBRES_H_
 
 /*
 Definitions des types
-Representation des arbres binaires de recherche 
+Representation des arbres binaires de recherche
  avec 1 lien sur le père dans chaque noeud
 */
 typedef struct maillon{
@@ -22,7 +22,7 @@ typedef struct maillon{
         struct maillon *pere ;
 }Noeud, *Arbre ;
 
-//La macro TAILLE_NOEUD est Utilisé seulement dans 
+//La macro TAILLE_NOEUD est Utilisé seulement dans
 //les commentaires
 #define TAILLE_NOEUD (sizeof(Noeud))
 
@@ -42,8 +42,8 @@ l'arbre resultat
 */
 Arbre inserer(Arbre a, int x);
 
-/* afficher_arbre_croissant : affiche les elements de l'arbre a 
-   dans l'ordre croissant 
+/* afficher_arbre_croissant : affiche les elements de l'arbre a
+   dans l'ordre croissant
 */
 void afficher_arbre_croissant(Arbre a);
 
@@ -52,7 +52,7 @@ void afficher_arbre_croissant(Arbre a);
 int rechercher(Arbre a, int x);
 
 /* afficher_min :
-  Affiche la valeur minimale dans l'arbre a 
+  Affiche la valeur minimale dans l'arbre a
 */
 void afficher_min(Arbre a);
 
@@ -62,7 +62,21 @@ void afficher_min(Arbre a);
 */
 Arbre supprimer_min(Arbre a);
 
+/* creer_arbre_sans_doublon
+  Crée un arbre sans doublon à partir de l'arbre a
+*/
+Arbre creer_arbre_sans_doublon(Arbre a);
+
+/* afficher_arbre_croissant_sans_doublon
+  Affiche l'arbre a sans les doublon
+*/
+void afficher_arbre_croissant_sans_doublon(Arbre a);
+
+/* supprimer_arbre
+  Surrprime un arbre et libére l'espace mémoire qu'il occupe
+*/
+Arbre supprimer_arbre(Arbre a);
+
 /*---------------------- fin arbres.h ---------------------------*/
 
 #endif
-

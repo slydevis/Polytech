@@ -2,7 +2,7 @@
 -------------------------------------------------------------------
 Nom du fichier : main.c
 Auteur :
-Objet : Module principale 
+Objet : Module principale
 --------------------------------------------------------------------
 */
 
@@ -13,7 +13,7 @@ Objet : Module principale
 
 /*
 cette fonction affiche un menu qui donne les commandes disponibles
-pour effectuer les operations sur les arbres  
+pour effectuer les operations sur les arbres
 */
 static void menu(void)
 {
@@ -24,6 +24,9 @@ static void menu(void)
 	afficher_chaine(" 4 : Rechercher un element\n");
 	afficher_chaine(" 5 : Afficher la valeur minimale \n");
 	afficher_chaine(" 6 : Supprimer un element ayant la valeur minimal \n");
+	afficher_chaine(" 7 : Crée un arbre sans doublon à partir de l'ABR\n");
+	afficher_chaine(" 8 : Afficher un ABR sans doublon\n");
+	afficher_chaine(" 9 : Supprime l'arbre sans doublon\n");
 	afficher_chaine(" 0 : Quitter \n");
 	afficher_chaine("\n");
 	afficher_chaine("choix : \n");
@@ -33,52 +36,71 @@ int main(void)
 {
     int choix ;
     int nb ;
-    
+
     Arbre mon_arbre ;
-    
+		Arbre sans_doublon_arbre;
+
     // initialisation des structures de donnees utilisees pour la
     // gestion de la memoire.
-    init_mem(); 
-    
-    mon_arbre = creer_arbre_vide() ; 
-    menu();    
+    init_mem();
+
+    mon_arbre = creer_arbre_vide() ;
+		sans_doublon_arbre = creer_arbre_vide();
+
+    menu();
     choix = lire_entier() ;
     while (choix != 0)
     {
         switch(choix)
         {
-            case 1 : 
-                   mon_arbre = creer_arbre_vide() ; 
+            case 1 :
+                   mon_arbre = creer_arbre_vide() ;
                    break;
-            case 2 : 
+            case 2 :
                    afficher_chaine("nombre a inserer ? ");
                    nb = lire_entier();
                    mon_arbre = inserer(mon_arbre, nb);
                    break ;
 
-            case 3 : 
+            case 3 :
                    if (mon_arbre !=NULL)
                         afficher_arbre_croissant(mon_arbre);
                    else
                         afficher_chaine(" arbre vide! \n");
                    break ;
-            case 4 : 
+            case 4 :
                    afficher_chaine("nombre a rechercher ? ");
                    nb = lire_entier();
                    if(rechercher(mon_arbre, nb) !=0)
                         afficher_chaine (" present!\n");
-                   else 
+                   else
                         afficher_chaine(" absent!\n");
-                   break; 
-           
-            case 5 : 
+                   break;
+
+            case 5 :
                    afficher_min(mon_arbre);
                    break ;
-           
-            case 6: 
-                   mon_arbre = supprimer_min(mon_arbre); 
+
+            case 6:
+                   mon_arbre = supprimer_min(mon_arbre);
                    break ;
-            
+						case 7:
+									 sans_doublon_arbre = creer_arbre_sans_doublon(mon_arbre);
+									 afficher_chaine("Nouveau arbre sans doublon :\n");
+									 afficher_arbre_croissant_sans_doublon(sans_doublon_arbre);
+									 break;
+						case 8:
+									 if(mon_arbre != NULL)
+									 			afficher_arbre_croissant_sans_doublon(mon_arbre);
+									 else
+									 			afficher_chaine(" arbre vide! \n");
+									 break;
+						case 9:
+									if(sans_doublon_arbre != NULL)
+											 sans_doublon_arbre = supprimer_arbre(sans_doublon_arbre);
+									else
+											 afficher_chaine(" arbre vide! \n");
+ 									break;
          }
          menu();
          choix = lire_entier() ;

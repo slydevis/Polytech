@@ -1,12 +1,12 @@
 /*
 -------------------------------------------------------------------
 Nom du fichier : arbres.c
-Auteur : 
-Objet : Module implantant les arbres binaires de recherche 
+Auteur :
+Objet : Module implantant les arbres binaires de recherche
         contenant des entiers. Les noeuds sont doublement chainees.
 --------------------------------------------------------------------
 */
-#include <stdio.h> //pour la constante NULL 
+#include <stdio.h> //pour la constante NULL
 
 #include "arbres.h" //pour verification de la coherence et définition
                     // des types Arbre et Noeud
@@ -42,16 +42,16 @@ l'arbre resultat
      {
           afficher_chaine("insertion impossible : memoire pleine\n");
           return(a);
-     }   
+     }
      p->info = x ;
      p->fils_gauche = NULL ;
      p->fils_droit = NULL ;
      if (a == NULL)
-     { 
+     {
           p->pere = NULL ;
           return(p);
      }
-     
+
      q=a;
      do
      {
@@ -74,15 +74,15 @@ l'arbre resultat
      {
          r->fils_droit=p ;
      }
-     
+
      return(a);
-     
+
 }
 
 
 void afficher_arbre_croissant(Arbre a)
-/* afficher_arbre_croissant : affiche les elements de l'arbre a 
-   dans l'ordre croissant 
+/* afficher_arbre_croissant : affiche les elements de l'arbre a
+   dans l'ordre croissant
 */
 {
      if (a!= NULL)
@@ -100,7 +100,7 @@ int rechercher(Arbre a, int x)
 {
      if (a == NULL) return(0) ;
      if (a->info == x) return(1) ;
-     if (a->info > x) 
+     if (a->info > x)
      {
          return(rechercher(a->fils_gauche, x));
      }
@@ -112,17 +112,17 @@ int rechercher(Arbre a, int x)
 
 void afficher_min(Arbre a)
 /* afficher_min :
-  Affiche la valeur minimale dans l'arbre a 
+  Affiche la valeur minimale dans l'arbre a
 */
 {
       Noeud *p = a;
-      
+
       if (a==NULL)
-      { 
+      {
           printf("\nArbre vide!\n");
       }
       else
-      { 
+      {
           while(p->fils_gauche != NULL)
           {
                p=p->fils_gauche ;
@@ -140,9 +140,9 @@ Arbre supprimer_min(Arbre a)
 */
 {
       Noeud *p = a;
-      
+
       if (a==NULL)
-      { 
+      {
           printf("\nArbre vide!\n");
           return(NULL);
       }
@@ -171,5 +171,53 @@ Arbre supprimer_min(Arbre a)
       return(a);
 }
 
-/*--------------------fin arbres.c---------------------------*/
 
+/* creer_arbre_sans_doublon_rec
+  Crée un arbre sans doublon à partir de a et le met dans b
+*/
+Arbre creer_arbre_sans_doublon_rec(Arbre a, Arbre b) {
+    if(rechercher(b, a->info) == 0)
+      b = inserer(b, a->info);
+    if(a->fils_gauche != NULL)
+      b = creer_arbre_sans_doublon_rec(a->fils_gauche, b);
+    if(a->fils_droit != NULL)
+      b = creer_arbre_sans_doublon_rec(a->fils_droit, b);
+
+    return b;
+}
+
+/* creer_arbre_sans_doublon
+  Crée un arbre sans doublon à partir de l'arbre a
+*/
+Arbre creer_arbre_sans_doublon(Arbre a) {
+  if(a == NULL)
+    return NULL;
+
+  Arbre p = creer_arbre_vide();
+  p = creer_arbre_sans_doublon_rec(a, p);
+
+  return p;
+}
+
+/* afficher_arbre_croissant_sans_doublon
+  Affiche l'arbre a sans les doublon
+*/
+void afficher_arbre_croissant_sans_doublon(Arbre a) {
+    Noeud* tmp = creer_arbre_sans_doublon(a);
+    afficher_arbre_croissant(tmp);
+}
+
+/* supprimer_arbre
+  Surrprime un arbre et libére l'espace mémoire qu'il occupe
+*/
+Arbre supprimer_arbre(Arbre a) {
+    Arbre p = a;
+
+    while(p != NULL) {
+        p = supprimer_min(p);
+    }
+
+    return p;
+}
+
+/*--------------------fin arbres.c---------------------------*/

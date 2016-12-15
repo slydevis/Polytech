@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 #Nom du fichier : main.s
 #Auteur :
-#Objet : Module principale 
+#Objet : Module principale
 #--------------------------------------------------------------------
 #*/
 #
@@ -14,7 +14,7 @@
 #
 #/*
 #cette fonction affiche un menu qui donne les commandes disponibles
-#pour effectuer les operations sur les arbres  
+#pour effectuer les operations sur les arbres
 #*/
 #static void menu(void)
 	.text
@@ -46,6 +46,15 @@ menu :
 #	afficher_chaine(" 6 : Supprimer un element ayant la valeur minimal \n");
 	la $a0, ch6
 	jal afficher_chaine
+# afficher_chaine(" 7 : Crée un arbre sans doublon à partir de l'ABR\n");
+	la $a0, ch7
+	jal afficher_chaine
+# afficher_chaine(" 8 : Afficher un ABR sans doublon\n");
+	la $a0, ch8
+	jal afficher_chaine
+# afficher_chaine(" 9 : Supprime l'arbre sans doublon\n");
+	la $a0, ch9
+	jal afficher_chaine
 #	afficher_chaine(" 0 : Quitter \n");
 	la $a0, ch0
 	jal afficher_chaine
@@ -68,38 +77,44 @@ main:
 # resultat dans $v0 (convention de programmation du MIPS)
 #{
 #    int choix ;
-# la variable locale choix sera  dans le registre $s0 (sauvegarde' 
+# la variable locale choix sera  dans le registre $s0 (sauvegarde'
 # par l'appele')
 #    int nb ;
-# la variable locale nb sera dans le registre $s1 (sauvegarde' 
+# la variable locale nb sera dans le registre $s1 (sauvegarde'
 #  par l'appele')
-#    
+#
 #
 #     Arbre mon_arbre ;
 #  la variable locale mon_arbre sera dans le registre $s2 (sauvegarde'
 #  par l'appele')
-#
+# 		Arbre sans_doublon_arbre;
+# la variable locale sans_doublon_arbre sera dans le registre $s3
+# (sauvegardé par l'appelé)
 	# main appelle d'autres fonctions: on sauvegardera $ra
 	# main utilise $s0, $s1, et $s2. Il faudra les sauvegarder
-        
+
 	sw $ra, -4($sp)
 	sw $s0, -8($sp)
 	sw $s1, -12($sp)
 	sw $s2, -16($sp)
-	addiu $sp, $sp, -16
+	sw $s3, -20($sp)
+	addiu $sp, $sp, -20
 
 #    // initialisation des structures de donnees utilisees pour la
 #    // gestion de la memoire.
-#    init_mem(); 
-	jal init_mem 
-#    
-#    mon_arbre = creer_arbre_vide() ; 
-	jal creer_arbre_vide # resultat dans $v0 (decide' en examinant arbres.h) 
+#    init_mem();
+	jal init_mem
+#
+#    mon_arbre = creer_arbre_vide() ;
+	jal creer_arbre_vide # resultat dans $v0 (decide' en examinant arbres.h)
         move $s2, $v0
-#    menu();    
+# 	sans_doublon_arbre = creer_arbre_vide();
+	jal creer_arbre_vide
+	move $s3, $v0
+#    menu();
 	jal menu
 #    choix = lire_entier() ;
-	jal lire_entier # resultat dans $v0 (decide' en examinant inteface.h) 
+	jal lire_entier # resultat dans $v0 (decide' en examinant inteface.h)
 	move $s0, $v0
 #    while (choix != 0)
 while: beq $s0, $0, fin_while
@@ -109,8 +124,8 @@ while: beq $s0, $0, fin_while
 # valeur min de choix : 1, valeur max : 6, pas de branche default
         # si choix <= 0 aller a fin_switch
 	ble $s0, $0, fin_switch
-        # si choix > 6 aller a fin_switch
-	li $t0, 6
+        # si choix > 9 aller a fin_switch
+	li $t0, 9
 	bgt $s0, $t0, fin_switch
         # aller a JT[choix]
         li $t0, 4
@@ -118,14 +133,14 @@ while: beq $s0, $0, fin_while
 	lw $t0, JT($t0)
 	jr $t0
 #        {
-#            case 1 : 
+#            case 1 :
 case1:
-#                   mon_arbre = creer_arbre_vide() ; 
+#                   mon_arbre = creer_arbre_vide() ;
          jal creer_arbre_vide
          move $s2, $v0
 #                   break;
-         j fin_switch 
-#            case 2 : 
+         j fin_switch
+#            case 2 :
 case2:
 #                   afficher_chaine("nombre a inserer ? ");
 	la $a0, saisieinserer # constante stockee dans la section .data
@@ -140,9 +155,9 @@ case2:
 	move $s2, $v0
 
 #                   break ;
-         j fin_switch 
+         j fin_switch
 #
-#            case 3 : 
+#            case 3 :
 case3:
 #                   if (mon_arbre !=NULL)
           beq $s2,$0, elsemain1
@@ -157,8 +172,8 @@ elsemain1:
          jal afficher_chaine
 finifmain1:
 #                   break ;
-         j fin_switch 
-#            case 4 : 
+         j fin_switch
+#            case 4 :
 case4:
 #                   afficher_chaine("nombre a rechercher ? ");
          la $a0, saisierechercher
@@ -175,38 +190,82 @@ case4:
 	la $a0, present
 	jal afficher_chaine
 	b finifmain2
-#                   else 
+#                   else
 elsemain2:
 #                        afficher_chaine(" absent!\n");
 	la $a0, absent
 	jal afficher_chaine
 finifmain2:
 #                   break;
-         j fin_switch  
-#           
-#            case 5 : 
+         j fin_switch
+#
+#            case 5 :
 case5:
 #                   afficher_min(mon_arbre);
 	move $a0, $s2
 	jal afficher_min
 #                   break ;
-         j fin_switch 
-#           
+         j fin_switch
+#
 #            case 6:
 case6:
-#                   mon_arbre = supprimer_min(mon_arbre); 
+#                   mon_arbre = supprimer_min(mon_arbre);
 	move $a0, $s2
 	jal supprimer_min
-	move $s2, $v0 
+	move $s2, $v0
 #                   break ;
-         j fin_switch 
-#            
+         j fin_switch
+#
+case7:
+# sans_doublon_arbre = creer_arbre_sans_doublon(mon_arbre);
+	move $a0, $s2
+	jal creer_arbre_sans_doublon
+	move $s3, $v0
+# afficher_chaine("Nouveau arbre sans doublon :\n");
+	la $a0, new_sans_doublon_arbre
+	jal afficher_chaine
+# afficher_arbre_croissant_sans_doublon(sans_doublon_arbre);
+	move $a0, $s3
+	jal afficher_arbre_croissant_sans_doublon
+# break;
+	j fin_switch
+case8:
+#  if (mon_arbre !=NULL)
+  beq $s2,$0, else_main_case8
+# afficher_arbre_croissant_sans_doublon(mon_arbre);
+	move $a0, $s2
+	jal afficher_arbre_croissant_sans_doublon
+	j fin_if_case8
+# else
+else_main_case8:
+# afficher_chaine(" arbre vide! \n");
+	la $a0, arbrevide
+	jal afficher_chaine
+fin_if_case8:
+# break;
+	j fin_switch
+case9:
+# if(sans_doublon_arbre != NULL)
+	beq $s3, $0, else_main_case9
+#		 sans_doublon_arbre = supprimer_arbre(sans_doublon_arbre);
+	move $a0, $s3
+	jal supprimer_arbre
+	move $s3, $v0
+	j fin_if_case9
+# else
+else_main_case9:
+#		 afficher_chaine(" arbre vide! \n");
+	la $a0, arbrevide
+	jal afficher_chaine
+fin_if_case9:
+# break;
+	j fin_switch
 #         }
 fin_switch:
 #         menu();
          jal menu
 #    choix = lire_entier() ;
-        jal lire_entier 
+        jal lire_entier
         move $s0, $v0
 #    }
         j while
@@ -215,11 +274,12 @@ fin_while:
 #return(0);
 	li $v0, 0
 	# restauration $si et $ra puis retour a l'appelant
-	addiu $sp, $sp, 16
+	addiu $sp, $sp, 20
 	lw $ra, -4($sp)
 	lw $s0, -8($sp)
 	lw $s1, -12($sp)
 	lw $s2, -16($sp)
+	lw $s3, -20($sp)
 	jr $ra
 #}
 
@@ -227,12 +287,15 @@ fin_while:
 	.data
 # constantes chaines de caracteres utilisees dans la fonction menu
 chmenu:	.asciiz "\n------------------Menu-----------------\n"
-ch1:	.asciiz " 1 : Creer un arbre vide \n" 
+ch1:	.asciiz " 1 : Creer un arbre vide \n"
 ch2: 	.asciiz " 2 : Inserer un nouvel element \n"
 ch3:	.asciiz " 3 : Afficher l'arbre dans l'ordre croissant \n"
 ch4:	.asciiz " 4 : Rechercher un element\n"
 ch5:	.asciiz " 5 : Afficher la valeur minimale \n"
 ch6:	.asciiz " 6 : Supprimer un element ayant la valeur minimal \n"
+ch7: 	.asciiz " 7 : Crée un arbre sans doublon à partir de l'ABR \n"
+ch8:	.asciiz " 8 : Afficher un ABR sans doublon \n"
+ch9: 	.asciiz " 9 : Supprime l'arbre sans doublon \n"
 ch0:	.asciiz " 0 : Quitter \n"
 alaligne: .asciiz "\n"
 choix :	.asciiz "choix : \n"
@@ -243,16 +306,19 @@ saisierechercher: .asciiz "nombre a rechercher ? "
 present: .asciiz " present!\n"
 absent: .asciiz " absent!\n"
 arbrevide: .asciiz " arbre vide! \n"
+new_sans_doublon_arbre: .asciiz "Nouveau arbre sans doublon :\n"
 
 # jump table
 	.align 2
-JT : 	.word 0 # mot perdu car choix=0 n'est pas une branche du switch	
+JT : 	.word 0 # mot perdu car choix=0 n'est pas une branche du switch
 	.word case1
 	.word case2
 	.word case3
 	.word case4
 	.word case5
 	.word case6
-	
-#/*------------------------fin main.s------------------------------*/
+	.word case7
+	.word case8
+	.word case9
 
+#/*------------------------fin main.s------------------------------*/

@@ -424,6 +424,163 @@ fin_restauration_supprimer_min:
   jr $ra
 #}
 #
+
+#/* creer_arbre_sans_doublon_rec
+#  Crée un arbre sans doublon à partir de a et le met dans b
+#*/
+#Arbre creer_arbre_sans_doublon_rec(Arbre a, Arbre b) {
+# parametres dans $a0 et $a1, résultat dans $v0
+  .globl creer_arbre_sans_doublon_rec
+creer_arbre_sans_doublon_rec:
+# sauvegarde de $ra et de $a0 et $a1
+  sw $ra, -4($sp)
+  addiu $sp, $sp, -4
+
+# sauvegarde de $a0 de $a1
+  sw $a0, -4($sp)
+  sw $a1, -8($sp)
+  addiu $sp, $sp, -8
+
+  #if(rechercher(b, a->info) == 0)
+  lw $t0, 0($a0) # a->info dans $t0
+  move $a0, $a1
+  move $a1, $t0
+  jal rechercher
+  bnez $v0, suite_creer_arbre_sans_doublon_rec
+#   b = inserer(b, a->info);
+  lw $a0, 0($sp) # b dans $a0
+  lw $a1, 4($sp)
+  lw $a1, 0($a1) # a->info
+  jal inserer
+  sw $v0, 0($sp)
+suite_creer_arbre_sans_doublon_rec:
+# if(a->fils_gauche != NULL)
+  lw $t0, 4($sp)
+  lw $t0, 4($t0) # a->fils_gauche dans $t0
+  beqz $t0, suite_creer_arbre_sans_doublon_rec_2
+#   b = creer_arbre_sans_doublon_rec(a->fils_gauche, b);
+  lw $a0, 4($sp)
+  lw $a0, 4($a0) # a->fils_gauche
+  lw $a1, 0($sp)
+  jal creer_arbre_sans_doublon_rec
+  sw $v0, 0($sp)
+suite_creer_arbre_sans_doublon_rec_2:
+# if(a->fils_droit != NULL)
+  lw $t0, 4($sp)
+  lw $t0, 8($t0)
+  beqz $t0, suite_creer_arbre_sans_doublon_rec_3
+#   b = creer_arbre_sans_doublon_rec(a->fils_droit, b);
+  move $a0, $t0
+  lw $a1, 0($sp)
+  jal creer_arbre_sans_doublon_rec
+  sw $v0, 0($sp)
+suite_creer_arbre_sans_doublon_rec_3:
+# return b;
+  lw $v0, 0($sp)
+fin_creer_arbre_sans_doublon_rec:
+# restauration de $a0, $a1
+  addiu $sp, $sp, 8
+  lw $a0, -4($sp)
+  lw $a1, -8($sp)
+# restauration de $ra
+  addiu $sp, $sp, 4
+  lw $ra, -4($sp)
+  jr $ra
+#}
+
+#/* creer_arbre_sans_doublon
+#  Crée un arbre sans doublon à partir de l'arbre a
+#*/
+#Arbre creer_arbre_sans_doublon(Arbre a) {
+# parametres dans $a0, resultat dans $v0
+  .globl creer_arbre_sans_doublon
+creer_arbre_sans_doublon:
+# sauvegarde de $ra et de $s0
+  sw $ra, -4($sp)
+  sw $s0, -8($sp)
+  addiu $sp, $sp, -8
+# if(a == NULL)
+  bnez $a0, else_creer_arbre_sans_doublon
+#  return NULL;
+  move $v0, $0
+  j fin_creer_arbre_sans_doublon
+else_creer_arbre_sans_doublon:
+# Arbre p = creer_arbre_vide();
+# p dans $s0
+  jal creer_arbre_vide
+  move $s0, $v0
+# p = creer_arbre_sans_doublon_rec(a, p);
+# a déjà dans $a0
+  move $a1, $s0
+  jal creer_arbre_sans_doublon_rec
+  move $s0, $v0
+# return p;
+  move $v0, $s0
+fin_creer_arbre_sans_doublon:
+# restauration de $v0 et $s0
+  addiu $sp, $sp, 8
+  lw $ra, -4($sp)
+  lw $s0, -8($sp)
+  jr $ra
+#}
+
+#/* afficher_arbre_croissant_sans_doublon
+#  Affiche l'arbre a sans les doublon
+#*/
+#void afficher_arbre_croissant_sans_doublon(Arbre a) {
+# parametre dans $a0
+  .globl afficher_arbre_croissant_sans_doublon
+afficher_arbre_croissant_sans_doublon:
+# sauvegarde de $ra
+  sw $ra, -4($sp)
+  addiu $sp, $sp, -4
+#    Noeud* tmp = creer_arbre_sans_doublon(a);
+# tmp dans $t0 (a déjà dans $a0)
+  jal creer_arbre_sans_doublon
+  move $t0, $v0
+#    afficher_arbre_croissant(tmp);
+  move $a0, $t0
+  jal afficher_arbre_croissant
+# restauration de $ra
+  addiu $sp, $sp, 4
+  lw $ra, -4($sp)
+  jr $ra
+#}
+
+#/* supprimer_arbre
+#  Surrprime un arbre et libére l'espace mémoire qu'il occupe
+#*/
+#Arbre supprimer_arbre(Arbre a) {
+# parametre dans $a0, résultat dans $v0
+  .globl supprimer_arbre
+supprimer_arbre:
+# sauvegarde de $ra et de $s0
+  sw $ra, -4($sp)
+  sw $s0, -8($sp)
+  addiu $sp, $sp, -8
+# Arbre p = a;
+  move $s0, $a0
+# p dans $s0
+
+while_supprimer_arbre:
+# while(p != NULL) {
+  beqz $s0, fin_while_supprimer_arbre
+  move $a0, $s0
+#     p = supprimer_min(p);
+  jal supprimer_min
+  move $s0, $v0
+  j while_supprimer_arbre
+# }
+fin_while_supprimer_arbre:
+# return p;
+  move $v0, $s0
+# restauration de $ra
+  addiu $sp, $sp, 8
+  lw $ra, -4($sp)
+  sw $s0, -8($sp)
+  jr $ra
+#}
+
 #/*--------------------fin arbres.s---------------------------*/
 #
 
