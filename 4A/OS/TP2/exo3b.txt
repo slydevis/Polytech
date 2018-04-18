@@ -1,0 +1,40 @@
+Voiture n°2 souhaite rentrer dans le parking
+Voiture n°2 passe la porte
+Voiture n°1 souhaite rentrer dans le parking
+Voiture n°1 passe la porte
+Voiture n°0 souhaite rentrer dans le parking
+Voiture n°3 souhaite rentrer dans le parking
+Voiture n°4 souhaite rentrer dans le parking
+Voiture n°2 a passé la porte
+Voiture n°2 entre dans le parking
+Voiture n°1 a passé la porte
+Voiture n°1 entre dans le parking
+Voiture n°2 souhaite sortir du parking
+Voiture n°2 passe par la sortie
+Voiture n°2 a passé la sortie
+Voiture n°2 est sortie du parking
+Voiture n°0 passe la porte
+Voiture n°0 a passé la porte
+Voiture n°0 entre dans le parking
+Voiture n°1 souhaite sortir du parking
+Voiture n°1 passe par la sortie
+Voiture n°1 a passé la sortie
+Voiture n°1 est sortie du parking
+Voiture n°3 passe la porte
+Voiture n°3 a passé la porte
+Voiture n°3 entre dans le parking
+Voiture n°0 souhaite sortir du parking
+Voiture n°0 passe par la sortie
+Voiture n°0 a passé la sortie
+Voiture n°0 est sortie du parking
+Voiture n°4 passe la porte
+Voiture n°4 a passé la porte
+Voiture n°4 entre dans le parking
+Voiture n°3 souhaite sortir du parking
+Voiture n°3 passe par la sortie
+Voiture n°3 a passé la sortie
+Voiture n°3 est sortie du parking
+Voiture n°4 souhaite sortir du parking
+Voiture n°4 passe par la sortie
+Voiture n°4 a passé la sortie
+Voiture n°4 est sortie du parking

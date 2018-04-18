@@ -1,0 +1,4 @@
+pid du main = 21609
+Thread 1
+Je suis B et j'ai fini
+Je suis A et j'ai fini

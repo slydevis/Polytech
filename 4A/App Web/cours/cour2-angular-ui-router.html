@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="routeApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Route App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+</head>
+
+<body>
+    <a ui-sref="home" ui-sref-active="active">Acceuil</a>
+    <a ui-sref="page1" ui-sref-active="active">Page 1</a>
+    <a ui-sref="page2" ui-sref-active="active">Page 2</a>
+    <a ui-sref="compteur" ui-sref-active="active">Compteur</a>
+
+    <ui-view></ui-view>
+</body>
+
+<script>
+    var myApp = angular.module('routeApp', ['ui.router']);
+
+    myApp.config(function ($stateProvider) {
+        var homeState = {
+            name: 'home',
+            url: '/home',
+            template: '<h3>Page d\'accueil</h3>'
+        };
+
+        var page1State = {
+            name: 'page1',
+            url: '/page1',
+            templateUrl: 'page1.html',
+            controller: 'page1Ctrl'
+        };
+
+        var page2State = {
+            name: 'page2',
+            url: '/page2',
+            template: '<h3>Le contenu de la page 2 </h3>'
+        };
+
+        var compteurState = {
+            name: 'compteur',
+            url: '/compteur',
+            component: 'compteur'
+        }
+
+        $stateProvider.state(homeState);
+        $stateProvider.state(page1State);
+        $stateProvider.state(page2State);
+        $stateProvider.state(compteurState);
+    });
+</script>
+
+<script>
+    myApp.controller('page1Ctrl', ['$scope', function ($scope) {
+        $scope.content = function () {
+            var dt = new Date();
+            return "un peu de contenu dynamique : " + dt;
+        }
+    }]);
+</script>
+
+<script>
+    myApp.component('compteur', {
+        template: '<h3>{{ counter }}</h3>' +
+            '<button ng-click="$ctrl.addToCounter()">Compteur</button>',
+        controller: function ($scope) {
+
+            this.load = function () {
+                $scope.counter = localStorage.getItem('counter');
+            }
+
+            this.addToCounter = function () {
+                if (!$scope.counter) {
+                    $scope.counter = localStorage.getItem('counter');
+                }
+
+                $scope.counter++;
+                localStorage.setItem('counter', $scope.counter);
+            }
+
+            this.load();
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="routeApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+</head>
+
+<body ng-controller="Page4Ctrl">
+    Hello World Node.js
+
+    <div ng-repeat="dt in myData.userSet">
+        +
+        <span ng-bind="dt.firstName"></span>
+        <span ng-bind="dt.lastName"></span>
+    </div>
+</body>
+
+<script>
+    var routeApp = angular.module('routeApp', []);
+    routeApp.controller('Page4Ctrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.load = function () {
+            $http.post('/getData').then(function (data) {
+                console.log(data);
+                $scope.myData = data.data;
+            });
+        };
+
+        $scope.load();
+    }]);
+</script>
+
+</html>

@@ -1,0 +1,15 @@
+Voiture n°1 souhaite rentrer dans le parking
+Voiture n°1 entre dans le parking
+Voiture n°2 souhaite rentrer dans le parking
+Voiture n°2 entre dans le parking
+Voiture n°4 souhaite rentrer dans le parking
+Voiture n°0 souhaite rentrer dans le parking
+Voiture n°3 souhaite rentrer dans le parking
+Voiture n°2 sort du parking
+Voiture n°4 entre dans le parking
+Voiture n°1 sort du parking
+Voiture n°0 entre dans le parking
+Voiture n°0 sort du parking
+Voiture n°3 entre dans le parking
+Voiture n°4 sort du parking
+Voiture n°3 sort du parking

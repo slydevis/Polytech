@@ -1,0 +1,16 @@
+<section ng-controller="todoCtrl" id='todoSection'>
+    <form id='todoForm' ng-submit="addTask()">
+        <input id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
+    </form>
+    <article ng-show="tasks.length" class="ng-hide">
+        <ul id="todo-list">
+            <li ng-repeat="task in tasks" ng-class="{completed: task.completed}">
+                <div class="view">
+                    <input class="mark" type="checkbox" ng-model="task.completed" ng-change="changeCompletion(task)" />
+                    <span>{{ task.title }}</span>
+                    <a href="javascript:void(0)" class="close" ng-click="removeTask(task)">x</a>
+                </div>
+            </li>
+        </ul>
+    </article>
+</section>

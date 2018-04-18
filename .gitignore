@@ -1,0 +1,27 @@
+### MAC ###
+.DS_Store
+
+### IntellIJ ###
+.idea
+*.iml
+*.cpb
+
+### CMake ###
+cmake-build-debug
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+
+### JAVA ###
+# TODO: Improve it
+*.class
+!4A/Systeme_repartie/src/**/*.class
+
+### C/C++ ###
+*.o
+*.out
+
+### NodeJS ###
+node_modules
+
+### Remove already versionned projects ###

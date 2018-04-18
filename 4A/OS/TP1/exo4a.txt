@@ -1,0 +1,43 @@
+Début processus car
+pos = 0, nb_car[0] = 1
+pos = 1, nb_car[1] = 1
+pos = 2, nb_car[2] = 1
+pos = 3, nb_car[3] = 1
+Fin processus car
+Début processus digit
+somme = 1
+somme = 3
+somme = 6
+somme = 10
+somme = 10
+Envoie du résultat
+Fin processus digit
+Début processus car
+Résultat de la somme = 10
+car_num[a] = 1
+car_num[b] = 1
+car_num[c] = 1
+car_num[d] = 1
+car_num[e] = 0
+car_num[f] = 0
+car_num[g] = 0
+car_num[h] = 0
+car_num[i] = 0
+car_num[j] = 0
+car_num[k] = 0
+car_num[l] = 0
+car_num[m] = 0
+car_num[n] = 0
+car_num[o] = 0
+car_num[p] = 0
+car_num[q] = 0
+car_num[r] = 0
+car_num[s] = 0
+car_num[t] = 0
+car_num[u] = 0
+car_num[v] = 0
+car_num[w] = 0
+car_num[x] = 0
+car_num[y] = 0
+car_num[z] = 0
+Fin processus père

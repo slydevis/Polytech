@@ -1,0 +1,35 @@
+
+------ Segment de mémoire partagée --------
+clef       shmid      propriétaire perms      octets     nattch     états      
+0x0052e2c1 0          postgres   600        56         5                       
+0x00000000 196609     guillaume  600        393216     2          dest         
+0x00000000 229378     guillaume  600        393216     2          dest         
+0x00000000 524291     guillaume  600        393216     2          dest         
+0x00000000 622596     guillaume  600        393216     2          dest         
+0x00000000 786437     guillaume  600        393216     2          dest         
+0x00000000 819206     guillaume  600        393216     2          dest         
+0x00000000 851975     guillaume  600        524288     2          dest         
+0x00000000 884744     guillaume  600        524288     2          dest         
+0x00000000 1048585    guillaume  600        524288     2          dest         
+0x00000000 3833866    guillaume  600        393216     2          dest         
+0x00000000 3637260    guillaume  600        393216     2          dest         
+0x00000000 1638413    guillaume  600        393216     2          dest         
+0x00000000 9338894    guillaume  600        393216     2          dest         
+0x00000000 3735567    guillaume  600        393216     2          dest         
+0x00000000 9371664    guillaume  600        393216     2          dest         
+0x00000000 3801105    guillaume  600        524288     2          dest         
+0x00000000 12845074   guillaume  600        524288     2          dest         
+0x00000000 25985043   guillaume  600        41040      2          dest         
+0x00000000 7602197    guillaume  600        393216     2          dest         
+0x00000000 7700502    guillaume  600        393216     2          dest         
+0x00000000 4620311    guillaume  600        524288     2          dest         
+0x00000000 4685848    guillaume  600        524288     2          dest         
+0x00000000 7798809    guillaume  600        393216     2          dest         
+
+Ouverture de la mémoire partagee
+Clef memoire = 3
+
+
+memoire partage : 
+ Test zone memoire partagee
+Fermeture de la mémoire partagee

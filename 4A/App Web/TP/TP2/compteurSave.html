@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="counterApp" lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Compteur Sauvegarde</title>
+</head>
+
+<body ng-controller="CounterSavedCtrl">
+    <button ng-click="increment()">Incrementer et sauvegarder</button> counter : {{ counter }}
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+<script>
+    var counterApp = angular.module('counterApp', []);
+
+    counterApp.controller('CounterSavedCtrl', ['$scope', function ($scope) {
+        $scope.load = function () {
+            $scope.counter = localStorage.getItem('counter');
+        }
+
+        $scope.increment = function () {
+            $scope.counter++;
+            localStorage.setItem('counter', $scope.counter);
+        }
+
+        $scope.load();
+    }]);
+</script>
+
+</html>
