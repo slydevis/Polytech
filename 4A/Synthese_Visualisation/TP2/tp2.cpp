@@ -20,14 +20,6 @@ using namespace std;
 #define SPACE_KEY 32
 #define ESC_KEY 27
 
-// angle of rotation for the camera direction
-// float angleX = 0.0f;
-// float angleY = 0.0f;
-// float angleZ = 0.0f;
-
-// int axeM1 = 0;
-// int axeM2 = 0;
-
 bool animationM1 = false;
 bool animationM2 = false;
 
@@ -120,42 +112,13 @@ void affichage(void) {
     // glEnable(GL_CULL_FACE);
     // glCullFace(GL_BACK);
 
-    /*******************************
-     * MAVRO CODE
-     * ***********************************/
-    // DIsplay
-
-    // glPushMatrix();
-    // glTranslatef(-1, -1, -1);
-    // glMultMatrixf(M1);
-    // def_cube(1.);
-    // def_axes();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(1, 1, -1);
-    // glMultMatrixf(M2);
-    // def_boite();
-    // def_axes();
-    // glPopMatrix();
-
-    /******************************************************************/
-
-    /*******************************  ************************************/
-
     glPushMatrix();
-    // glRotatef(angleX, 1.0f, 0.0f, 0.0f);
-    // glRotatef(angleY, 0.0f, 1.0f, 0.0f);
-    // glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
     glMultMatrixf(M1);
     def_boite(1);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(1.0f, 1.0f, -1.0f);
-    // glRotatef(angleX, 1.0f, 0.0f, 0.0f);
-    // glRotatef(angleY, 0.0f, 1.0f, 0.0f);
-    // glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
     glMultMatrixf(M2);
     def_boite(1);
     glPopMatrix();
@@ -202,11 +165,6 @@ void reshapeCallback(int width, int height) {
 
 void animationM1Callback(int) {
     if (animationM1 == true) {
-        // angleX += ANGLE_SPEED;
-        // angleY += ANGLE_SPEED;
-        // angleZ += ANGLE_SPEED;
-        // axeM1 = (axeM1 + 1) % 3;
-
         updateMatrix(M1, X, ANGLE_SPEED);
         updateMatrix(M1, Y, ANGLE_SPEED);
         updateMatrix(M1, Z, ANGLE_SPEED);
@@ -230,42 +188,36 @@ void keyboardCallback(unsigned char key, int x, int y) {
     case ESC_KEY:
         exit(0);
     case 'q':
-        // angleY -= ANGLE_SPEED;
         updateMatrix(M1, Y, -ANGLE_SPEED);
         break;
     case 'Q':
         updateMatrix(M2, Y, -ANGLE_SPEED);
         break;
     case 'd':
-        // angleY += ANGLE_SPEED;
         updateMatrix(M1, Y, ANGLE_SPEED);
         break;
     case 'D':
         updateMatrix(M2, Y, ANGLE_SPEED);
         break;
     case 'z':
-        // angleX += ANGLE_SPEED;
         updateMatrix(M1, X, ANGLE_SPEED);
         break;
     case 'Z':
         updateMatrix(M2, X, ANGLE_SPEED);
         break;
     case 's':
-        // angleX -= ANGLE_SPEED;
         updateMatrix(M1, X, -ANGLE_SPEED);
         break;
     case 'S':
         updateMatrix(M2, X, -ANGLE_SPEED);
         break;
     case 'a':
-        // angleZ += ANGLE_SPEED;
         updateMatrix(M1, Z, ANGLE_SPEED);
         break;
     case 'A':
         updateMatrix(M2, Z, ANGLE_SPEED);
         break;
     case 'e':
-        // angleZ -= ANGLE_SPEED;
         updateMatrix(M1, Z, -ANGLE_SPEED);
         break;
     case 'E':
