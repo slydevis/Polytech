@@ -19,6 +19,7 @@ using namespace std;
 
 #define SPACE_KEY 32
 #define ESC_KEY 27
+#define ENTER_KEY 13
 
 bool animationM1 = false;
 bool animationM2 = false;
@@ -60,42 +61,49 @@ void def_axes() {
     glEnd();
 }
 
-void def_boite(int a) {
+void def_boite(float a) {
+    float mil = a / 2.0f;
+
     // Blanc
     glPushMatrix();
-    glTranslatef(0.0, 0.0, -0.5);
+    glTranslatef(0.0, 0.0, -mil);
+    glScaled(a, a, 1);
     glColor3f(1.0, 1.0, 1.0);
     def_carre();
     glPopMatrix();
 
     // Rouge
     glPushMatrix();
-    glTranslatef(0.5, 0.0, 0.0);
+    glTranslatef(mil, 0.0, 0.0);
     glRotatef(-90.0, 0.0, 1.0, 0.0);
+    glScaled(a, a, 1);
     glColor3f(1.0, 0.0, 0.0);
     def_carre();
     glPopMatrix();
 
     // Vert
     glPushMatrix();
-    glTranslatef(-0.5, 0.0, 0.0);
+    glTranslatef(-mil, 0.0, 0.0);
     glRotatef(90.0, 0.0, 1.0, 0.0);
+    glScaled(a, a, 1);
     glColor3f(0.0, 1.0, 0.0);
     def_carre();
     glPopMatrix();
 
     // BLEU
     glPushMatrix();
-    glTranslatef(0.0, -0.5, 0.0);
+    glTranslatef(0.0, -mil, 0.0);
     glRotatef(-90.0, 1.0, 0.0, 0.0);
+    glScaled(a, a, 1);
     glColor3f(0.0, 0.0, 1.0);
     def_carre();
     glPopMatrix();
 
     // CYAN
     glPushMatrix();
-    glTranslatef(0.0, 0.0, 0.5);
+    glTranslatef(0.0, 0.0, mil);
     glRotatef(180.0, 1.0, 0.0, 0.0);
+    glScaled(a, a, 1);
     glColor3f(0.0, 1.0, 1.0);
     def_carre();
     glPopMatrix();
@@ -114,7 +122,7 @@ void affichage(void) {
 
     glPushMatrix();
     glMultMatrixf(M1);
-    def_boite(1);
+    def_boite(1.5f);
     glPopMatrix();
 
     glPushMatrix();
@@ -231,6 +239,12 @@ void keyboardCallback(unsigned char key, int x, int y) {
             animationM1 = !animationM1;
             glutTimerFunc(50, animationM1Callback, 0);
         }
+        break;
+    case ENTER_KEY:
+        animationM2 = !animationM2;
+        animationM1 = !animationM1;
+        glutTimerFunc(50, animationM1Callback, 0);
+        glutTimerFunc(50, animationM2Callback, 0);
         break;
     }
 
