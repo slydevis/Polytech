@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 // Data Task
 var dataTaskLayer = require('./dataTaskLayer.js');
 
+// TODO: Add clean error
+
 // Database management
 // var mongodb = require('mongo').MongoClient; // Todo remove it
 

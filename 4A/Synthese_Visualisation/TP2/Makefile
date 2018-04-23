@@ -22,4 +22,4 @@ tp2.o: tp2.cpp
 	$(CXX) -c tp2.cpp $(FLAGS)
 
 clean:
-	- rm *.o *.out $(EXE)
+	- rm *.o $(EXE)
