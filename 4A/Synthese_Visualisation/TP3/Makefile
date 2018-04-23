@@ -9,17 +9,17 @@ endif
 
 FLAGS += -std=c++11
 
-EXE = tp2.out
+EXE = tp3.out
 
-OBJ = tp2.o
+OBJ = tp3.o
 
 all: $(EXE)
 
 $(EXE): $(OBJ)
 	$(CXX) -o $@ $(OBJ) $(FLAGS)  
 
-tp2.o: tp2.cpp
-	$(CXX) -c tp2.cpp $(FLAGS)
+tp3.o: tp3.cpp
+	$(CXX) -c tp3.cpp $(FLAGS)
 
 clean:
 	- rm *.o $(EXE)

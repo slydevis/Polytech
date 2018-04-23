@@ -1,6 +1,7 @@
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	FLAGS = -lGL -lGLU -lglut
+	FLAGS += -lsfml-system -lsfml-audio
 endif
 
 ifeq ($(UNAME_S),Darwin)
@@ -9,17 +10,17 @@ endif
 
 FLAGS += -std=c++11
 
-EXE = tp2.out
+EXE = tp4.out
 
-OBJ = tp2.o
+OBJ = tp4.o
 
 all: $(EXE)
 
 $(EXE): $(OBJ)
-	$(CXX) -o $@ $(OBJ) $(FLAGS)  
+	$(CXX) -o $@ $(OBJ) $(FLAGS)
 
-tp2.o: tp2.cpp
-	$(CXX) -c tp2.cpp $(FLAGS)
+tp4.o: tp4.cpp
+	$(CXX) -c tp4.cpp $(FLAGS)
 
 clean:
 	- rm *.o $(EXE)
