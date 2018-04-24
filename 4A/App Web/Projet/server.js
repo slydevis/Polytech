@@ -6,7 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 // Data Task
-var dataTaskLayer = require('./dataTaskLayer.js');
+var dataTaskLayer = require('./repository/dataTaskLayer.js');
 
 // TODO: Add clean error
 
@@ -137,16 +137,6 @@ app.use(express.static(path.join(__dirname, 'public')));
  * 
  **********************************************************/
 
-// - Task object exemple
-// [
-//     {
-//         _id: 'a5721931273-21302193821-123291380123',
-//         title: "Task exemple",
-//         completed: true,
-//         user_id: 1,
-//     }
-// ]
-
 app.post('/addTask', function (req, res) {
     if (!req.body.title) {
         res.send({
@@ -187,7 +177,6 @@ app.post('/addTask', function (req, res) {
     }
 });
 
-// TODO: Test this method
 // TODO: Add user condition
 app.post('/readTask', function (req, res) {
     dataTaskLayer.getTaskInfo(req.body._id, function (task) {
@@ -198,14 +187,6 @@ app.post('/readTask', function (req, res) {
 
         res.send(obj);
     });
-    //     mongo.select('task', { _id: req.body._id }, function (result) {
-    //         var obj = {
-    //             success: true,
-    //             task: result
-    //         };
-
-    //         res.send(obj);
-    //     });
 });
 
 app.post('/updateTask', function (req, res) {

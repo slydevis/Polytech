@@ -17,6 +17,16 @@ mongoose.connect(mongo_url + mongo_database_name, function (err) {
     }
 });
 
+// - Task object exemple
+// [
+//     {
+//         _id: 'a5721931273-21302193821-123291380123',
+//         title: "Task exemple",
+//         completed: true,
+//         user_id: 1,
+//     }
+// ]
+
 // Declare schema Task
 var TaskSchema = Schema({
     _id: String,
@@ -67,7 +77,7 @@ module.exports = {
         });
     },
     getTaskInfo: function (id, cb) {
-        TaskModel.findOne({ _id: id }, function (task) {
+        TaskModel.findOne({ _id: id }, function (err, task) {
             cb(task);
         });
     }
