@@ -11,12 +11,21 @@ a.col-lg-12.centrer { background: white; }
 
 .red { color : red; }
 
+.navbar-brand {
+    display: block;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
 #nav {
     position:fixed;
     top : 0;
     left: 0;
     background-color: #222;
     padding: 15px;
+    padding-left: 5px;
     z-index: 100;
     float: left;
     width: 185px;
@@ -58,4 +67,11 @@ a.col-lg-12.centrer { background: white; }
     margin-right: 10px;
     height: 25px;
     width: 25px;
+}
+
+
+@media screen and (max-height: 470px) {
+    #externalLink {
+        display: none;
+    }
 }

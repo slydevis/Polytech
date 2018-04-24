@@ -1,0 +1,30 @@
+* { 
+    padding: 0;
+    margin: 0;
+    border: 0; 
+}
+
+#header {
+    background: #2E8DDB; /* Blue */ 
+    height: 100px;
+}
+
+#left {
+    background: #E93E58; /* Red */
+    height: 400px;
+    width: 30%;
+    margin: 5px 5px 5px 0;
+}
+
+#right {
+    background: #359D45; /* Green */
+    height: 400px;
+    width: 69.7%;
+    float: right;
+    margin: 5px 0 5px 0;
+}
+
+#footer {
+    background: #FFEC69; /* Yellow */
+    height:100px;
+}

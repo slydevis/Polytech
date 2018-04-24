@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Guillaume Michon</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<span id="top"></span>
+<div id="nav">
+    <a class="navbar-brand" href="#">Guillaume Michon</a>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="rapport.html">Rapport</a></li>
+        <li class="active"><a href="#">Contact</a></li>
+        <li><a href="lien.html">Lien</a></li>
+        <li><a href="#" onclick="themeManager()">Changer de thème</a> </li>
+    </ul>
+    <div id="externalLink">
+        <a href="http://facebook.com/slydevis" title="Mon Facebook">
+            <img src="img/facebook.png" alt="Mon Facebook" />
+        </a>
+        <a href="http://github.com/slydevis" title="Mon Github">
+            <img src="img/github.png" alt="Mon Github" />
+        </a>
+    </div>
+</div>
+
+<!-- Visible if javascript is disable -->
+<noscript>
+    <div class="centrer">
+        <div class="alert alert-danger">
+            Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur utilisation plus agréable du site !
+        </div>
+    </div>
+</noscript>
+
+<div id="content">
+    <div id="infoAlert" class="alert"></div>
+    <form action="#" method="post" id="contact">
+        <div class="input text">
+            <label for="name">Nom et prénom :</label>
+            <span></span>
+            <div class="hint">
+                <span class="alert-danger"></span>
+            </div>
+            <input type="text" id="name" name="name" onblur="checkName(this);" />
+        </div>
+        <div class="input text">
+            <label for="email">Email :</label>
+            <span></span>
+            <div class="hint">
+                <span class="alert-danger"></span>
+            </div>
+            <input type="text" id="email" name="email" onblur="checkMail(this);">
+        </div>
+        <div class="input text">
+            <label for="birthday">Date de naissance :</label>
+            <span></span>
+            <div class="hint">
+                <span class="alert-danger"></span>
+            </div>
+            <input type="text" id="birthday" name="birthday" placeholder="JJ/MM/AAAA" onblur="checkBirthday(this);">
+        </div>
+        <div class="input text messagebox">
+            <label for="message">Votre message :</label>
+            <span></span>
+            <div class="hintTextarea">
+                <span class="alert-danger"></span>
+            </div>
+            <textarea name="message" id="message" style="resize:none; height:150px; overflow:auto;" onblur="checkMessage(this);"></textarea>
+        </div>
+        <input id="submit" type="submit" class="button" value="Envoyer" disabled="disabled" />
+    </form>
+    <img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat" />
+    <img src="img/troll.png" id="trol" alt="trolol" />
+    <div id="music"></div>
+</div>
+<script src="script.js"></script>
+<script src="form.js"></script>
+</body>
+
+</html>

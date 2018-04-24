@@ -1,88 +1,66 @@
-<!--
-Consigne :
-
-Une page d’accueil.
-Une page contenant votre CV au format HTML et proposant de le télécharger au format PDF.
-Une page de liens internes/externes.
-Une page contenant un formulaire, par exemple un livre d’or. On trouvera au minimum les champs suivants :
-nom, date de naissance, adresse email, commentaire. Ces différents champs seront vérifiés par un script
-JavaScript. Il n’est pas nécessaire d’exécuter une action à la validation de ce formulaire.
-La navigation dans le site se fera à l’aide d’un menu.
-L’utilisation des feuilles de style devra être illustrée par la possibilité de « visiter » les pages à l’aide d’au
-moins deux feuilles de style (au minimum, une affichant un menu en ligne, l’autre un menu en colonne). Le
-changement de feuilles de style sera effectué directement sur la page à l’aide d’un script JavaScript
-« activable » par un lien.
-Il vous est également demandé de rédiger deux rapports au format PDF. Le premier regroupe vos réponses
-aux questions des travaux pratiques sur l’environnement Linux et doit mettre en évidence le travail réalisé
-sur ce sujet. Le second explique les scripts utilisés dans vos pages. Ces documents seront
-« téléchargeables » à partir de votre page de liens
-
--->
-
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>Guillaume Michon</title>
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Boostrap link if needed -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 </head>
+
 <body>
-    <span id="top"></span>
-    <div id="nav">
-        <a onClick="infoBoxTest()" class="navbar-brand" href="#">Guillaume Michon</a>
-        <ul>
-            <li class="active"><a href="#">Accueil</a></li>
-            <li><a href="cv.html">CV</a></li>
-            <li><a href="#rapport">Rapport</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#lien">Lien</a></li>
-            <li><a href="#" onclick="themeManager()">Changer de thème</a> </li>
-        </ul>
-        <div id="externalLink">
-            <a href="http://facebook.com/slydevis" title="Mon Facebook">
-                <img src="img/facebook.png" alt="Mon Facebook"/>
-            </a>
-            <a href="http://github.com/slydevis" title="Mon Github">
-                <img src="img/github.png" alt="Mon Github"/>
-            </a>
+<span id="top"></span>
+<div id="nav">
+    <a class="navbar-brand" href="#">Guillaume Michon</a>
+    <ul>
+        <li class="active"><a href="#">Accueil</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="rapport.html">Rapport</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="lien.html">Lien</a></li>
+        <li><a href="#" onclick="themeManager()">Changer de thème</a></li>
+    </ul>
+    <div id="externalLink">
+        <a href="http://facebook.com/slydevis" title="Mon Facebook">
+            <img src="img/facebook.png" alt="Mon Facebook" />
+        </a>
+        <a href="http://github.com/slydevis" title="Mon Github">
+            <img src="img/github.png" alt="Mon Github" />
+        </a>
+    </div>
+</div>
+
+<!-- Visible if javascript is disable -->
+<noscript>
+    <div class="centrer">
+        <div class="alert alert-danger">
+            Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur utilisation plus agréable du site !
         </div>
     </div>
+</noscript>
 
-    <!-- Visible if javascript is disable -->
-    <noscript>
-        <div class="centrer">
-            <div class="alert alert-danger">
-                Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur
-                utilisation plus agréable du site !
-            </div>
-        </div>
-    </noscript>
+<div id="content">
+    <div id="infoAlert" class="alert alert-info" style="display: block"><img style="float: left; margin-top:-5px; margin-right: 8px;" src="img/info.png" alt="info" width="25" height="25">Un easter egg est caché dans ce site serez vous le trouver ?</div>
+    <h1 class="centrer" style="font-size: 10em;">BIENVENUE</h1>
+    <p>
+        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+            <img style="border:0;width:88px;height:31px"
+                 src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                 alt="CSS Valide !" />
+        </a>
+    </p>
+</div>
 
-    <div id="content">
-        <div id="infoAlert" class="alert">Test d'info</div>
-        <h1 class="red centrer">Surtout ne pas appuyer sur la touche T (si on n'aime pas l'humour) !!!</h1>
-         </div>
-        <img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat"/>
-        <img src="img/troll.png" id="trol" alt="trolol" />
-            Test Progress Bar :
-    <div class="progress">
-        <div id="bar" class="progress-bar blue" style="width:70%">
-            70%
-        </div>
-    </div>
-    Test du texte juste en dessous de la progress bar
-    <a onclick="progressBar()" href="#">Progress bar</a>
+<a href="#top" class="centrer">
+    <img src="img/arrow.png" alt="remonter en haut" />
+</a>
 
-    <div class="arrow"></div>
-    <a onclick="return scrollToAnchor(this)" href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut"/></a>
-        <div id="music"></div>
-        <span id="bas"></span>
-    </div>
-    <!-- Boostrap javascript if needed -->
-    <!-- script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
-    <script src="script.js"></script>
+<img src="img/nyancat2.gif" id="nyanCat" alt="Nyan cat" />
+<img src="img/troll.png" id="trol" alt="Troll" />
+<div id="music"></div>
+
+<script src="script.js"></script>
+<script src="easteregg.js"></script>
 </body>
+
 </html>

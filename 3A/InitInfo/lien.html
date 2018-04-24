@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Guillaume Michon</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<span id="top"></span>
+<div id="nav">
+    <a class="navbar-brand" href="#">Guillaume Michon</a>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="rapport.html">Rapport</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="active"><a href="#">Lien</a></li>
+        <li><a href="#" onclick="themeManager()">Changer de thème</a> </li>
+    </ul>
+    <div id="externalLink">
+        <a href="http://facebook.com/slydevis" title="Mon Facebook">
+            <img src="img/facebook.png" alt="Mon Facebook"/>
+        </a>
+        <a href="http://github.com/slydevis" title="Mon Github">
+            <img src="img/github.png" alt="Mon Github"/>
+        </a>
+    </div>
+</div>
+
+<!-- Visible if javascript is disable -->
+<noscript>
+    <div class="centrer">
+        <div class="alert alert-danger">
+            Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur
+            utilisation plus agréable du site !
+        </div>
+    </div>
+</noscript>
+
+<div id="content">
+    <div id="infoAlert" class="alert"></div>
+    <h1>Lien internes</h1>
+    <table>
+        <tr>
+            <td><img src="img/peanuts.png" alt="TP d'HTML/CSS" class="vignette"/></td>
+            <td><h3>TP HTML/CSS :</h3> Mon travail pour le TP d'HTML/CSS dans cette matière.<div class="centrer" style="margin-top: 30px;"><a class="button" href="tp/index.html">Lien</a></div></td>
+        </tr>
+    </table>
+    <h1>Lien externes</h1>
+    <table>
+        <tr>
+            <td><img src="img/jdc.png" alt="Les joies du code" class="vignette"/></td>
+            <td><h3>Les joies du code :</h3> Un site regroupant des gifs décrivant le quotidien des développeurs.<div class="centrer" style="margin-top: 30px;"><a class="button" href="http://lesjoiesducode.fr/">Lien</a></div></td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr>
+            <td><img src="img/iconfinder.png" alt="Iconfinder" class="vignette"></td>
+            <td><h3>IconFinder :</h3> Un site regroupant une bibliothèque d'icone utilisable notemment pour le web.<div class="centrer" style="margin-top: 30px"><a class="button" href="https://www.iconfinder.com/">Lien</a></div></td>
+        </tr>
+    </table>
+    <div class="arrow"></div>
+    <a href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut"/></a>
+    <span id="bas"></span>
+</div>
+<img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat"/>
+<img src="img/troll.png" id="trol" alt="trolol" />
+<div id="music"></div>
+<script src="script.js"></script>
+<script src="easteregg.js"></script>
+</body>
+</html>

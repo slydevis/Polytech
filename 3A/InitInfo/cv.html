@@ -1,149 +1,183 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>Guillaume Michon</title>
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Boostrap link if needed -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 </head>
+
 <body>
-    <span id="top"></span>
-    <div id="nav">
-        <a onClick="infoBoxTest()" class="navbar-brand" href="#">Guillaume Michon</a>
-        <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li class="active"><a href="#">CV</a></li>
-            <li><a href="#rapport">Rapport</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#lien">Lien</a></li>
-            <li><a href="#" onclick="themeManager()">Changer de thème</a> </li>
-        </ul>
-        <div id="externalLink">
-            <a href="http://facebook.com/slydevis" title="Mon Facebook">
-                <img src="img/facebook.png" alt="Mon Facebook"/>
-            </a>
-            <a href="http://github.com/slydevis" title="Mon Github">
-                <img src="img/github.png" alt="Mon Github"/>
-            </a>
+<span id="top"></span>
+<div id="nav">
+    <a class="navbar-brand" href="#">Guillaume Michon</a>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li class="active"><a href="#">CV</a></li>
+        <li><a href="rapport.html">Rapport</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="lien.html">Lien</a></li>
+        <li><a href="#" onclick="themeManager()">Changer de thème</a> </li>
+    </ul>
+    <div id="externalLink">
+        <a href="http://facebook.com/slydevis" title="Mon Facebook">
+            <img src="img/facebook.png" alt="Mon Facebook" />
+        </a>
+        <a href="http://github.com/slydevis" title="Mon Github">
+            <img src="img/github.png" alt="Mon Github" />
+        </a>
+    </div>
+</div>
+
+<!-- Visible if javascript is disable -->
+<noscript>
+    <div class="centrer">
+        <div class="alert alert-danger">
+            Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur utilisation plus agréable du site !
         </div>
     </div>
+</noscript>
 
-    <!-- Visible if javascript is disable -->
-    <noscript>
-        <div class="centrer">
-            <div class="alert alert-danger">
-                Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur
-                utilisation plus agréable du site !
-            </div>
-        </div>
-    </noscript>
-
-    <div id="content">
-        <div id="infoAlert" class="alert">Test d'info</div>
-        <p>
-        Guillaume Michon | Etudiant<br/>
-        8 rue théodore aubanel, 13160 Châteaurenard<br/>
-        06.35.31.09.05<br/>
-        guillaume.michon@etu.univ-amu.fr<br/>
-        Anglais technique<br/>
-        </p>
-        <h1>Formation :</h1>
-        <p>
-			<ul>
-				<li>2015/???? :  <b>Cycle d'ingénieur en informatique (en cours)</b> - Polytech Marseille </li>
-				<li>2014/2015 : <b>License informatique</b> - Fac des sciences de Aix-Montperrin</li>
-				<li>2012/2014 : <b>DUT Informatique</b> - IUT d'Aix-Marseille Université</li>
-				<li>2010/2012 : <b>BAC STI génie électronique</b> - Lycée Philippe de Girard d'Avignon</li>
-			</ul>
-        </p>
-        <h1>Mes compétences techniques :</h1>
-        <div class="columnLeft">
-            <h3>C :</h3>
-            <div class="progress">
-                <div value="80" class="progress-bar grey">
-                    80%
-                </div>
-            </div>
-
-            <h3>C++ :</h3>
-            <div class="progress">
-                <div value="90" class="progress-bar pink">
-                    90%
-                </div>
-            </div>
-            <h3>Java :</h3>
-            <div class="progress">
-                <div value="70" class="progress-bar brown">
-                    70%
-                </div>
-            </div>
-            <h3>HTML/CSS :</h3>
-            <div class="progress">
-                <div value="95" class="progress-bar redGit">
-                    95%
-                </div>
-            </div>
-        </div>
-        <div class="columnRight">
-            <h3>PHP :</h3>
-            <div class="progress">
-                <div value="50" class="progress-bar purple">
-                    50%
-                </div>
-            </div>
-                <h3>Javascript :</h3>
-            <div class="progress">
-                <div value="60" class="progress-bar blue">
-                    60%
-                </div>
-            </div>
-                    <h3>SQL :</h3>
-            <div class="progress">
-                <div value="80" class="progress-bar orange">
-                    80%
-                </div>
-            </div>
-            <h3>Python :</h3>
-            <div class="progress">
-                <div value="20" class="progress-bar green">
-                    20%
-                </div>
-            </div>
-            </div>
+<div id="content">
+    <div id="infoAlert" class="alert"></div>
+    <div class="centrer" style="margin-bottom: 50px">
+        <span style="color: #a54ac7; font-size: xx-large;">Guillaume Michon </span> | <span style="font-size: x-large; color: #9d9d9d">Etudiant</span>
+        <br/> 8 rue théodore aubanel, 13160 Châteaurenard
         <br/>
-        <div>
-            <h1>Mes expériences professionnels :</h1>
-            <span class="green">TODO : Faire une mise en page pour les expériences pro</span>
-			<ul>
-			<li>Stage à Dassault Aviation</li>
-			<li>Une puce</li>
-			<li>Une puce</li>
-            <li>Une puce</li>
-            <li>Une puce</li>
-            <li>Une puce</li>
+        <ul><li class="cord phone">06.35.31.09.05</li>
+        <li class="cord email">guillaume.michon@etu.univ-amu.fr</li>
+        <li class="cord english">Anglais technique</li></ul>
+    </div>
+    <h1>Formation :</h1>
+    <ul>
+        <li>2015/???? : <b>Cycle d'ingénieur en informatique (en cours)</b> - Polytech Marseille </li>
+        <li>2014/2015 : <b>Licence informatique</b> - Fac des sciences de Aix-Montperrin</li>
+        <li>2012/2014 : <b>DUT Informatique</b> - IUT d'Aix-Marseille Université</li>
+        <li>2010/2012 : <b>BAC STI génie électronique</b> - Lycée Philippe de Girard d'Avignon</li>
+    </ul>
+    <h1>Mes compétences techniques :</h1>
+    <div class="columnLeft">
+        <h3>C :</h3>
+        <div class="progress">
+            <div data-value="80" class="progress-bar grey">
+                80%
+            </div>
+        </div>
 
-			</ul>
-            <h1>Mes centres d'intérêts :</h1>
-            <ul>
-            <li>L'informatique</li>
-            <li>Nouvelle technologie</li>
-            <li>Viet-vo-dao</li>
-            <li>Bascketball</li>
-            <li>Volley</li>
-            </ul>
+        <h3>C++ :</h3>
+        <div class="progress">
+            <div data-value="90" class="progress-bar pink">
+                90%
+            </div>
+        </div>
+        <h3>Java :</h3>
+        <div class="progress">
+            <div data-value="70" class="progress-bar brown">
+                70%
+            </div>
+        </div>
+        <h3>HTML/CSS :</h3>
+        <div class="progress">
+            <div data-value="95" class="progress-bar redGit">
+                95%
+            </div>
         </div>
     </div>
-        <img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat"/>
-        <img src="img/troll.png" id="trol" alt="trolol" />
-    <div class="arrow"></div>
-    <a onclick="return scrollToAnchor(this)" href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut"/></a>
-        <div id="music"></div>
-        <span id="bas"></span>
+    <div class="columnRight toto">
+        <h3>PHP :</h3>
+        <div class="progress">
+            <div data-value="50" class="progress-bar purple">
+                50%
+            </div>
+        </div>
+        <h3>Javascript :</h3>
+        <div class="progress">
+            <div data-value="60" class="progress-bar blue">
+                60%
+            </div>
+        </div>
+        <h3>SQL :</h3>
+        <div class="progress">
+            <div data-value="80" class="progress-bar orange">
+                80%
+            </div>
+        </div>
+        <h3>Python :</h3>
+        <div class="progress">
+            <div data-value="20" class="progress-bar green">
+                20%
+            </div>
+        </div>
     </div>
-    <!-- Boostrap javascript if needed -->
-    <!-- script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
-    <script src="script.js"></script>
+    <br/>
+    <h1>Mes expériences professionnels :</h1>
+    <div style="float: left; margin-bottom: 10px;">
+        <b>Stage à Dassault Aviation</b>
+        <br/>
+        <i>2014</i>
+    </div>
+    <div style="float: right;">
+        <b style="float: right">Autonome</b>
+        <br/>
+        <i style="float: right">10 semaines</i>
+    </div>
+    <div style="clear: left; border-top: double 1px #939b9e; padding: 5px; margin-bottom: 10px;">
+        Conception et création d'un programme afin de traduire un fichier binaire provenant d'un GPS et de retransmettre les résultats à l'utilisateur sous la forme d'une interface homme machine
+        <br/>Langage de programmation utilisé : C++ avec librairie Qt
+   </div>
+
+    <div style="float: left; margin-bottom: 10px;">
+        <b>Réalisation d'un résolveur de Futoshiki</b>
+        <br/>
+        <i>2013</i>
+    </div>
+    <div style="float: right;">
+        <b style="float: right">Binôme</b>
+        <br/>
+        <i style="float: right">6 mois</i>
+    </div>
+    <div style="clear: left; border-top: double 1px #939b9e; padding: 5px;">
+        Conception et création d'un programme avec de l'IA afin de résoudre des grilles de Futoshiki (jeu semblable au Sudoku) en minimum de temps. Les algorithmes Backtrack et Forward Checking on été implémentés. Un des buts de ce projet été d'analyser les differants algorithmes en terme de vitesse d'execution.
+        <br/>Langage de programmation utilisé : C
+    </div>
+    <div style="float: left; margin-bottom: 10px;">
+        <b>Réalisation d'une application Android</b>
+        <br/>
+        <i>2015</i>
+    </div>
+    <div style="float: right;">
+        <b style="float: right">Equipe de 4 personnes</b>
+        <br/>
+        <i style="float: right">6 mois</i>
+    </div>
+    <div style="clear: left; border-top: double 1px #939b9e; padding: 5px;">
+        Conception et création d'une application Android afin de récupérer diverses informations dans une base de donnée et de les afficher. Une des fonctionnalitée de cette application a été l'utilisation de l'API Google Map afin de géolocaliser diverse adresses et de calculer un itinéraire celons la position de l'utilisateur.
+    </div>
+
+    <h1>Mes centres d'intérêts :</h1>
+    <ul>
+        <li>L'informatique</li>
+        <li>Nouvelle technologie</li>
+        <li>Viet-vo-dao</li>
+        <li>Bascketball</li>
+        <li>Volley</li>
+    </ul>
+    <div class="centrer">
+        <a href="pdf/cv.pdf" target="_blank" class="button">Télécharger en version PDF</a>
+    </div>
+    <div class="arrow"></div>
+    <a href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut" /></a>
+    <span id="bas"></span>
+
+    <img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat" />
+    <img src="img/troll.png" id="trol" alt="trolol" />
+    <div id="music"></div>
+</div>
+
+<script src="script.js"></script>
+<script src="progressbar.js"></script>
+<script src="easteregg.js"></script>
 </body>
+
 </html>

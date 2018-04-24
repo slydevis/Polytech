@@ -15,7 +15,7 @@ todoApp.config(function ($stateProvider) {
 
     var homeState = {
         name: 'home',
-        url: '/home',
+        url: '',
         template: '<header><h1>Page d\'accueil</h1></header>'
     };
 

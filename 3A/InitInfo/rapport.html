@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Guillaume Michon</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<span id="top"></span>
+<div id="nav">
+    <a class="navbar-brand" href="#">Guillaume Michon</a>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li class="active"><a href="#">Rapport</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="lien.html">Lien</a></li>
+        <li><a href="#" onclick="themeManager()">Changer de thème</a> </li>
+    </ul>
+    <div id="externalLink">
+        <a href="http://facebook.com/slydevis" title="Mon Facebook">
+            <img src="img/facebook.png" alt="Mon Facebook"/>
+        </a>
+        <a href="http://github.com/slydevis" title="Mon Github">
+            <img src="img/github.png" alt="Mon Github"/>
+        </a>
+    </div>
+</div>
+
+<!-- Visible if javascript is disable -->
+<noscript>
+    <div class="centrer">
+        <div class="alert alert-danger">
+            Le JavaScript est désactivé veuillez l'activé puis réactualisez la page pour une meilleur
+            utilisation plus agréable du site !
+        </div>
+    </div>
+</noscript>
+
+<div id="content">
+    <div id="infoAlert" class="alert"></div>
+    <h1>Rapport</h1>
+    <table>
+        <tr>
+            <td><img src="img/linux.png" alt="TP d'HTML/CSS" class="vignetteRapport"/></td>
+            <td><h3>TP Linux :</h3> Mon rapport pour le TP sur le système d'exploitation linux.<div class="centrer" style="margin-top: 30px;"><a class="button" href="pdf/rapport_linux.pdf" target="_blank">Télécharger le PDF</a></div></td>
+        </tr>
+        <tr>
+            <td><img src="img/js.png" alt="TP d'HTML/CSS" class="vignetteRapport"/></td>
+            <td><h3>Ce site :</h3> Mon rapport sur ce site.<div class="centrer" style="margin-top: 30px;"><a class="button" href="pdf/rapport_javascript.pdf" target="_blank">Télécharger le PDF</a></div></td>
+
+        </tr>
+    </table>
+    <div class="arrow"></div>
+    <a href="#top" class="col-lg-12 centrer"><img src="img/arrow.png" alt="remonter en haut"/></a>
+    <span id="bas"></span>
+</div>
+<img src="img/nyancat2.gif" id="nyanCat" alt="nyanCat"/>
+<img src="img/troll.png" id="trol" alt="trolol" />
+<div id="music"></div>
+<script src="script.js"></script>
+<script src="easteregg.js"></script>
+</body>
+</html>
