@@ -38,18 +38,6 @@ todoApp.controller('todoCtrl', ['$scope', 'todoService', function ($scope, $todo
         });
     }
 
-    // $scope.load = function () {
-    // TODO: Step 1 : Load from database
-    // TODO: Step 2 : Load from local storage
-    //     var result = $todoService.getTaskByUser(0, function (result) {
-    //         $scope.tasks = [];
-
-    //         result.tasks.forEach(e => {
-    //             $scope.tasks.push(e);
-    //         })
-    //     });
-    // }
-
     $scope.refreshTaskSet();
 }]);
 

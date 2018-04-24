@@ -1,0 +1,8 @@
+<header>
+    <h1>Ampoule Simulator</h1>
+</header>
+
+<div ng-controller="lampCtrl">
+    <img id='myImage' src="assets/ampoule_eteinte.png" />
+    <button ng-click="changeState()" class="btn" ng-class="btnColor" id="allumerBtn">{{ btnTxt }}</button>
+</div>

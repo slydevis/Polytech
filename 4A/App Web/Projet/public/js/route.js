@@ -19,6 +19,13 @@ todoApp.config(function ($stateProvider) {
         template: '<header><h1>Page d\'accueil</h1></header>'
     };
 
+    var lampState = {
+        name: 'lamp',
+        url: '/lamp',
+        templateUrl: 'view/lamp.html',
+        controller: 'lampCtrl'
+    };
+
     var page1State = {
         name: 'page1',
         url: '/page1',
@@ -48,6 +55,7 @@ todoApp.config(function ($stateProvider) {
     // $stateProvider.state(loginState);
     // $stateProvider.state(registerState);
     $stateProvider.state(homeState);
+    $stateProvider.state(lampState);
     $stateProvider.state(page1State);
     $stateProvider.state(page2State);
     $stateProvider.state(todoListState);
