@@ -21,11 +21,15 @@ File::File(std::string filename) : m_filename(filename) {
     // std::cout << "FILE SIZE = " << m_size << std::endl;
 }
 
-File::~File() { close(); }
+File::~File() { 
+    close(); 
+}
 
 unsigned File::getSize() const { return this->m_size; }
 
-void File::close() { m_file->close(); }
+void File::close() {
+    m_file->close();
+}
 
 bool File::eof() const { return m_file->eof(); }
 
@@ -50,3 +54,9 @@ char File::get() const {
     return c;
 }
 void File::write(char c) { *m_file << c; }
+
+void File::write(std::string str) {
+    for (char c : str) {
+        write(c);
+    }
+}

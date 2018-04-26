@@ -1,6 +1,6 @@
 EXEC = compression.out
 
-OBJ = Huffman.o File.o
+OBJ = UtilBinary.o HuffmanTree.o Huffman.o File.o
 
 FLAGS = -Wall -std=c++11
 
@@ -11,6 +11,12 @@ Huffman.o: Huffman.cpp Huffman.hpp
 	
 File.o: File.cpp File.hpp
 	$(CXX) -c File.cpp $(FLAGS)
+
+UtilBinary.o: UtilBinary.cpp UtilBinary.hpp
+	$(CXX) -c UtilBinary.cpp $(FLAGS)
+
+HuffmanTree.o: HuffmanTree.cpp HuffmanTree.hpp
+	$(CXX) -c HuffmanTree.cpp $(FLAGS)
 
 compression.out: main.cpp $(OBJ)
 	$(CXX) -g -o $(EXEC) main.cpp $(OBJ) $(FLAGS)

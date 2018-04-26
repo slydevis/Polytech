@@ -19,6 +19,20 @@
         "bitset": "cpp",
         "__split_buffer": "cpp",
         "string": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "__bit_reference": "cpp",
+        "__tree": "cpp",
+        "deque": "cpp",
+        "iterator": "cpp",
+        "map": "cpp",
+        "string_view": "cpp",
+        "algorithm": "cpp",
+        "queue": "cpp",
+        "memory": "cpp",
+        "system_error": "cpp",
+        "sstream": "cpp",
+        "__locale": "cpp"
     }
 }

@@ -1,4 +1,4 @@
-#ifndef __FILE_HPP_
+#ifndef __FILE_HPP__
 #define __FILE_HPP__
 
 #include <bitset>
@@ -16,6 +16,7 @@ class File {
     std::bitset<8> getBitSet() const;
     char get() const;
     void write(char c);
+    void write(std::string str);
 
   private:
     unsigned m_size;
@@ -23,4 +24,4 @@ class File {
     std::string m_filename;
 };
 
-#endif /* __FILE_HPP_ */
+#endif /* __FILE_HPP__ */
