@@ -51,6 +51,10 @@ GLfloat M1[16];
 float uCoord = 0;
 float yCoord = 0;
 
+#ifdef __linux__
+sf::Music *music;
+#endif
+
 /* Prototype de la fonction, elle est ecrite a la fin du fichier*/
 int chargeTextureTGA(TextureImage *texture, char *filename);
 
@@ -217,27 +221,6 @@ void def_boite(float a) {
 void affiche(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // glBindTexture(GL_TEXTURE_2D, texture.texID);
-
-    // glBegin(GL_QUADS);
-    /* Texture fixe */
-    // glTexCoord2f(0.0f, 0.0f); glVertex3f(-.5f, -.5f,  .5f);	// bas gauche
-    // glTexCoord2f(1.0f, 0.0f); glVertex3f( .5f, -.5f,  .5f);	// bas droit
-    // glTexCoord2f(1.0f, 1.0f); glVertex3f( .5f,  .5f,  .5f);	// haut droit
-    // glTexCoord2f(0.0f, 1.0f); glVertex3f(-.5f,  .5f,  .5f);	// haut gauche
-
-    /* On change les coordonnées de texture à chaque affiche, la texture "bouge"
-     */
-    // glTexCoord2f(uCoord, 0.0f);
-    // glVertex3f(-.5f, -.5f, .5f); // bas gauche
-    // glTexCoord2f(uCoord + 1.0f, 0.0f);
-    // glVertex3f(.5f, -.5f, .5f); // bas droit
-    // glTexCoord2f(uCoord + 1.0f, 1.0f);
-    // glVertex3f(.5f, .5f, .5f); // haut droit
-    // glTexCoord2f(uCoord, 1.0f);
-    // glVertex3f(-.5f, .5f, .5f); // haut gauche
-    // glEnd();
-
     glPushMatrix();
     glMultMatrixf(M1);
     def_boite(1.0f);
@@ -249,6 +232,10 @@ void affiche(void) {
 void keyboardCallback(unsigned char key, int x, int y) {
     switch (key) {
     case ESC_KEY:
+#ifdef __linux__
+        music->stop();
+        delete music;
+#endif
         exit(0);
         break;
     case 'q':
@@ -283,13 +270,13 @@ int main(int argc, char **argv) {
     glutCreateWindow("texture");
 
 #ifdef __linux__
-    sf::Music music;
+    music = new sf::Music();
 
-    if (!music.openFromFile("Nyan.ogx"))
+    if (!music->openFromFile("Nyan.ogx"))
         return -1;
 
-    music.play();
-    music.setLoop(true);
+    music->play();
+    music->setLoop(true);
 #endif
 
     initGL();
