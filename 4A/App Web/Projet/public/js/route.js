@@ -1,7 +1,7 @@
-todoApp.config(function ($stateProvider) {
+todoApp.config(function ($stateProvider, $urlRouterProvider) {
     var homeState = {
         name: 'home',
-        url: '',
+        url: '/',
         template: '<header><h1>Page d\'accueil</h1></header>'
     };
 
@@ -45,4 +45,6 @@ todoApp.config(function ($stateProvider) {
     $stateProvider.state(page2State);
     $stateProvider.state(todoListState);
     $stateProvider.state(compteurState);
+
+    $urlRouterProvider.otherwise('/');
 });

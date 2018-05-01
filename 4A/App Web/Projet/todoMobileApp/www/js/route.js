@@ -1,8 +1,8 @@
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
     // Display menu for mobile
     var appState = {
         name: 'app',
-        url: '/app',
+        url: '',
         abstract: true,
         templateUrl: 'view/menu.html',
         controller: 'appCtrl'
@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 
     var homeState = {
         name: 'app.home',
-        url: '',
+        url: '/',
         views: {
             'menuContent': {
                 template: '<ion-view><ion-content><header><h1>Page d\'accueil</h1></header></ion-view></ion-content>'
@@ -80,5 +80,5 @@ app.config(function ($stateProvider) {
     $stateProvider.state(todoListState);
     $stateProvider.state(compteurState);
 
-    // $urlRouterProvider.otherwise('/app/todo');
+    $urlRouterProvider.otherwise('/');
 });
