@@ -33,13 +33,5 @@ todoApp.factory('todoService', ['$http', function ($http) {
         });
     }
 
-    // serv.getTaskByUser = function ($user, callback) {
-    //     $http.post('/getTasks', { user: $user }).then(function (data) {
-    //         callback(data.data);
-    //     }, function (res) {
-    //         console.log("ERROR = " + res);
-    //     });
-    // }
-
     return serv;
 }]);

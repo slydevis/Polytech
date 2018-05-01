@@ -1,6 +1,7 @@
 todoApp.controller('lampCtrl', ['$scope', function ($scope) {
     $scope.btnTxt = "Allumer";
-    $scope.btnColor = "btn-warning"
+    $scope.btnColor = "yellow lighten-1"
+    $scope.textColor = "black-text"
 
     $scope.changeState = function () {
         var btn = document.getElementById('allumerBtn');
@@ -9,12 +10,14 @@ todoApp.controller('lampCtrl', ['$scope', function ($scope) {
         if (btn.innerHTML === 'Allumer') {
             img.src = 'assets/ampoule_allume.png';
             $scope.btnTxt = 'Eteindre';
-            $scope.btnColor = "btn-dark";
+            $scope.btnColor = "blue-grey darken-1";
+            $scope.textColor = "white-text"
         }
         else {
             img.src = 'assets/ampoule_eteinte.png';
             $scope.btnTxt = 'Allumer'
-            $scope.btnColor = "btn-warning";
+            $scope.btnColor = "yellow lighten-1";
+            $scope.textColor = "black-text"
         }
     };
 }]);

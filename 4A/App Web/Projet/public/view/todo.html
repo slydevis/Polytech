@@ -3,18 +3,26 @@
 </header>
 
 <section ng-controller="todoCtrl" id='todoSection'>
-    <form id='todoForm' ng-submit="addTask()">
-        <input id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
-    </form>
-    <article ng-show="tasks.length" class="ng-hide">
-        <ul id="todo-list">
-            <li ng-repeat="task in tasks" ng-class="{completed: task.completed}">
-                <div class="view">
-                    <input class="mark" type="checkbox" ng-model="task.completed" ng-change="changeCompletion(task)" />
-                    <span>{{ task.title }}</span>
-                    <a href="javascript:void(0)" class="close" ng-click="removeTask(task)">x</a>
-                </div>
-            </li>
-        </ul>
-    </article>
+    <div class="row">
+        <div class="col s12 valign-wrapper">
+            <div class="col s6 offset-s3">
+                <form id='todoForm' ng-submit="addTask()">
+                    <input id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
+                </form>
+                <article ng-show="tasks.length" class="ng-hide">
+                    <ul class="collection" id="todo-list">
+                        <li ng-repeat="task in tasks" class="collection-item" ng-class="{completed: task.completed}">
+                            <label>
+                                <input type="checkbox" ng-model="task.completed" ng-change="changeCompletion(task)" />
+                                <span>{{ task.title }}</span>
+                            </label>
+                            <a class="secondary-content" href="javascript:void(0)" ng-click="removeTask(task)">
+                                <i class="close material-icons red-text">close</i>
+                            </a>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </div>
 </section>

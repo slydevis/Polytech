@@ -1,18 +1,4 @@
 todoApp.config(function ($stateProvider) {
-    // var loginState = {
-    //     name: 'login',
-    //     url: '',
-    //     templateUrl: 'login.html',
-    //     controller: 'userCtrl'
-    // };
-
-    // var registerState = {
-    //     name: 'register',
-    //     url: '/register',
-    //     templateUrl: 'view/register.html',
-    //     controller: 'userCtrl'
-    // };
-
     var homeState = {
         name: 'home',
         url: '',
@@ -36,7 +22,7 @@ todoApp.config(function ($stateProvider) {
     var page2State = {
         name: 'page2',
         url: '/page2',
-        template: '<h3 style="text-align:center">Le contenu de la page 2 </h3>'
+        template: '<h1 style="text-align:center">Le contenu de la page 2 </h1>'
     };
 
     var todoListState = {
@@ -49,11 +35,10 @@ todoApp.config(function ($stateProvider) {
     var compteurState = {
         name: 'compteur',
         url: '/compteur',
-        component: 'compteurComponent'
+        templateUrl: 'view/compteur.html',
+        controller: 'compteurCtrl'
     };
 
-    // $stateProvider.state(loginState);
-    // $stateProvider.state(registerState);
     $stateProvider.state(homeState);
     $stateProvider.state(lampState);
     $stateProvider.state(page1State);
