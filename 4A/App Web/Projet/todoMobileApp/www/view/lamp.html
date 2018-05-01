@@ -1,0 +1,22 @@
+<ion-view>
+    <ion-content>
+        <header>
+            <h1>Ampoule Simulator</h1>
+        </header>
+
+        <div ng-controller="lampCtrl">
+            <div class="row">
+                <div class="col s12 valign-wrapper">
+                    <div class="col offset-s3 s3">
+                        <img id='myImage' class="responsive-img" src="assets/ampoule_eteinte.png" />
+                    </div>
+                    <div class="col offset-s1 s1">
+                        <a ng-click="changeState()" class="waves-effect waves-light btn-large" ng-class="[btnColor, textColor]">
+                            <span id="allumerBtn">{{ btnTxt }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

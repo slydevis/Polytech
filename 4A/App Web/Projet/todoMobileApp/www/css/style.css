@@ -1,0 +1,27 @@
+.brand-logo {
+    margin-left: 20px;
+}
+
+header {
+    text-align: center;
+}
+
+label {
+    color:black;
+}
+
+input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    font-style: italic;
+    color: #AAA;
+}
+
+li a .close:hover {
+    cursor: pointer;
+    color: #444 !important;
+}
+
+/* Ionic Custom CSS */
+ion-view {
+    margin-top: 30px;
+}
