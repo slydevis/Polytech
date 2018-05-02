@@ -21,6 +21,10 @@ li a .close:hover {
     color: #444 !important;
 }
 
+input[type="text"]:focus {
+    border-bottom: 1px solid #2196F3 !important;
+}
+
 /* Ionic Custom CSS */
 ion-view {
     margin-top: 30px;

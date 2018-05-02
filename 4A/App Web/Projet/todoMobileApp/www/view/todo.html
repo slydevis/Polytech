@@ -10,7 +10,7 @@
                     <!-- Materialize grid system seems doesn't work well with ionic -->
                     <div style="width:50%; margin: auto">
                         <form id='todoForm' ng-submit="addTask()">
-                            <input id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
+                            <input type="text" id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
                         </form>
                         <article ng-show="tasks.length" class="ng-hide">
                             <ul class="collection" id="todo-list">

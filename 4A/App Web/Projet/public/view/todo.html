@@ -7,7 +7,7 @@
         <div class="col s12 valign-wrapper">
             <div class="col s6 offset-s3">
                 <form id='todoForm' ng-submit="addTask()">
-                    <input id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
+                    <input type="text" id='new-todo' placeholder="Que devez-vous faire ?" ng-model="newTask" />
                 </form>
                 <article ng-show="tasks.length" class="ng-hide">
                     <ul class="collection" id="todo-list">
