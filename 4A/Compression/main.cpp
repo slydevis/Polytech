@@ -1,150 +1,3 @@
-// #include <bitset>
-// #include <iostream>
-// #include <vector>
-
-// #include "File.hpp"
-
-// using namespace std;
-
-/************************************************************************************
-
- Lecture de fichiers textes
-. Réalisation d’une étude statistique sur les octets
-. Modification des bits*2
-. Réécriture bit à bit des valeurs modifiées dans un ou plusieurs fichiers
-. Vérifier les propriétés et la taille des nouveaux fichiers
-
-*2 On pourra écrire par exemple un bit sur deux dans un nouveau fichier, ou
-couper les octets en deux parties (poids fort et poids faible), et former deux
-fichiers pour des bits alternés ou des groupes de 4 bits.
-
-6.
-Ecriture du codage/décodage de Huffman, adapté au traitement d’octets. Tests sur
-fichiers textes.
-
-*************************************************************************************/
-/************************************************************************************
- *                                     PART 1
- ************************************************************************************/
-
-// int main(int argc, char **argv) {
-//     if (argc != 2) {
-//         std::cout << "Nombre d'argument incorrect" << std::endl;
-//         return -1;
-//     }
-
-//     File file(argv[1]);
-//     File file_un_bit_sur_deux("un_bit_sur_deux.txt");
-//     File file_poid_fort("poid_fort.txt");
-//     File file_poid_faible("poid_faible.txt");
-
-//     std::vector<std::bitset<8>> binary_file;
-//     std::vector<std::bitset<8>> binary_file_un_bit_sur_deux;
-//     std::vector<std::bitset<8>> binary_file_poid_fort;
-//     std::vector<std::bitset<8>> binary_file_poid_faible;
-
-//     while (!file.eof()) {
-//         std::bitset<8> bitset(file.get());
-//         binary_file.push_back(bitset);
-//         // std::bitset<8> c = file.getBitSet();
-//         // std::cout << "BYTE = " << c.to_string() << std::endl;
-
-//         // // Un bit sur deux dans un fichier
-//         // string byte = c.to_string();
-//         // for (unsigned i = 0; i < c.to_string().size(); ++i) {
-//         //     if (i % 2 == 0) {
-//         //         file_un_bit_sur_deux.write(byte[i]);
-//         //     }
-//         // }
-//     }
-
-//     // Un bit sur deux dans un fichier
-//     for (unsigned i = 0; i < binary_file.size(); i = i + 2) {
-//         std::bitset<8> octect;
-
-//         std::bitset<8> tmp_poid_fort = binary_file[i];
-//         std::bitset<8> tmp_poid_faible = binary_file[i + 1];
-
-//         // std::cout << "DEBUT OCTECT = " << tmp_poid_fort.to_string()
-//         //           << std::endl;
-
-//         // Poid fort
-//         unsigned cpt = 7;
-//         for (int j = 7; j >= 0; j = j - 2) {
-//             octect[cpt] = tmp_poid_fort[j];
-//             cpt--;
-//         }
-
-//         // Poid fort
-//         for (int j = 7; j >= 0; j = j - 2) {
-//             octect[cpt] = tmp_poid_faible[j];
-//             cpt--;
-//         }
-
-//         // std::cout << "FIN OCTECT = " << octect.to_string() << std::endl;
-//         binary_file_un_bit_sur_deux.push_back(octect);
-//         unsigned long n = octect.to_ulong();
-//         file_un_bit_sur_deux.write((char)(n));
-//     }
-
-//     // Bit de poid fort dans un fichier
-//     for (unsigned i = 0; i < binary_file.size(); i = i + 2) {
-//         std::bitset<8> part1 = binary_file[i];
-//         std::bitset<8> part2 = binary_file[i + 1];
-
-//         // std::cout << "DEBUT" << std::endl;
-//         // std::cout << "PART 1 = " << part1.to_string() << std::endl;
-//         // std::cout << "PART 2 = " << part2.to_string() << std::endl;
-
-//         for (unsigned j = 7; j >= 4; --j) {
-//             // std::cout << "BIT = " << part2[j] << std::endl;
-//             part1.set(j - 4, part2[j]);
-//         }
-
-//         // std::cout << "PART 1 = " << part1.to_string() << std::endl;
-
-//         // std::cout << "FIN" << std::endl;
-
-//         binary_file_poid_fort.push_back(part1);
-//         unsigned long n = part1.to_ulong();
-//         file_poid_fort.write((char)(n));
-//     }
-
-//     // Bit de poid faible dans un fichier
-//     for (unsigned i = 0; i < binary_file.size(); i = i + 2) {
-//         std::bitset<8> part1 = binary_file[i];
-//         std::bitset<8> part2 = binary_file[i + 1];
-
-//         // std::cout << "DEBUT" << std::endl;
-//         // std::cout << "PART 1 = " << part1.to_string() << std::endl;
-//         // std::cout << "PART 2 = " << part2.to_string() << std::endl;
-
-//         for (int j = 3; j >= 0; --j) {
-//             // std::cout << "BIT = " << part1[j] << std::endl;
-//             part2.set(j + 4, part1[j]);
-//         }
-
-//         // std::cout << "PART 2 = " << part2.to_string() << std::endl;
-
-//         // std::cout << "FIN" << std::endl;
-
-//         binary_file_poid_faible.push_back(part2);
-//         unsigned long n = part1.to_ulong();
-//         file_poid_faible.write((char)(n));
-//     }
-
-//     file_un_bit_sur_deux.close();
-//     file_poid_fort.close();
-//     file_poid_faible.close();
-//     file.close();
-
-//     return 0;
-// }
-
-/************************************************************************************
- *                                     PART 2
- ************************************************************************************/
-
 #include <iostream>
 
 #include "File.hpp"
@@ -154,15 +7,80 @@ using namespace std;
 
 std::string text;
 
-int main(int argc, char **argv) {
-    // TODO: Add empty file protection
-    // std::string text = "totoro";
+void part1(string filename) {
+    File file(filename);
 
+    text = "";
+    while (!file.eof()) {
+        char c = file.get();
+        std::cout << "char (" << (int)c << ")= " << c << std::endl;
+        text += c;
+    }
+
+    code_t binary_file = UtilBinary::string_to_bitvec(text);
+    std::cout << "Original (" << text << ") : ";
+    UtilBinary::display(binary_file);
+
+    // Un bit sur deux dans un fichier
+    File file_un_bit_sur_deux("un_bit_sur_deux.txt", true);
+    code_t binary_file_un_bit_sur_deux;
+
+    for (unsigned i = 0; i < binary_file.size(); i += 2) {
+        binary_file_un_bit_sur_deux.push_back(binary_file[i]);
+    }
+
+    std::cout << "Un bit sur deux = ";
+    UtilBinary::display(binary_file_un_bit_sur_deux);
+    file.close();
+
+    string res = UtilBinary::bitvec_to_string(binary_file_un_bit_sur_deux);
+    file_un_bit_sur_deux.write(res);
+    file_un_bit_sur_deux.close();
+
+    // Bit de poid fort dans un fichier
+    File file_poid_fort("poid_fort.txt", true);
+    code_t binary_file_poid_fort;
+
+    for (unsigned i = 0; i < binary_file.size(); i += 8) {
+        for (unsigned j = 0; j < 4; ++j) {
+            binary_file_poid_fort.push_back(binary_file[i + j]);
+        }
+    }
+
+    std::cout << "Poid fort = ";
+    UtilBinary::display(binary_file_poid_fort);
+    res = UtilBinary::bitvec_to_string(binary_file_poid_fort);
+    file_poid_fort.write(res);
+    file_poid_fort.close();
+
+    // Bit de poid faible dans un fichier
+    File file_poid_faible("poid_faible.txt", true);
+    code_t binary_file_poid_faible;
+
+    for (unsigned i = 4; i < binary_file.size(); i += 8) {
+        for (unsigned j = 0; j < 4; ++j) {
+            binary_file_poid_faible.push_back(binary_file[i + j]);
+        }
+    }
+
+    std::cout << "Poid faible = ";
+    UtilBinary::display(binary_file_poid_faible);
+    res = UtilBinary::bitvec_to_string(binary_file_poid_faible);
+    file_poid_faible.write(res);
+    file_poid_faible.close();
+}
+
+void part2(string filename) {
     // TODO: Fix segmentation fault when less than 2 letters
     // TODO: Fix file creation if not exist
     std::string text = "";
 
-    File file(argv[1]);
+    File file(filename);
+
+    if (file.getSize() == 0) {
+        std::cerr << "Le fichier à compresser est vide" << std::endl;
+        return;
+    }
 
     while (!file.eof()) {
         char c = file.get();
@@ -175,31 +93,25 @@ int main(int argc, char **argv) {
     std::cout << "TEXT DEFAULT = " << text << std::endl;
 
     Huffman huff(text);
-    // code_t code = huff.encode();
-
-    // std::cout << text << " => ";
-    // UtilBinary::display(code);
-
-    // std::cout << "Decode => " << Huffman::decode(code,
-    // huff.getTradTable())
-    //   << std::endl;
-
-    // std::cout << "Magical string => " <<
-    // UtilBinary::bitvec_to_string(code)
-    //   << std::endl;
-
-    // code_t magicalBitVec =
-    // UtilBinary::string_to_bitvec(UtilBinary::bitvec_to_string(code));
-
-    // std::cout << "Decode Magical string => ";
-    // UtilBinary::display(code);
-
-    // std::cout << std::endl
-    //           << "========= FREQUENCE TABLE  =========" << std::endl
-    //           << std::endl;
-    // huff.display_freq_table();
 
     huff.compress("fileCompressed.txt");
 
     Huffman::uncompress("fileCompressed.txt", "output.txt");
+}
+
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        std::cout << "Usage : ./compression.out filename" << std::endl;
+        return -1;
+    }
+
+    /************************************************************************************
+     *                                     PART 1
+     ************************************************************************************/
+    part1(argv[1]);
+
+    /************************************************************************************
+     *                                     PART 2
+     ************************************************************************************/
+    part2(argv[1]);
 }

@@ -33,6 +33,8 @@
         "memory": "cpp",
         "system_error": "cpp",
         "sstream": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "__functional_base": "cpp",
+        "istream": "cpp"
     }
 }

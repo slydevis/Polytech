@@ -7,7 +7,7 @@
 
 class File {
   public:
-    File(std::string filename);
+    File(std::string filename, bool removeOld = false);
     virtual ~File();
 
     void close();

@@ -4,10 +4,14 @@
 
 #include "File.hpp"
 
-File::File(std::string filename) : m_filename(filename) {
-    m_file =
-        new std::fstream(filename, std::fstream::binary | std::fstream::in |
-                                       std::fstream::out | std::fstream::ate);
+File::File(std::string filename, bool removeOld) : m_filename(filename) {
+    if (removeOld == true) {
+        remove(filename.c_str()); // Remove old file
+    }
+
+    m_file = new std::fstream(
+        filename, std::fstream::binary | std::fstream::in | std::fstream::out |
+                      std::ios::app | std::fstream::ate);
 
     if (!m_file) {
         std::cerr << "Error for opening file" << std::endl;
@@ -17,19 +21,13 @@ File::File(std::string filename) : m_filename(filename) {
 
     // Return to the beggining
     m_file->seekg(0);
-
-    // std::cout << "FILE SIZE = " << m_size << std::endl;
 }
 
-File::~File() { 
-    close(); 
-}
+File::~File() { close(); }
 
 unsigned File::getSize() const { return this->m_size; }
 
-void File::close() {
-    m_file->close();
-}
+void File::close() { m_file->close(); }
 
 bool File::eof() const { return m_file->eof(); }
 
@@ -53,6 +51,7 @@ char File::get() const {
 
     return c;
 }
+
 void File::write(char c) { *m_file << c; }
 
 void File::write(std::string str) {

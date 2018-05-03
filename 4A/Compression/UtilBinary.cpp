@@ -49,11 +49,19 @@ string UtilBinary::bitvec_to_string(code_t &bitvec) {
 }
 
 void UtilBinary::display(const code_t &code) {
+    int i = 0;
     for (bool b : code) {
         if (b) {
             std::cout << '1';
         } else {
             std::cout << '0';
+        }
+
+        ++i;
+
+        if (i == 8) {
+            std::cout << " ";
+            i = 0;
         }
     }
 

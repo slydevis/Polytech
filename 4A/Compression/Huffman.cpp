@@ -89,14 +89,14 @@ void Huffman::compress(const std::string outputFileName) {
     int nbAdded = 0;
     int alternate = false;
     while (code.size() % 8 != 0) {
-        // TODO: Add char with value of padding
+        // Add char with value of padding
         // Default = 0
         code.push_back(alternate);
         alternate = !alternate;
         nbAdded++;
     }
 
-    std::cout << "NB ADDED = " << nbAdded << std::endl;
+    // std::cout << "NB ADDED = " << nbAdded << std::endl;
     string outputStr = UtilBinary::bitvec_to_string(code);
     outputStr.push_back(nbAdded);
     // outputStr.push_back(0);
@@ -186,7 +186,7 @@ std::string Huffman::uncompress(const std::string inputFilename,
 
     code_t code_content = UtilBinary::string_to_bitvec(str);
 
-    // TODO: Remove nbPadding
+    // Remove nbPadding
     for (unsigned i = 0; i < nbPadding; ++i) {
         code_content.pop_back();
     }
@@ -196,9 +196,8 @@ std::string Huffman::uncompress(const std::string inputFilename,
     std::cout << "==== UNCOMPRESSED ====" << std::endl;
     std::cout << uncompressedStr << std::endl;
 
-    // TODO: Store result in file
     if (outputFileName != "") {
-        File output(outputFileName);
+        File output(outputFileName, true);
         output.write(uncompressedStr);
         output.close();
     }
@@ -266,6 +265,11 @@ void Huffman::create_trad_table() {
         HuffmanTree *node = q.front().first;
         code_t code = q.front().second;
         q.pop_front();
+
+        // TODO: Fix segmentation error if there are not 3 differents letter
+        // if (node == NULL) {
+        // std::cout << "Node == NULL" << std::endl;
+        // }
 
         HuffmanTree *left = node->getLeft();
         HuffmanTree *right = node->getRight();
