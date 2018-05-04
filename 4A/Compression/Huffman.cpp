@@ -112,7 +112,7 @@ void Huffman::compress(const std::string outputFileName) {
 
     // UtilBinary::display(UtilBinary::string_to_bitvec(outputStr));
 
-    File output(outputFileName);
+    File output(outputFileName, true);
     output.write(outputStr);
     output.close();
 }

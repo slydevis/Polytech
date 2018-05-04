@@ -9,12 +9,23 @@ std::string text;
 
 void part1(string filename) {
     File file(filename);
+    map<char, unsigned> car_occur;
 
     text = "";
     while (!file.eof()) {
         char c = file.get();
         std::cout << "char (" << (int)c << ")= " << c << std::endl;
+        car_occur[c] = car_occur[c] + 1;
         text += c;
+    }
+
+    file.close();
+
+    // Display Car frequencies
+    for (std::pair<char, unsigned> p : car_occur) {
+        float freq = ((float)p.second / (float)file.getSize()) * 100.0f;
+        std::cout << p.first << "(" << (int)p.first << ")"
+                  << " = " << freq << std::endl;
     }
 
     code_t binary_file = UtilBinary::string_to_bitvec(text);
@@ -31,7 +42,6 @@ void part1(string filename) {
 
     std::cout << "Un bit sur deux = ";
     UtilBinary::display(binary_file_un_bit_sur_deux);
-    file.close();
 
     string res = UtilBinary::bitvec_to_string(binary_file_un_bit_sur_deux);
     file_un_bit_sur_deux.write(res);
@@ -71,8 +81,6 @@ void part1(string filename) {
 }
 
 void part2(string filename) {
-    // TODO: Fix segmentation fault when less than 2 letters
-    // TODO: Fix file creation if not exist
     std::string text = "";
 
     File file(filename);
@@ -93,6 +101,12 @@ void part2(string filename) {
     std::cout << "TEXT DEFAULT = " << text << std::endl;
 
     Huffman huff(text);
+
+    map<char, code_t> trad_table = huff.getTradTable();
+    for (pair<char, code_t> p : trad_table) {
+        std::cout << p.first << " ( " << (int)p.first << " ) = ";
+        UtilBinary::display(p.second);
+    }
 
     huff.compress("fileCompressed.txt");
 
