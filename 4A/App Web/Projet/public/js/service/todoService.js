@@ -1,16 +1,16 @@
-todoApp.factory('todoService', ['$http', function ($http) {
+app.factory('todoService', ['$http', 'userService', function ($http, $userService) {
     var serv = {};
 
     serv.addTask = function (task, callback) {
-        $http.post('/addTask', { title: task }).then(function (resp) {
-            callback(resp.data.success);
+        $http.post('/addTask', { token: $userService.getToken(), title: task }).then(function (resp) {
+            callback(resp.data);
         }, function (res) {
             console.log("ERROR = " + res.data.errorSet);
         });
     };
 
     serv.getTaskSet = function (callback) {
-        $http.post('/getTaskSet').then(function (resp) {
+        $http.post('/getTaskSet', { token: $userService.getToken() }).then(function (resp) {
             callback(resp.data.tasks);
         }, function (res) {
             console.log("ERROR = " + res.data.errorSet);
@@ -19,7 +19,7 @@ todoApp.factory('todoService', ['$http', function ($http) {
 
     serv.deleteTask = function (task, callback) {
         $http.post('/deleteTask', task).then(function (resp) {
-            callback(resp.data.success);
+            callback(resp.data);
         }, function (res) {
             console.log("ERROR = " + res);
         });

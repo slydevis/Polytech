@@ -1,14 +1,16 @@
 // uuid-v4 = Génére un id unique
 var uuidv4 = require('uuid/v4');
 
+// Load configuration file for database
+var config = require('./../config.js').database;
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var mongo_url = "mongodb://localhost:27017/";
-var mongo_database_name = "todoList";
+var mongo_url = "mongodb://" + config.host + ":" + config.port + "/" + config.name;
 
 // Connect to mongoDB table
-mongoose.connect(mongo_url + mongo_database_name, function (err) {
+mongoose.connect(mongo_url, function (err) {
     if (err) {
         throw err;
     }
@@ -20,25 +22,27 @@ mongoose.connect(mongo_url + mongo_database_name, function (err) {
 // Declare schema Task
 var TaskSchema = Schema({
     _id: String,
+    user_id: String,
     title: String,
-    completed: Boolean
+    completed: Boolean,
 });
 
 // Init model
 var TaskModel = mongoose.model('tasks', TaskSchema);
 
 module.exports = {
-    getTaskSet: function (cb) {
-        TaskModel.find(null, function (err, taskSet) {
+    getTaskSet: function (user, cb) {
+        TaskModel.find({ user_id: user.id }, function (err, taskSet) {
             cb(taskSet);
         });
     },
-    addTask: function (title, cb) {
+    addTask: function (user, title, cb) {
         // Create a task
         var taskSamp = new TaskModel({
             _id: uuidv4(),
+            user_id: user.id,
             title: title,
-            completed: false
+            completed: false,
         });
 
         // Save task

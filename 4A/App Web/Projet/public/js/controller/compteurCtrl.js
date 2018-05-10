@@ -1,4 +1,4 @@
-todoApp.controller('compteurCtrl', ['$scope', function ($scope) {
+app.controller('compteurCtrl', ['$scope', function ($scope) {
     $scope.load = function () {
         $scope.counter = localStorage.getItem('counter');
     }

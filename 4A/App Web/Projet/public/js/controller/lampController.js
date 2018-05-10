@@ -1,4 +1,4 @@
-todoApp.controller('lampCtrl', ['$scope', function ($scope) {
+app.controller('lampCtrl', ['$scope', function ($scope) {
     $scope.btnTxt = "Allumer";
     $scope.btnColor = "yellow lighten-1"
     $scope.textColor = "black-text"

@@ -1,12 +1,17 @@
-todoApp.controller('todoCtrl', ['$scope', 'todoService', function ($scope, $todoService) {
+app.controller('todoCtrl', ['$scope', 'todoService', '$rootScope', 'Notification', 'tradService', function ($scope, $todoService, $rootScope, Notification, $tradService) {
     $scope.tasks = [];
 
     $scope.addTask = function () {
         if ($scope.newTask) {
             $todoService.addTask($scope.newTask.trim(), function (resp) {
-                if (resp) {
+                if (resp.success) {
                     $scope.refreshTaskSet();
                     $scope.newTask = ''; // Reset field
+                }
+                else {
+                    resp.errorSet.forEach(element => {
+                        Notification.error({ message: $tradService.get('todo', element) });
+                    });
                 }
             })
         }
@@ -20,16 +25,26 @@ todoApp.controller('todoCtrl', ['$scope', 'todoService', function ($scope, $todo
 
     $scope.changeCompletion = function (task) {
         $todoService.updateTask(task, function (res) {
-            if (res) {
+            if (res.success) {
                 $scope.refreshTaskSet();
+            }
+            else {
+                resp.errorSet.forEach(element => {
+                    Notification.error({ message: $tradService.get('todo', element) });
+                });
             }
         });
     }
 
     $scope.removeTask = function (task) {
         $todoService.deleteTask(task, function (res) {
-            if (res) {
+            if (res.success) {
                 $scope.refreshTaskSet();
+            }
+            else {
+                resp.errorSet.forEach(element => {
+                    Notification.error({ message: $tradService.get('todo', element) });
+                });
             }
         });
     }
