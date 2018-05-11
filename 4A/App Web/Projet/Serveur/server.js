@@ -225,6 +225,7 @@ app.post('/register', function (req, res) {
     }
 });
 
+// TODO: Add error when login or password is empty
 app.post('/login', function (req, res) {
     var user = req.body.user;
 

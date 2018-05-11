@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus ng-controller="navCtrl" enable-menu-with-back-views="true">
     <ion-side-menu-content>
         <ion-nav-bar class="blue bar-stable" style="height: 64px; padding-top: 15px;">
             <ion-nav-buttons side="left">
@@ -37,19 +37,19 @@
                 <ion-item ui-sref="app.todo" ui-sref-active="active">
                     Todo List
                 </ion-item>
-
-                <!-- <ion-item menu-close ng-click="login()">
+                <ion-item ng-hide="isLogged" ui-sref="app.login" ui-sref-active="active">
                     Login
                 </ion-item>
-                <ion-item menu-close href="#/app/search">
-                    Search
+                <ion-item ng-hide="isLogged" ui-sref="app.register" ui-sref-active="active">
+                    Register
                 </ion-item>
-                <ion-item menu-close href="#/app/browse">
-                    Browse
+
+                <ion-item ng-show="isLogged" style="margin: 10px; text-align: center">
+                    <span>{{ user.username }}</span>
                 </ion-item>
-                <ion-item menu-close href="#/app/playlists">
-                    Playlists
-                </ion-item> -->
+                <ion-item ng-show="isLogged" ui-sref="app.logout" ui-sref-active="active">
+                    Logout
+                </ion-item>
             </ion-list>
         </ion-content>
     </ion-side-menu>

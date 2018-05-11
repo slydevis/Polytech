@@ -1,0 +1,46 @@
+<ion-view>
+    <ion-content>
+        <header>
+            <h1>Register</h1>
+        </header>
+
+        <section ng-controller="userCtrl" id='userSection'>
+            <div class="row">
+                <form ng-submit="register()" class="col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="input-field col-md-6 col-md-offset-3">
+                            <input ng-model="user.username" id="username" type="text" class="validate">
+                            <label for="username">Username</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-md-6 col-md-offset-3">
+                            <input ng-model="user.email" id="email" type="email" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-md-6 col-md-offset-3">
+                            <input ng-model="user.password" id="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-md-6 col-md-offset-3">
+                            <input ng-model="user.confirmPassword" id="confirmPassword" type="password" class="validate">
+                            <label for="password">Conirmation password</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button type="submit" class="col-md-2 col-md-offset-5 btn blue waves-effect waves-light">Enregister</button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </ion-content>
+</ion-view>

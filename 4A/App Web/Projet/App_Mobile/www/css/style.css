@@ -1,0 +1,69 @@
+.brand-logo {
+    margin-left: 20px;
+}
+
+header {
+    text-align: center;
+}
+
+label {
+    color:black;
+}
+
+input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    font-style: italic;
+    color: #AAA;
+}
+
+li a .close:hover {
+    cursor: pointer;
+    color: #444 !important;
+}
+
+input[type="text"]:focus {
+    border-bottom: 1px solid #2196F3 !important;
+}
+
+input[type="password"]:focus {
+    border-bottom: 1px solid #2196F3 !important;
+}
+
+input[type="email"]:focus {
+    border-bottom: 1px solid #2196F3 !important;
+}
+
+#dropdown1 {
+    top: 64px !important;
+}
+
+#dropdown1 li > a {
+    color: #2196F3 !important;
+}
+
+#dropdown1 li:hover > a {
+    background: #2196F3 !important;
+    color: white !important;
+}
+
+/* Ionic Custom CSS */
+ion-view {
+    margin-top: 30px;
+}
+
+.bar .buttons {
+    display: block;
+}
+
+.left-buttons {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.bar {
+    height: 64px;
+}
+
+ion-side-menu ion-header-bar {
+    height: 45px !important;
+}

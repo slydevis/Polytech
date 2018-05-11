@@ -20,6 +20,10 @@
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link rel="stylesheet" href="css/material-icon.css">
   <link rel="stylesheet" href="css/materialize.min.css">
+  <link rel="stylesheet" href="css/angular-ui-notification.min.css">
+
+  <!-- Ionic override some materalize class (for grid system that's why we import boostrap grid system) -->
+  <link rel="stylesheet" href="css/boostrap-grid.min.css">
   <link href="css/style.css" rel="stylesheet">
 
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -27,32 +31,33 @@
     -->
 
   <!-- ionic/angularjs js -->
-  <!-- <script src="lib/ionic/js/ionic.bundle.js"></script> -->
-  <script data-require="ionic@1.0.0-beta.1" data-semver="1.0.0-beta.1" src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.js"></script>
+  <!-- TODO: Fix CSS WITH THIS JS -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
 
   <!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
 
   <!-- your app's js -->
   <script src="js/app.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/materialize.min.js"></script>
+  <script src="js/angular-ui-notification.min.js"></script>
   <script src="js/route.js"></script>
-  <script src="js/controller/appCtrl.js"></script>
+  <script src="js/service/tradService.js"></script>
+  <script src="js/controller/navCtrl.js"></script>
   <script src="js/controller/compteurCtrl.js"></script>
   <script src="js/controller/page1Ctrl.js"></script>
-  <script src="js/controller/todoController.js"></script>
   <script src="js/controller/lampController.js"></script>
+  <script src="js/controller/todoController.js"></script>
   <script src="js/service/todoService.js"></script>
+  <script src="js/controller/userCtrl.js"></script>
+  <script src="js/service/userService.js"></script>
 </head>
 
 <body ng-app="starter">
-
   <ion-pane>
-    <!-- <ion-header-bar class="bar-stable">
-      <h1 class="title">Ionic Blank Starter</h1>
-    </ion-header-bar>
-    <ion-content>
-    </ion-content> -->
-    <ui-view></ui-view>
+    <div ui-view="nav"></div>
+    <div ui-view></div>
   </ion-pane>
 </body>
 

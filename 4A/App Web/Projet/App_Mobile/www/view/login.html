@@ -1,0 +1,32 @@
+<ion-view>
+    <ion-content>
+        <header>
+            <h1>Login</h1>
+        </header>
+
+        <section ng-controller="userCtrl" id='userSection'>
+            <div class="row">
+                <form ng-submit="login()" class="col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="input-field col-md-6 col-md-offset-3">
+                            <input ng-model="user.login" id="username" type="text" class="validate">
+                            <label for="username">Username / Email</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col-md-6 col-md-offset-3">
+                            <input ng-model="user.password" id="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button type="submit" class="col-md-2 col-md-offset-5 btn blue waves-effect waves-light">Login</button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </ion-content>
+</ion-view>
