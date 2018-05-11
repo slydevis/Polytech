@@ -1,9 +1,10 @@
 # Prérequis
 
-* MongoDB installé
-* Node.JS > 8.0 installé
-* Ionic installé
-* Cordova installé
+Avant de commencer il faut avoir installé sur votre machine :
+* MongoDB
+* Node.JS
+* Ionic
+* Cordova
 
 # Configuration
 
